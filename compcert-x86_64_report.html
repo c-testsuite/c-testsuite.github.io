@@ -1,0 +1,1854 @@
+    <html>
+    <header><title>compcert-x86_64 report</title></header>
+    <body>
+<h2>compcert-x86_64</h2>
+<br>
+compcert-x86_64 version:
+<br>
+The CompCert C verified compiler, version 3.5
+<br>
+test date: 2019-05-15
+<h3>single-exec</h3>
+<br>
+<pre>
+Test summary:
+
+pass 204
+fail 16
+skip 0
+---------
+total 220
+
+not ok ./tests/single-exec/00143.c
+  /* Disgusting, no?  But it compiles and runs just fine.  I feel a combination of
+     pride and revulsion at this discovery.  If no one&#x27;s thought of it before,
+     I think I&#x27;ll name it after myself.
+     It amazes me that after 10 years of writing C there are still
+     little corners that I haven&#x27;t explored fully.
+     - Tom Duff */
+  
+  int main()
+  {
+      int  count, n;
+      short *from, *to;
+      short a[39], b[39];
+  
+      for(n = 0; n &lt; 39; n++) {
+          a[n] = n;
+          b[n] = 0;
+      }
+      from = a;
+      to = b;
+      count = 39;
+      n = (count + 7) / 8;
+      switch (count % 8) {
+      case 0: do { *to++ = *from++;
+      case 7:      *to++ = *from++;
+      case 6:      *to++ = *from++;
+      case 5:      *to++ = *from++;
+      case 4:      *to++ = *from++;
+      case 3:      *to++ = *from++;
+      case 2:      *to++ = *from++;
+      case 1:      *to++ = *from++;
+              } while (--n &gt; 0);
+      }
+      for(n = 0; n &lt; 39; n++)
+          if(a[n] != b[n])
+              return 1;
+      return 0;
+  }+ccomp -fall -O2 ./tests/single-exec/00143.c -o ./tests/single-exec/00143.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  ./tests/single-exec/00143.c:24: error: unsupported feature: &#x27;case&#x27; statement not in &#x27;switch&#x27; statement
+  ./tests/single-exec/00143.c:25: error: unsupported feature: &#x27;case&#x27; statement not in &#x27;switch&#x27; statement
+  ./tests/single-exec/00143.c:26: error: unsupported feature: &#x27;case&#x27; statement not in &#x27;switch&#x27; statement
+  ./tests/single-exec/00143.c:27: error: unsupported feature: &#x27;case&#x27; statement not in &#x27;switch&#x27; statement
+  ./tests/single-exec/00143.c:28: error: unsupported feature: &#x27;case&#x27; statement not in &#x27;switch&#x27; statement
+  ./tests/single-exec/00143.c:29: error: unsupported feature: &#x27;case&#x27; statement not in &#x27;switch&#x27; statement
+  ./tests/single-exec/00143.c:30: error: unsupported feature: &#x27;case&#x27; statement not in &#x27;switch&#x27; statement
+  7 errors detected.
+  +exit 1
+not ok ./tests/single-exec/00162.c
+  void foo(int [5]);
+  void fooc(int x[const 5]);
+  void foos(int x[static 5]);
+  void foov(int x[volatile 5]);
+  void foor(int x[restrict 5]);
+  void fooc(int [const 5]);
+  void foos(int [static 5]);
+  void foov(int [volatile 5]);
+  void foor(int [restrict 5]);
+  void fooc(int (* const x));
+  void foos(int *x);
+  void foov(int * volatile x);
+  void foor(int * restrict x);
+  void fooc(int x[volatile 5])
+  {
+    x[3] = 42;
+  #ifdef INVALID
+    x = 0;
+  #endif
+  }
+  void foovm(int x[const *]);
+  void foovm(int * const x);
+  #ifdef INVALID
+  void wrongc(int x[3][const 4]);
+  void wrongvm(int x[static *]);
+  void foovm(int x[const *])
+  {
+    x[2] = 1;
+  }
+  #endif
+  int main()
+  {
+    return 0;
+  }
+  +ccomp -fall -O2 ./tests/single-exec/00162.c -o ./tests/single-exec/00162.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  ./tests/single-exec/00162.c:3:17: syntax error after &#x27;[&#x27; and before &#x27;static&#x27;.
+  Ill-formed array declarator.
+  At this point, one of the following is expected:
+    an expression, followed with a closing bracket &#x27;]&#x27;; or
+    a closing bracket &#x27;]&#x27;.
+  Fatal error; compilation aborted.
+  1 error detected.
+  +exit 1
+not ok ./tests/single-exec/00166.c
+  #include &lt;stdio.h&gt;
+  
+  int main()
+  {
+     int a = 24680;
+     int b = 01234567;
+     int c = 0x2468ac;
+     int d = 0x2468AC;
+     int e = 0b010101010101;
+  
+     printf(&quot;%d\n&quot;, a);
+     printf(&quot;%d\n&quot;, b);
+     printf(&quot;%d\n&quot;, c);
+     printf(&quot;%d\n&quot;, d);
+     printf(&quot;%d\n&quot;, e);
+  
+     return 0;
+  }
+  
+  // vim: set expandtab ts=4 sw=3 sts=3 tw=80 :
+  +ccomp -fall -O2 ./tests/single-exec/00166.c -o ./tests/single-exec/00166.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  ./tests/single-exec/00166.c:9: error: invalid numerical constant &#x27;0b010101010101&#x27;
+  These characters form a preprocessor number, but not a constant
+  1 error detected.
+  +exit 1
+not ok ./tests/single-exec/00170.c
+  #include &lt;stdio.h&gt;
+  
+  enum fred
+  {
+     a,
+     b,
+     c,
+     d,
+     e = 54,
+     f = 73,
+     g,
+     h
+  };
+  
+  /* All following uses of enum efoo should compile
+     without warning.  While forward enums aren&#x27;t ISO C,
+     it&#x27;s accepted by GCC also in strict mode, and only warned
+     about with -pedantic.  This happens in the real world.  */
+  /* Strict ISO C doesn&#x27;t allow this kind of forward declaration of
+     enums, but GCC accepts it (and gives only pedantic warning), and
+     it occurs in the wild.  */
+  enum efoo;
+  struct Sforward_use {
+      int (*fmember) (enum efoo x);
+  };
+  
+  extern enum efoo it_real_fn(void);
+  enum efoo {
+    ONE,
+    TWO,
+  };
+  struct S2 {
+    enum efoo (*f2) (void);
+  };
+  void should_compile(struct S2 *s)
+  {
+    s-&gt;f2 = it_real_fn;
+  }
+  
+  enum efoo it_real_fn(void)
+  {
+    return TWO;
+  }
+  
+  static unsigned int deref_uintptr(unsigned int *p)
+  {
+    return *p;
+  }
+  
+  enum Epositive {
+      epos_one, epos_two
+  };
+  
+  int main()
+  {
+     enum fred frod;
+     enum Epositive epos = epos_two;
+  
+     printf(&quot;%d %d %d %d %d %d %d %d\n&quot;, a, b, c, d, e, f, g, h);
+     /* printf(&quot;%d\n&quot;, frod); */
+     frod = 12;
+     printf(&quot;%d\n&quot;, frod);
+     frod = e;
+     printf(&quot;%d\n&quot;, frod);
+  
+     /* Following should compile without warning.  */
+     printf (&quot;enum to int: %u\n&quot;, deref_uintptr(&amp;epos));
+  
+     return 0;
+  }
+  
+  /* vim: set expandtab ts=4 sw=3 sts=3 tw=80 :*/
+  +ccomp -fall -O2 ./tests/single-exec/00170.c -o ./tests/single-exec/00170.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  ./tests/single-exec/00170.c:22: error: forward declaration of &#x27;enum efoo&#x27; is not allowed in ISO C
+  1 error detected.
+  +exit 1
+not ok ./tests/single-exec/00174.c
+  #include &lt;stdio.h&gt;
+  #include &lt;math.h&gt;
+  
+  int main()
+  {
+     // variables
+     float a = 12.34 + 56.78;
+     printf(&quot;%f\n&quot;, a);
+  
+     // infix operators
+     printf(&quot;%f\n&quot;, 12.34 + 56.78);
+     printf(&quot;%f\n&quot;, 12.34 - 56.78);
+     printf(&quot;%f\n&quot;, 12.34 * 56.78);
+     printf(&quot;%f\n&quot;, 12.34 / 56.78);
+  
+     // comparison operators
+     printf(&quot;%d %d %d %d %d %d\n&quot;, 12.34 &lt; 56.78, 12.34 &lt;= 56.78, 12.34 == 56.78, 12.34 &gt;= 56.78, 12.34 &gt; 56.78, 12.34 != 56.78);
+     printf(&quot;%d %d %d %d %d %d\n&quot;, 12.34 &lt; 12.34, 12.34 &lt;= 12.34, 12.34 == 12.34, 12.34 &gt;= 12.34, 12.34 &gt; 12.34, 12.34 != 12.34);
+     printf(&quot;%d %d %d %d %d %d\n&quot;, 56.78 &lt; 12.34, 56.78 &lt;= 12.34, 56.78 == 12.34, 56.78 &gt;= 12.34, 56.78 &gt; 12.34, 56.78 != 12.34);
+  
+     // assignment operators
+     a = 12.34;
+     a += 56.78;
+     printf(&quot;%f\n&quot;, a);
+  
+     a = 12.34;
+     a -= 56.78;
+     printf(&quot;%f\n&quot;, a);
+  
+     a = 12.34;
+     a *= 56.78;
+     printf(&quot;%f\n&quot;, a);
+  
+     a = 12.34;
+     a /= 56.78;
+     printf(&quot;%f\n&quot;, a);
+  
+     // prefix operators
+     printf(&quot;%f\n&quot;, +12.34);
+     printf(&quot;%f\n&quot;, -12.34);
+  
+     // type coercion
+     a = 2;
+     printf(&quot;%f\n&quot;, a);
+     printf(&quot;%f\n&quot;, sin(2));
+  
+     return 0;
+  }
+  
+  /* vim: set expandtab ts=4 sw=3 sts=3 tw=80 :*/
+  +ccomp -fall -O2 ./tests/single-exec/00174.c -o ./tests/single-exec/00174.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/6yjpyqkx6d9k5f2s2g8h9kz40q6rz1yx-binutils-2.31.1/bin/ld: /tmp/compcert89bb94.o: in function `main&#x27;:
+  (.text+0x1c8): undefined reference to `sin&#x27;
+  collect2: error: ld returned 1 exit status
+  ccomp: error: linker command failed with exit code 1 (use -v to see invocation)
+  
+  1 error detected.
+  +exit 1
+not ok ./tests/single-exec/00204.c
+  // This program is designed to test some arm64-specific things, such as the
+  // calling convention, but should give the same results on any architecture.
+  
+  #include &lt;stdarg.h&gt;
+  #include &lt;stdint.h&gt;
+  #include &lt;stdio.h&gt;
+  
+  struct s1 { char x[1]; } s1 = { &quot;0&quot; };
+  struct s2 { char x[2]; } s2 = { &quot;12&quot; };
+  struct s3 { char x[3]; } s3 = { &quot;345&quot; };
+  struct s4 { char x[4]; } s4 = { &quot;6789&quot; };
+  struct s5 { char x[5]; } s5 = { &quot;abcde&quot; };
+  struct s6 { char x[6]; } s6 = { &quot;fghijk&quot; };
+  struct s7 { char x[7]; } s7 = { &quot;lmnopqr&quot; };
+  struct s8 { char x[8]; } s8 = { &quot;stuvwxyz&quot; };
+  struct s9 { char x[9]; } s9 = { &quot;ABCDEFGHI&quot; };
+  struct s10 { char x[10]; } s10 = { &quot;JKLMNOPQRS&quot; };
+  struct s11 { char x[11]; } s11 = { &quot;TUVWXYZ0123&quot; };
+  struct s12 { char x[12]; } s12 = { &quot;456789abcdef&quot; };
+  struct s13 { char x[13]; } s13 = { &quot;ghijklmnopqrs&quot; };
+  struct s14 { char x[14]; } s14 = { &quot;tuvwxyzABCDEFG&quot; };
+  struct s15 { char x[15]; } s15 = { &quot;HIJKLMNOPQRSTUV&quot; };
+  struct s16 { char x[16]; } s16 = { &quot;WXYZ0123456789ab&quot; };
+  struct s17 { char x[17]; } s17 = { &quot;cdefghijklmnopqrs&quot; };
+  
+  struct hfa11 { float a; } hfa11 = { 11.1 };
+  struct hfa12 { float a, b; } hfa12 = { 12.1, 12.2 };
+  struct hfa13 { float a, b, c; } hfa13 = { 13.1, 13.2, 13.3 };
+  struct hfa14 { float a, b, c, d; } hfa14 = { 14.1, 14.2, 14.3, 14.4 };
+  
+  struct hfa21 { double a; } hfa21 = { 21.1 };
+  struct hfa22 { double a, b; } hfa22 = { 22.1, 22.2 };
+  struct hfa23 { double a, b, c; } hfa23 = { 23.1, 23.2, 23.3 };
+  struct hfa24 { double a, b, c, d; } hfa24 = { 24.1, 24.2, 24.3, 24.4 };
+  
+  struct hfa31 { long double a; } hfa31 = { 31.1 };
+  struct hfa32 { long double a, b; } hfa32 = { 32.1, 32.2 };
+  struct hfa33 { long double a, b, c; } hfa33 = { 33.1, 33.2, 33.3 };
+  struct hfa34 { long double a, b, c, d; } hfa34 = { 34.1, 34.2, 34.3, 34.4 };
+  
+  void fa_s1(struct s1 a) { printf(&quot;%.1s\n&quot;, a.x); }
+  void fa_s2(struct s2 a) { printf(&quot;%.2s\n&quot;, a.x); }
+  void fa_s3(struct s3 a) { printf(&quot;%.3s\n&quot;, a.x); }
+  void fa_s4(struct s4 a) { printf(&quot;%.4s\n&quot;, a.x); }
+  void fa_s5(struct s5 a) { printf(&quot;%.5s\n&quot;, a.x); }
+  void fa_s6(struct s6 a) { printf(&quot;%.6s\n&quot;, a.x); }
+  void fa_s7(struct s7 a) { printf(&quot;%.7s\n&quot;, a.x); }
+  void fa_s8(struct s8 a) { printf(&quot;%.8s\n&quot;, a.x); }
+  void fa_s9(struct s9 a) { printf(&quot;%.9s\n&quot;, a.x); }
+  void fa_s10(struct s10 a) { printf(&quot;%.10s\n&quot;, a.x); }
+  void fa_s11(struct s11 a) { printf(&quot;%.11s\n&quot;, a.x); }
+  void fa_s12(struct s12 a) { printf(&quot;%.12s\n&quot;, a.x); }
+  void fa_s13(struct s13 a) { printf(&quot;%.13s\n&quot;, a.x); }
+  void fa_s14(struct s14 a) { printf(&quot;%.14s\n&quot;, a.x); }
+  void fa_s15(struct s15 a) { printf(&quot;%.15s\n&quot;, a.x); }
+  void fa_s16(struct s16 a) { printf(&quot;%.16s\n&quot;, a.x); }
+  void fa_s17(struct s17 a) { printf(&quot;%.17s\n&quot;, a.x); }
+  
+  void fa_hfa11(struct hfa11 a)
+  { printf(&quot;%.1f\n&quot;, a.a); }
+  void fa_hfa12(struct hfa12 a)
+  { printf(&quot;%.1f %.1f\n&quot;, a.a, a.a); }
+  void fa_hfa13(struct hfa13 a)
+  { printf(&quot;%.1f %.1f %.1f\n&quot;, a.a, a.b, a.c); }
+  void fa_hfa14(struct hfa14 a)
+  { printf(&quot;%.1f %.1f %.1f %.1f\n&quot;, a.a, a.b, a.c, a.d); }
+  
+  void fa_hfa21(struct hfa21 a)
+  { printf(&quot;%.1f\n&quot;, a.a); }
+  void fa_hfa22(struct hfa22 a)
+  { printf(&quot;%.1f %.1f\n&quot;, a.a, a.a); }
+  void fa_hfa23(struct hfa23 a)
+  { printf(&quot;%.1f %.1f %.1f\n&quot;, a.a, a.b, a.c); }
+  void fa_hfa24(struct hfa24 a)
+  { printf(&quot;%.1f %.1f %.1f %.1f\n&quot;, a.a, a.b, a.c, a.d); }
+  
+  void fa_hfa31(struct hfa31 a)
+  { printf(&quot;%.1Lf\n&quot;, a.a); }
+  void fa_hfa32(struct hfa32 a)
+  { printf(&quot;%.1Lf %.1Lf\n&quot;, a.a, a.a); }
+  void fa_hfa33(struct hfa33 a)
+  { printf(&quot;%.1Lf %.1Lf %.1Lf\n&quot;, a.a, a.b, a.c); }
+  void fa_hfa34(struct hfa34 a)
+  { printf(&quot;%.1Lf %.1Lf %.1Lf %.1Lf\n&quot;, a.a, a.b, a.c, a.d); }
+  
+  void fa1(struct s8 a, struct s9 b, struct s10 c, struct s11 d,
+           struct s12 e, struct s13 f)
+  {
+      printf(&quot;%.3s %.3s %.3s %.3s %.3s %.3s\n&quot;, a.x, b.x, c.x, d.x, e.x, f.x);
+  }
+  
+  void fa2(struct s9 a, struct s10 b, struct s11 c, struct s12 d,
+           struct s13 e, struct s14 f)
+  {
+      printf(&quot;%.3s %.3s %.3s %.3s %.3s %.3s\n&quot;, a.x, b.x, c.x, d.x, e.x, f.x);
+  }
+  
+  void fa3(struct hfa14 a, struct hfa23 b, struct hfa32 c)
+  {
+      printf(&quot;%.1f %.1f %.1f %.1f %.1Lf %.1Lf\n&quot;,
+             a.a, a.d, b.a, b.c, c.a, c.b);
+  }
+  
+  void fa4(struct s1 a, struct hfa14 b, struct s2 c, struct hfa24 d,
+           struct s3 e, struct hfa34 f)
+  {
+      printf(&quot;%.1s %.1f %.1f %.2s %.1f %.1f %.3s %.1Lf %.1Lf\n&quot;,
+             a.x, b.a, b.d, c.x, d.a, d.d, e.x, f.a, f.d);
+  }
+  
+  void arg(void)
+  {
+      printf(&quot;Arguments:\n&quot;);
+      fa_s1(s1);
+      fa_s2(s2);
+      fa_s3(s3);
+      fa_s4(s4);
+      fa_s5(s5);
+      fa_s6(s6);
+      fa_s7(s7);
+      fa_s8(s8);
+      fa_s9(s9);
+      fa_s10(s10);
+      fa_s11(s11);
+      fa_s12(s12);
+      fa_s13(s13);
+      fa_s14(s14);
+      fa_s15(s15);
+      fa_s16(s16);
+      fa_s17(s17);
+      fa_hfa11(hfa11);
+      fa_hfa12(hfa12);
+      fa_hfa13(hfa13);
+      fa_hfa14(hfa14);
+      fa_hfa21(hfa21);
+      fa_hfa22(hfa22);
+      fa_hfa23(hfa23);
+      fa_hfa24(hfa24);
+      fa_hfa31(hfa31);
+      fa_hfa32(hfa32);
+      fa_hfa33(hfa33);
+      fa_hfa34(hfa34);
+      fa1(s8, s9, s10, s11, s12, s13);
+      fa2(s9, s10, s11, s12, s13, s14);
+      fa3(hfa14, hfa23, hfa32);
+      fa4(s1, hfa14, s2, hfa24, s3, hfa34);
+  }
+  
+  struct s1 fr_s1(void) { return s1; }
+  struct s2 fr_s2(void) { return s2; }
+  struct s3 fr_s3(void) { return s3; }
+  struct s4 fr_s4(void) { return s4; }
+  struct s5 fr_s5(void) { return s5; }
+  struct s6 fr_s6(void) { return s6; }
+  struct s7 fr_s7(void) { return s7; }
+  struct s8 fr_s8(void) { return s8; }
+  struct s9 fr_s9(void) { return s9; }
+  struct s10 fr_s10(void) { return s10; }
+  struct s11 fr_s11(void) { return s11; }
+  struct s12 fr_s12(void) { return s12; }
+  struct s13 fr_s13(void) { return s13; }
+  struct s14 fr_s14(void) { return s14; }
+  struct s15 fr_s15(void) { return s15; }
+  struct s16 fr_s16(void) { return s16; }
+  struct s17 fr_s17(void) { return s17; }
+  
+  struct hfa11 fr_hfa11(void) { return hfa11; }
+  struct hfa12 fr_hfa12(void) { return hfa12; }
+  struct hfa13 fr_hfa13(void) { return hfa13; }
+  struct hfa14 fr_hfa14(void) { return hfa14; }
+  
+  struct hfa21 fr_hfa21(void) { return hfa21; }
+  struct hfa22 fr_hfa22(void) { return hfa22; }
+  struct hfa23 fr_hfa23(void) { return hfa23; }
+  struct hfa24 fr_hfa24(void) { return hfa24; }
+  
+  struct hfa31 fr_hfa31(void) { return hfa31; }
+  struct hfa32 fr_hfa32(void) { return hfa32; }
+  struct hfa33 fr_hfa33(void) { return hfa33; }
+  struct hfa34 fr_hfa34(void) { return hfa34; }
+  
+  void ret(void)
+  {
+      struct s1 t1 = fr_s1();
+      struct s2 t2 = fr_s2();
+      struct s3 t3 = fr_s3();
+      struct s4 t4 = fr_s4();
+      struct s5 t5 = fr_s5();
+      struct s6 t6 = fr_s6();
+      struct s7 t7 = fr_s7();
+      struct s8 t8 = fr_s8();
+      struct s9 t9 = fr_s9();
+      struct s10 t10 = fr_s10();
+      struct s11 t11 = fr_s11();
+      struct s12 t12 = fr_s12();
+      struct s13 t13 = fr_s13();
+      struct s14 t14 = fr_s14();
+      struct s15 t15 = fr_s15();
+      struct s16 t16 = fr_s16();
+      struct s17 t17 = fr_s17();
+      printf(&quot;Return values:\n&quot;);
+      printf(&quot;%.1s\n&quot;, t1.x);
+      printf(&quot;%.2s\n&quot;, t2.x);
+      printf(&quot;%.3s\n&quot;, t3.x);
+      printf(&quot;%.4s\n&quot;, t4.x);
+      printf(&quot;%.5s\n&quot;, t5.x);
+      printf(&quot;%.6s\n&quot;, t6.x);
+      printf(&quot;%.7s\n&quot;, t7.x);
+      printf(&quot;%.8s\n&quot;, t8.x);
+      printf(&quot;%.9s\n&quot;, t9.x);
+      printf(&quot;%.10s\n&quot;, t10.x);
+      printf(&quot;%.11s\n&quot;, t11.x);
+      printf(&quot;%.12s\n&quot;, t12.x);
+      printf(&quot;%.13s\n&quot;, t13.x);
+      printf(&quot;%.14s\n&quot;, t14.x);
+      printf(&quot;%.15s\n&quot;, t15.x);
+      printf(&quot;%.16s\n&quot;, t16.x);
+      printf(&quot;%.17s\n&quot;, t17.x);
+      printf(&quot;%.1f\n&quot;, fr_hfa11().a);
+      printf(&quot;%.1f %.1f\n&quot;, fr_hfa12().a, fr_hfa12().b);
+      printf(&quot;%.1f %.1f\n&quot;, fr_hfa13().a, fr_hfa13().c);
+      printf(&quot;%.1f %.1f\n&quot;, fr_hfa14().a, fr_hfa14().d);
+      printf(&quot;%.1f\n&quot;, fr_hfa21().a);
+      printf(&quot;%.1f %.1f\n&quot;, fr_hfa22().a, fr_hfa22().b);
+      printf(&quot;%.1f %.1f\n&quot;, fr_hfa23().a, fr_hfa23().c);
+      printf(&quot;%.1f %.1f\n&quot;, fr_hfa24().a, fr_hfa24().d);
+      printf(&quot;%.1Lf\n&quot;, fr_hfa31().a);
+      printf(&quot;%.1Lf %.1Lf\n&quot;, fr_hfa32().a, fr_hfa32().b);
+      printf(&quot;%.1Lf %.1Lf\n&quot;, fr_hfa33().a, fr_hfa33().c);
+      printf(&quot;%.1Lf %.1Lf\n&quot;, fr_hfa34().a, fr_hfa34().d);
+  }
+  
+  int match(const char **s, const char *f)
+  {
+      const char *p = *s;
+      for (p = *s; *f &amp;&amp; *f == *p; f++, p++)
+          ;
+      if (!*f) {
+          *s = p - 1;
+          return 1;
+      }
+      return 0;
+  }
+  
+  void myprintf(const char *format, ...)
+  {
+      const char *s;
+      va_list ap;
+      va_start(ap, format);
+      for (s = format; *s; s++) {
+          if (match(&amp;s, &quot;%7s&quot;)) {
+              struct s7 t7 = va_arg(ap, struct s7);
+              printf(&quot;%.7s&quot;, t7.x);
+          }
+          else if (match(&amp;s, &quot;%9s&quot;)) {
+              struct s9 t9 = va_arg(ap, struct s9);
+              printf(&quot;%.9s&quot;, t9.x);
+          }
+          else if (match(&amp;s, &quot;%hfa11&quot;)) {
+              struct hfa11 x = va_arg(ap, struct hfa11);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.a);
+          }
+          else if (match(&amp;s, &quot;%hfa12&quot;)) {
+              struct hfa12 x = va_arg(ap, struct hfa12);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.b);
+          }
+          else if (match(&amp;s, &quot;%hfa13&quot;)) {
+              struct hfa13 x = va_arg(ap, struct hfa13);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.c);
+          }
+          else if (match(&amp;s, &quot;%hfa14&quot;)) {
+              struct hfa14 x = va_arg(ap, struct hfa14);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.d);
+          }
+          else if (match(&amp;s, &quot;%hfa21&quot;)) {
+              struct hfa21 x = va_arg(ap, struct hfa21);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.a);
+          }
+          else if (match(&amp;s, &quot;%hfa22&quot;)) {
+              struct hfa22 x = va_arg(ap, struct hfa22);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.b);
+          }
+          else if (match(&amp;s, &quot;%hfa23&quot;)) {
+              struct hfa23 x = va_arg(ap, struct hfa23);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.c);
+          }
+          else if (match(&amp;s, &quot;%hfa24&quot;)) {
+              struct hfa24 x = va_arg(ap, struct hfa24);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.d);
+          }
+          else if (match(&amp;s, &quot;%hfa31&quot;)) {
+              struct hfa31 x = va_arg(ap, struct hfa31);
+              printf(&quot;%.1Lf,%.1Lf&quot;, x.a, x.a);
+          }
+          else if (match(&amp;s, &quot;%hfa32&quot;)) {
+              struct hfa32 x = va_arg(ap, struct hfa32);
+              printf(&quot;%.1Lf,%.1Lf&quot;, x.a, x.b);
+          }
+          else if (match(&amp;s, &quot;%hfa33&quot;)) {
+              struct hfa33 x = va_arg(ap, struct hfa33);
+              printf(&quot;%.1Lf,%.1Lf&quot;, x.a, x.c);
+          }
+          else if (match(&amp;s, &quot;%hfa34&quot;)) {
+              struct hfa34 x = va_arg(ap, struct hfa34);
+              printf(&quot;%.1Lf,%.1Lf&quot;, x.a, x.d);
+          }
+          else
+              putchar(*s);
+      }
+      putchar(&#x27;\n&#x27;);
+  }
+  
+  void stdarg(void)
+  {
+      printf(&quot;stdarg:\n&quot;);
+      myprintf(&quot;%9s %9s %9s %9s %9s %9s&quot;, s9, s9, s9, s9, s9, s9);
+      myprintf(&quot;%7s %9s %9s %9s %9s %9s&quot;, s7, s9, s9, s9, s9, s9);
+  
+      myprintf(&quot;HFA long double:&quot;);
+      myprintf(&quot;%hfa34 %hfa34 %hfa34 %hfa34&quot;, hfa34, hfa34, hfa34, hfa34);
+      myprintf(&quot;%hfa33 %hfa34 %hfa34 %hfa34&quot;, hfa33, hfa34, hfa34, hfa34);
+      myprintf(&quot;%hfa32 %hfa34 %hfa34 %hfa34&quot;, hfa32, hfa34, hfa34, hfa34);
+      myprintf(&quot;%hfa31 %hfa34 %hfa34 %hfa34&quot;, hfa31, hfa34, hfa34, hfa34);
+  
+      myprintf(&quot;%hfa32 %hfa33 %hfa33 %hfa33 %hfa33&quot;,
+               hfa32, hfa33, hfa33, hfa33, hfa33);
+      myprintf(&quot;%hfa31 %hfa33 %hfa33 %hfa33 %hfa33&quot;,
+               hfa31, hfa33, hfa33, hfa33, hfa33);
+      myprintf(&quot;%hfa33 %hfa33 %hfa33 %hfa33&quot;,
+               hfa33, hfa33, hfa33, hfa33);
+  
+      myprintf(&quot;%hfa34 %hfa32 %hfa32 %hfa32 %hfa32&quot;,
+               hfa34, hfa32, hfa32, hfa32, hfa32);
+      myprintf(&quot;%hfa33 %hfa32 %hfa32 %hfa32 %hfa32&quot;,
+               hfa33, hfa32, hfa32, hfa32, hfa32);
+  
+      myprintf(&quot;%hfa34 %hfa32 %hfa31 %hfa31 %hfa31 %hfa31&quot;,
+               hfa34, hfa32, hfa31, hfa31, hfa31, hfa31);
+  
+      myprintf(&quot;HFA double:&quot;);
+      myprintf(&quot;%hfa24 %hfa24 %hfa24 %hfa24&quot;, hfa24, hfa24, hfa24, hfa24);
+      myprintf(&quot;%hfa23 %hfa24 %hfa24 %hfa24&quot;, hfa23, hfa24, hfa24, hfa24);
+      myprintf(&quot;%hfa22 %hfa24 %hfa24 %hfa24&quot;, hfa22, hfa24, hfa24, hfa24);
+      myprintf(&quot;%hfa21 %hfa24 %hfa24 %hfa24&quot;, hfa21, hfa24, hfa24, hfa24);
+  
+      myprintf(&quot;%hfa22 %hfa23 %hfa23 %hfa23 %hfa23&quot;,
+               hfa22, hfa23, hfa23, hfa23, hfa23);
+      myprintf(&quot;%hfa21 %hfa23 %hfa23 %hfa23 %hfa23&quot;,
+               hfa21, hfa23, hfa23, hfa23, hfa23);
+      myprintf(&quot;%hfa23 %hfa23 %hfa23 %hfa23&quot;,
+               hfa23, hfa23, hfa23, hfa23);
+  
+      myprintf(&quot;%hfa24 %hfa22 %hfa22 %hfa22 %hfa22&quot;,
+               hfa24, hfa22, hfa22, hfa22, hfa22);
+      myprintf(&quot;%hfa23 %hfa22 %hfa22 %hfa22 %hfa22&quot;,
+               hfa23, hfa22, hfa22, hfa22, hfa22);
+  
+      myprintf(&quot;%hfa24 %hfa22 %hfa21 %hfa21 %hfa21 %hfa21&quot;,
+               hfa24, hfa22, hfa21, hfa21, hfa21, hfa21);
+  
+      myprintf(&quot;HFA float:&quot;);
+      myprintf(&quot;%hfa14 %hfa14 %hfa14 %hfa14&quot;, hfa14, hfa14, hfa14, hfa14);
+      myprintf(&quot;%hfa13 %hfa14 %hfa14 %hfa14&quot;, hfa13, hfa14, hfa14, hfa14);
+      myprintf(&quot;%hfa12 %hfa14 %hfa14 %hfa14&quot;, hfa12, hfa14, hfa14, hfa14);
+      myprintf(&quot;%hfa11 %hfa14 %hfa14 %hfa14&quot;, hfa11, hfa14, hfa14, hfa14);
+  
+      myprintf(&quot;%hfa12 %hfa13 %hfa13 %hfa13 %hfa13&quot;,
+               hfa12, hfa13, hfa13, hfa13, hfa13);
+      myprintf(&quot;%hfa11 %hfa13 %hfa13 %hfa13 %hfa13&quot;,
+               hfa11, hfa13, hfa13, hfa13, hfa13);
+      myprintf(&quot;%hfa13 %hfa13 %hfa13 %hfa13&quot;,
+               hfa13, hfa13, hfa13, hfa13);
+  
+      myprintf(&quot;%hfa14 %hfa12 %hfa12 %hfa12 %hfa12&quot;,
+               hfa14, hfa12, hfa12, hfa12, hfa12);
+      myprintf(&quot;%hfa13 %hfa12 %hfa12 %hfa12 %hfa12&quot;,
+               hfa13, hfa12, hfa12, hfa12, hfa12);
+  
+      myprintf(&quot;%hfa14 %hfa12 %hfa11 %hfa11 %hfa11 %hfa11&quot;,
+               hfa14, hfa12, hfa11, hfa11, hfa11, hfa11);
+  }
+  
+  void pll(unsigned long long x)
+  {
+      printf(&quot;%llx\n&quot;, x);
+  }
+  
+  void movi(void)
+  {
+      printf(&quot;MOVI:\n&quot;);
+      pll(0);
+      pll(0xabcd);
+      pll(0xabcd0000);
+      pll(0xabcd00000000);
+      pll(0xabcd000000000000);
+      pll(0xffffabcd);
+      pll(0xabcdffff);
+      pll(0xffffffffffffabcd);
+      pll(0xffffffffabcdffff);
+      pll(0xffffabcdffffffff);
+      pll(0xabcdffffffffffff);
+      pll(0xaaaaaaaa);
+      pll(0x5555555555555555);
+      pll(0x77777777);
+      pll(0x3333333333333333);
+      pll(0xf8f8f8f8);
+      pll(0x1e1e1e1e1e1e1e1e);
+      pll(0x3f803f80);
+      pll(0x01ff01ff01ff01ff);
+      pll(0x007fffc0);
+      pll(0x03fff80003fff800);
+      pll(0x0007fffffffffe00);
+  
+      pll(0xabcd1234);
+      pll(0xabcd00001234);
+      pll(0xabcd000000001234);
+      pll(0xabcd12340000);
+      pll(0xabcd000012340000);
+      pll(0xabcd123400000000);
+      pll(0xffffffffabcd1234);
+      pll(0xffffabcdffff1234);
+      pll(0xabcdffffffff1234);
+      pll(0xffffabcd1234ffff);
+      pll(0xabcdffff1234ffff);
+      pll(0xabcd1234ffffffff);
+  
+      pll(0xffffef0123456789);
+      pll(0xabcdef012345ffff);
+  
+      pll(0xabcdef0123456789);
+  }
+  
+  static uint32_t addip0(uint32_t x) { return x + 0; }
+  static uint64_t sublp0(uint64_t x) { return x - 0; }
+  static uint32_t addip123(uint32_t x) { return x + 123; }
+  static uint64_t addlm123(uint64_t x) { return x + -123; }
+  static uint64_t sublp4095(uint64_t x) { return x - 4095; }
+  static uint32_t subim503808(uint32_t x) { return x - -503808; }
+  static uint64_t addp12345(uint64_t x) { return x + 12345; }
+  static uint32_t subp12345(uint32_t x) { return x - 12345; }
+  
+  static uint32_t mvni(uint32_t x) { return 0xffffffff - x; }
+  static uint64_t negl(uint64_t x) { return 0 - x; }
+  static uint32_t rsbi123(uint32_t x) { return 123 - x; }
+  static uint64_t rsbl123(uint64_t x) { return 123 - x; }
+  
+  static uint32_t andi0(uint32_t x) { return x &amp; 0; }
+  static uint64_t andlm1(uint64_t x) { return x &amp; -1; }
+  static uint64_t orrl0(uint64_t x) { return x | 0; }
+  static uint32_t orrim1(uint32_t x) { return x | -1; }
+  static uint32_t eori0(uint32_t x) { return x ^ 0; }
+  static uint64_t eorlm1(uint64_t x) { return x ^ -1; }
+  static uint32_t and0xf0(uint32_t x) { return x &amp; 0xf0; }
+  static uint64_t orr0xf0(uint64_t x) { return x | 0xf0; }
+  static uint64_t eor0xf0(uint64_t x) { return x ^ 0xf0; }
+  
+  static uint32_t lsli0(uint32_t x) { return x &lt;&lt; 0; }
+  static uint32_t lsri0(uint32_t x) { return x &gt;&gt; 0; }
+  static int64_t asrl0(int64_t x) { return x &gt;&gt; 0; }
+  static uint32_t lsli1(uint32_t x) { return x &lt;&lt; 1; }
+  static uint32_t lsli31(uint32_t x) { return x &lt;&lt; 31; }
+  static uint64_t lsll1(uint64_t x) { return x &lt;&lt; 1; }
+  static uint64_t lsll63(uint64_t x) { return x &lt;&lt; 63; }
+  static uint32_t lsri1(uint32_t x) { return x &gt;&gt; 1; }
+  static uint32_t lsri31(uint32_t x) { return x &gt;&gt; 31; }
+  static uint64_t lsrl1(uint64_t x) { return x &gt;&gt; 1; }
+  static uint64_t lsrl63(uint64_t x) { return x &gt;&gt; 63; }
+  static int32_t asri1(int32_t x) { return x &gt;&gt; 1; }
+  static int32_t asri31(int32_t x) { return x &gt;&gt; 31; }
+  static int64_t asrl1(int64_t x) { return x &gt;&gt; 1; }
+  static int64_t asrl63(int64_t x) { return x &gt;&gt; 63; }
+  
+  void opi(void)
+  {
+      int x = 1000;
+      pll(addip0(x));
+      pll(sublp0(x));
+      pll(addip123(x));
+      pll(addlm123(x));
+      pll(sublp4095(x));
+      pll(subim503808(x));
+      pll(addp12345(x));
+      pll(subp12345(x));
+      pll(mvni(x));
+      pll(negl(x));
+      pll(rsbi123(x));
+      pll(rsbl123(x));
+      pll(andi0(x));
+      pll(andlm1(x));
+      pll(orrl0(x));
+      pll(orrim1(x));
+      pll(eori0(x));
+      pll(eorlm1(x));
+      pll(and0xf0(x));
+      pll(orr0xf0(x));
+      pll(eor0xf0(x));
+      pll(lsli0(x));
+      pll(lsri0(x));
+      pll(asrl0(x));
+      pll(lsli1(x));
+      pll(lsli31(x));
+      pll(lsll1(x));
+      pll(lsll63(x));
+      pll(lsri1(x));
+      pll(lsri31(x));
+      pll(lsrl1(x));
+      pll(lsrl63(x));
+      pll(asri1(x));
+      pll(asri31(x));
+      pll(asrl1(x));
+      pll(asrl63(x));
+  }
+  
+  void pcs(void)
+  {
+      arg();
+      ret();
+      stdarg();
+      movi();
+      opi();
+  }
+  
+  int main()
+  {
+      pcs();
+      return 0;
+  }
+  +ccomp -fall -O2 ./tests/single-exec/00204.c -o ./tests/single-exec/00204.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  +./tests/single-exec/00204.c.bin
+  +diff -u ./tests/single-exec/00204.c.expected ./tests/single-exec/00204.c.output
+  --- ./tests/single-exec/00204.c.expected	2019-05-15 05:26:54.092515088 +0000
+  +++ ./tests/single-exec/00204.c.output	2019-05-15 05:46:14.701477112 +0000
+  @@ -24,14 +24,14 @@
+   22.1 22.1
+   23.1 23.2 23.3
+   24.1 24.2 24.3 24.4
+  -31.1
+  -32.1 32.1
+  -33.1 33.2 33.3
+  -34.1 34.2 34.3 34.4
+  +-nan
+  +-nan nan
+  +-nan nan nan
+  +-nan nan nan nan
+   stu ABC JKL TUV 456 ghi
+   ABC JKL TUV 456 ghi tuv
+  -14.1 14.4 23.1 23.3 32.1 32.2
+  -0 14.1 14.4 12 24.1 24.4 345 34.1 34.4
+  +14.1 14.4 23.1 23.3 -nan -nan
+  +0 14.1 14.4 12 24.1 24.4 345 nan -nan
+   Return values:
+   0
+   12
+  @@ -58,24 +58,24 @@
+   22.1 22.2
+   23.1 23.3
+   24.1 24.4
+  -31.1
+  -32.1 32.2
+  -33.1 33.3
+  -34.1 34.4
+  +nan
+  +nan nan
+  +nan nan
+  +nan nan
+   stdarg:
+   ABCDEFGHI ABCDEFGHI ABCDEFGHI ABCDEFGHI ABCDEFGHI ABCDEFGHI
+   lmnopqr ABCDEFGHI ABCDEFGHI ABCDEFGHI ABCDEFGHI ABCDEFGHI
+   HFA long double:
+  -34.1,34.4 34.1,34.4 34.1,34.4 34.1,34.4
+  -33.1,33.3 34.1,34.4 34.1,34.4 34.1,34.4
+  -32.1,32.2 34.1,34.4 34.1,34.4 34.1,34.4
+  -31.1,31.1 34.1,34.4 34.1,34.4 34.1,34.4
+  -32.1,32.2 33.1,33.3 33.1,33.3 33.1,33.3 33.1,33.3
+  -31.1,31.1 33.1,33.3 33.1,33.3 33.1,33.3 33.1,33.3
+  -33.1,33.3 33.1,33.3 33.1,33.3 33.1,33.3
+  -34.1,34.4 32.1,32.2 32.1,32.2 32.1,32.2 32.1,32.2
+  -33.1,33.3 32.1,32.2 32.1,32.2 32.1,32.2 32.1,32.2
+  -34.1,34.4 32.1,32.2 31.1,31.1 31.1,31.1 31.1,31.1 31.1,31.1
+  +nan,nan nan,nan nan,nan nan,nan
+  +nan,nan nan,nan nan,nan nan,nan
+  +nan,nan nan,nan nan,nan nan,nan
+  +nan,nan nan,nan nan,nan nan,nan
+  +nan,nan nan,nan nan,nan nan,nan nan,nan
+  +nan,nan nan,nan nan,nan nan,nan nan,nan
+  +nan,nan nan,nan nan,nan nan,nan
+  +nan,nan nan,nan nan,nan nan,nan nan,nan
+  +nan,nan nan,nan nan,nan nan,nan nan,nan
+  +nan,nan nan,nan nan,nan nan,nan nan,nan nan,nan
+   HFA double:
+   24.1,24.4 24.1,24.4 24.1,24.4 24.1,24.4
+   23.1,23.3 24.1,24.4 24.1,24.4 24.1,24.4
+  +exit 1
+not ok ./tests/single-exec/00207.c
+  #include &lt;stdio.h&gt;
+  
+  /* This test segfaults as of April 27, 2015. */
+  void f1(int argc)
+  {
+    char test[argc];
+    if(0)
+    label:
+      printf(&quot;boom!\n&quot;);
+    if(argc-- == 0)
+      return;
+    goto label;
+  }
+  
+  /* This segfaulted on 2015-11-19. */
+  void f2(void)
+  {
+      goto start;
+      {
+          int a[1 &amp;&amp; 1]; /* not a variable-length array */
+          int b[1 || 1]; /* not a variable-length array */
+          int c[1 ? 1 : 1]; /* not a variable-length array */
+      start:
+          a[0] = 0;
+          b[0] = 0;
+          c[0] = 0;
+      }
+  }
+  
+  void f3(void)
+  {
+      printf(&quot;%d\n&quot;, 0 ? printf(&quot;x1\n&quot;) : 11);
+      printf(&quot;%d\n&quot;, 1 ? 12 : printf(&quot;x2\n&quot;));
+      printf(&quot;%d\n&quot;, 0 &amp;&amp; printf(&quot;x3\n&quot;));
+      printf(&quot;%d\n&quot;, 1 || printf(&quot;x4\n&quot;));
+  }
+  
+  int main()
+  {
+    f1(2);
+    f2();
+    f3();
+  
+    return 0;
+  }
+  +ccomp -fall -O2 ./tests/single-exec/00207.c -o ./tests/single-exec/00207.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  ./tests/single-exec/00207.c:6: error: size of array is not a compile-time constant
+  1 error detected.
+  +exit 1
+not ok ./tests/single-exec/00208.c
+  #include &lt;stdio.h&gt;
+  struct wchar {
+      char *data; char mem[];
+  };
+  struct wint {
+      char *data; int mem[];
+  };
+  int f1char (void) {
+      char s[9]=&quot;nonono&quot;;
+      struct wchar q = {&quot;bugs&quot;};
+      return !s[0];
+  }
+  int f1int (void) {
+      char s[9]=&quot;nonono&quot;;
+      struct wint q = {&quot;bugs&quot;};
+      return !s[0];
+  }
+  int main (void) {
+     char s[9]=&quot;nonono&quot;;
+     static struct wchar q = {&quot;bugs&quot;, {&#x27;c&#x27;}};
+     //printf (&quot;tcc has %s %s\n&quot;, s, q.data);
+     if (f1char() || f1int())
+       printf (&quot;bla\n&quot;);
+     return !s[0];
+  }
+  +ccomp -fall -O2 ./tests/single-exec/00208.c -o ./tests/single-exec/00208.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  ccomp: error: wrong type for array initializer
+  1 error detected.
+  +exit 1
+not ok ./tests/single-exec/00209.c
+  /* The following are all valid decls, even though some subtypes
+     are incomplete.  */
+  enum E *e;
+  const enum E *e1;
+  enum E const *e2;
+  struct S *s;
+  const struct S *s1;
+  struct S const *s2;
+  
+  /* Various strangely looking declarators, which are all valid
+     and have to map to the same numbered typedefs. */
+  typedef int (*fptr1)();
+  int f1 (int (), int);
+  typedef int (*fptr2)(int x);
+  int f2 (int (int x), int);
+  typedef int (*fptr3)(int);
+  int f3 (int (int), int);
+  typedef int (*fptr4[4])(int);
+  int f4 (int (*[4])(int), int);
+  typedef int (*fptr5)(fptr1);
+  int f5 (int (int()), fptr1);
+  int f1 (fptr1 fp, int i)
+  {
+    return (*fp)(i);
+  }
+  int f2 (fptr2 fp, int i)
+  {
+    return (*fp)(i);
+  }
+  int f3 (fptr3 fp, int i)
+  {
+    return (*fp)(i);
+  }
+  int f4 (fptr4 fp, int i)
+  {
+    return (*fp[i])(i);
+  }
+  int f5 (fptr5 fp, fptr1 i)
+  {
+    return fp(i);
+  }
+  int f8 (int ([4]), int);
+  int main () { return 0; }
+  +ccomp -fall -O2 ./tests/single-exec/00209.c -o ./tests/single-exec/00209.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  ./tests/single-exec/00209.c:3: error: unbound enum &#x27;E&#x27;
+  1 error detected.
+  +exit 1
+not ok ./tests/single-exec/00210.c
+  typedef unsigned short uint16_t;
+  typedef unsigned char uint8_t;
+  
+  typedef union Unaligned16a {
+    uint16_t u;
+    uint8_t b[2];
+  } __attribute__((packed)) Unaligned16a;
+  
+  typedef union __attribute__((packed)) Unaligned16b {
+    uint16_t u;
+    uint8_t b[2];
+  } Unaligned16b;
+  
+  extern void foo (void) __attribute__((stdcall));
+  void __attribute__((stdcall)) foo (void)
+  {
+  }
+  
+  /* The actual attribute isn&#x27;t important, must just be
+     parsable.  */
+  #define ATTR __attribute__((__noinline__))
+  int ATTR actual_function() {
+    return 42;
+  }
+  
+  extern int printf (const char *, ...);
+  int main()
+  {
+      void *function_pointer = &amp;actual_function;
+  
+      int a = ((ATTR int(*) (void)) function_pointer)();
+      printf(&quot;%i\n&quot;, a);
+  
+      /* In the following we once misparsed &#x27;ATTR *&#x27; is a btype
+         and hence the whole type was garbled.  */
+      int b = ( (int(ATTR *)(void))  function_pointer)();
+      printf(&quot;%i\n&quot;, b);
+  
+      return 0;
+  }
+  +ccomp -fall -O2 ./tests/single-exec/00210.c -o ./tests/single-exec/00210.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  ./tests/single-exec/00210.c:36:50: syntax error after &#x27;)&#x27; and before &#x27;*&#x27;.
+  Ill-formed parameter declaration.
+  At this point, one of the following is expected:
+    a storage class specifier; or
+    a type qualifier; or
+    a type specifier.
+  Fatal error; compilation aborted.
+  1 error detected.
+  +exit 1
+not ok ./tests/single-exec/00213.c
+  /* This checks various ways of dead code inside if statements
+     where there are non-obvious ways of how the code is actually
+     not dead due to reachable by labels.  */
+  extern int printf (const char *, ...);
+  static void kb_wait_1(void)
+  {
+    unsigned long timeout = 2;
+    do {
+        /* Here the else arm is a statement expression that&#x27;s supposed
+           to be suppressed.  The label inside the while would unsuppress
+  	 code generation again if not handled correctly.  And that
+  	 would wreak havoc to the cond-expression because there&#x27;s no
+  	 jump-around emitted, the whole statement expression really
+  	 needs to not generate code (perhaps except useless forward jumps).  */
+        (1 ? 
+         printf(&quot;timeout=%ld\n&quot;, timeout) :
+         ({
+  	int i = 1;
+  	while (1)
+  	  while (i--)
+  	    some_label:
+  	      printf(&quot;error\n&quot;);
+  	goto some_label;
+  	})
+        );
+        timeout--;
+    } while (timeout);
+  }
+  
+  static int global;
+  
+  static void foo(int i)
+  {
+    global+=i;
+    printf (&quot;g=%d\n&quot;, global);
+  }
+  
+  static int check(void)
+  {
+    printf (&quot;check %d\n&quot;, global);
+    return 1;
+  }
+  
+  static void dowhile(void)
+  {
+    do {
+        foo(1);
+        if (global == 1) {
+  	  continue;
+        } else if (global == 2) {
+  	  continue;
+        }
+        /* The following break shouldn&#x27;t disable the check() call,
+           as it&#x27;s reachable by the continues above.  */
+        break;
+    } while (check());
+  }
+  
+  int main (void)
+  {
+    int i = 1;
+    kb_wait_1();
+  
+    /* Simple test of dead code at first sight which isn&#x27;t actually dead. */
+    if (0) {
+  yeah:
+        printf (&quot;yeah\n&quot;);
+    } else {
+        printf (&quot;boo\n&quot;);
+    }
+    if (i--)
+      goto yeah;
+  
+    /* Some more non-obvious uses where the problems are loops, so that even
+       the first loop statements aren&#x27;t actually dead.  */
+    i = 1;
+    if (0) {
+        while (i--) {
+  	  printf (&quot;once\n&quot;);
+  enterloop:
+  	  printf (&quot;twice\n&quot;);
+        }
+    }
+    if (i &gt;= 0)
+      goto enterloop;
+  
+    /* The same with statement expressions.  One might be tempted to
+       handle them specially by counting if inside statement exprs and
+       not unsuppressing code at loops at all then.
+       See kb_wait_1 for the other side of the medal where that wouldn&#x27;t work.  */
+    i = ({
+        int j = 1;
+        if (0) {
+  	  while (j--) {
+  	      printf (&quot;SEonce\n&quot;);
+      enterexprloop:
+  	      printf (&quot;SEtwice\n&quot;);
+  	  }
+        }
+        if (j &gt;= 0)
+  	goto enterexprloop;
+        j; });
+  
+    /* The other two loop forms: */
+    i = 1;
+    if (0) {
+        for (i = 1; i--;) {
+  	  printf (&quot;once2\n&quot;);
+  enterloop2:
+  	  printf (&quot;twice2\n&quot;);
+        }
+    }
+    if (i &gt; 0)
+      goto enterloop2;
+  
+    i = 1;
+    if (0) {
+        do {
+  	  printf (&quot;once3\n&quot;);
+  enterloop3:
+  	  printf (&quot;twice3\n&quot;);
+        } while (i--);
+    }
+    if (i &gt; 0)
+      goto enterloop3;
+  
+    /* And check that case and default labels have the same effect
+       of disabling code suppression.  */
+    i = 41;
+    switch (i) {
+        if (0) {
+  	  printf (&quot;error\n&quot;);
+        case 42:
+  	  printf (&quot;error2\n&quot;);
+        case 41:
+  	  printf (&quot;caseok\n&quot;);
+        }
+    }
+  
+    i = 41;
+    switch (i) {
+        if (0) {
+  	  printf (&quot;error3\n&quot;);
+        default:
+  	  printf (&quot;caseok2\n&quot;);
+  	  break;
+        case 42:
+  	  printf (&quot;error4\n&quot;);
+        }
+    }
+  
+    dowhile();
+  
+    return 0;
+  }
+  +ccomp -fall -O2 ./tests/single-exec/00213.c -o ./tests/single-exec/00213.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  ./tests/single-exec/00213.c:17:9: syntax error after &#x27;(&#x27; and before &#x27;{&#x27;.
+  Ill-formed expression.
+  An opening parenthesis &#x27;(&#x27; has just been recognized.
+  At this point, one of the following is expected:
+    a type name,   if this is a type cast or a compound literal; or
+    an expression, if this is a parenthesized expression.
+  Fatal error; compilation aborted.
+  1 error detected.
+  +exit 1
+not ok ./tests/single-exec/00214.c
+  /* Check some way in where code suppression caused various
+     miscompilations.  */
+  extern int printf (const char *, ...);
+  typedef unsigned long size_t;
+  
+  size_t _brk_start, _brk_end;
+  void * extend_brk(size_t size, size_t align)
+  {
+      size_t mask = align - 1;
+      void *ret = 0;
+  
+       do {
+  	 if (__builtin_expect(!!(_brk_start == 0), 0))
+  	   do {
+  	       printf(&quot;wrong1\n&quot;);
+  	   } while (0);
+       } while (0);
+       _brk_end = (_brk_end + mask) &amp; ~mask;
+       ret = (void *)_brk_end;
+       _brk_end += size;
+  
+       return ret;
+  }
+  
+  static void get_args (int a, int b)
+  {
+    if (a != 1)
+      printf(&quot;wrong2\n&quot;);
+    else
+      printf(&quot;okay\n&quot;);
+  }
+  
+  void bla(void)
+  {
+    int __ret = 42;
+    ({
+      if (__builtin_expect(!!(0), 0)) {
+        if (__builtin_expect(!!__ret, 0))
+          printf(&quot;wrong3\n&quot;);
+        int x = !!(__ret);
+      }
+      __ret;
+    });
+    get_args(!!__ret, sizeof(__ret));
+  }
+  
+  _Bool chk(unsigned long addr, unsigned long limit, unsigned long size)
+  {
+    _Bool ret;
+    /* This just needs to compile, no runtime test.  (And it doesn&#x27;t compile
+       only with certain internal checking added that&#x27;s not committed).  */
+    if (0)
+      ret = 0 != (!!(addr &gt; limit - size));
+  }
+  
+  int main()
+  {
+    void *r;
+    _brk_start = 1024;
+    _brk_end = 1024;
+    r = extend_brk (4096, 16);
+    if (!r)
+      printf(&quot;wrong4\n&quot;);
+    else
+      printf(&quot;okay\n&quot;);
+    bla();
+    return 0;
+  }
+  +ccomp -fall -O2 ./tests/single-exec/00214.c -o ./tests/single-exec/00214.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  ./tests/single-exec/00214.c:36:4: syntax error after &#x27;(&#x27; and before &#x27;{&#x27;.
+  Ill-formed expression.
+  An opening parenthesis &#x27;(&#x27; has just been recognized.
+  At this point, one of the following is expected:
+    a type name,   if this is a type cast or a compound literal; or
+    an expression, if this is a parenthesized expression.
+  Fatal error; compilation aborted.
+  1 error detected.
+  +exit 1
+not ok ./tests/single-exec/00215.c
+  extern int printf(const char *format, ...);
+  static void kb_wait_1(void)
+  {
+      unsigned long timeout = 2;
+      do {
+          (1 ?
+              printf(&quot;timeout=%ld\n&quot;, timeout) :
+              ({
+                  while (1)
+                      printf(&quot;error\n&quot;);
+              })
+          );
+          timeout--;
+      } while (timeout);
+  }
+  static void kb_wait_2(void)
+  {
+      unsigned long timeout = 2;
+      do {
+          (1 ?
+              printf(&quot;timeout=%ld\n&quot;, timeout) :
+              ({
+                  for (;;)
+                      printf(&quot;error\n&quot;);
+              })
+          );
+          timeout--;
+      } while (timeout);
+  }
+  static void kb_wait_2_1(void)
+  {
+      unsigned long timeout = 2;
+      do {
+          (1 ?
+              printf(&quot;timeout=%ld\n&quot;, timeout) :
+              ({
+                  do {
+                      printf(&quot;error\n&quot;);
+  		} while (1);
+              })
+          );
+          timeout--;
+      } while (timeout);
+  }
+  static void kb_wait_2_2(void)
+  {
+      unsigned long timeout = 2;
+      do {
+          (1 ?
+              printf(&quot;timeout=%ld\n&quot;, timeout) :
+              ({
+                  label:
+                      printf(&quot;error\n&quot;);
+  		goto label;
+              })
+          );
+          timeout--;
+      } while (timeout);
+  }
+  static void kb_wait_3(void)
+  {
+      unsigned long timeout = 2;
+      do {
+          (1 ?
+              printf(&quot;timeout=%ld\n&quot;, timeout) :
+              ({
+                  int i = 1;
+                  goto label;
+                  i = i + 2;
+              label:
+                  i = i + 3;
+              })
+          );
+          timeout--;
+      } while (timeout);
+  }
+  static void kb_wait_4(void)
+  {
+      unsigned long timeout = 2;
+      do {
+          (1 ?
+              printf(&quot;timeout=%ld\n&quot;, timeout) :
+              ({
+                  switch(timeout) {
+                      case 2:
+                          printf(&quot;timeout is 2&quot;);
+                          break;
+                      case 1:
+                          printf(&quot;timeout is 1&quot;);
+                          break;
+                      default:
+                          printf(&quot;timeout is 0?&quot;);
+                          break;
+                  };
+                  // return;
+              })
+          );
+          timeout--;
+      } while (timeout);
+  }
+  int main()
+  {
+      printf(&quot;begin\n&quot;);
+      kb_wait_1();
+      kb_wait_2();
+      kb_wait_2_1();
+      kb_wait_2_2();
+      kb_wait_3();
+      kb_wait_4();
+      printf(&quot;end\n&quot;);
+      return 0;
+  }
+  +ccomp -fall -O2 ./tests/single-exec/00215.c -o ./tests/single-exec/00215.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  ./tests/single-exec/00215.c:8:14: syntax error after &#x27;(&#x27; and before &#x27;{&#x27;.
+  Ill-formed expression.
+  An opening parenthesis &#x27;(&#x27; has just been recognized.
+  At this point, one of the following is expected:
+    a type name,   if this is a type cast or a compound literal; or
+    an expression, if this is a parenthesized expression.
+  Fatal error; compilation aborted.
+  1 error detected.
+  +exit 1
+not ok ./tests/single-exec/00216.c
+  typedef unsigned char u8;
+  typedef struct {} empty_s;
+  struct contains_empty {
+      u8 a;
+      empty_s empty;
+      u8 b;
+  };
+  struct contains_empty ce = { { (1) }, (empty_s){}, 022, };
+  /* The following decl of &#x27;q&#x27; would demonstrate the TCC bug in init_putv when
+     handling copying compound literals.  (Compound literals
+     aren&#x27;t acceptable constant initializers in isoc99, but
+     we accept them like gcc, except for this case)
+  //char *q = (char *){ &quot;trara&quot; }; */
+  struct SS {u8 a[3], b; };
+  struct SS sinit16[] = { { 1 }, 2 };
+  struct S
+  {
+    u8 a,b;
+    u8 c[2];
+  };
+  
+  struct T
+  {
+    u8 s[16];
+    u8 a;
+  };
+  
+  struct U
+  {
+    u8 a;
+    struct S s;
+    u8 b;
+    struct T t;
+  };
+  
+  struct V
+  {
+    struct S s;
+    struct T t;
+    u8 a;
+  };
+  
+  struct W
+  {
+    struct V t;
+    struct S s[];
+  };
+  
+  struct S gs = ((struct S){1, 2, 3, 4});
+  struct S gs2 = {1, 2, {3, 4}};
+  struct T gt = {&quot;hello&quot;, 42};
+  struct U gu = {3, 5,6,7,8, 4, &quot;huhu&quot;, 43};
+  struct U gu2 = {3, {5,6,7,8}, 4, {&quot;huhu&quot;, 43}};
+  /* Optional braces around scalar initializers.  Accepted, but with
+     a warning.  */
+  struct U gu3 = { {3}, {5,6,7,8,}, 4, {&quot;huhu&quot;, 43}};
+  /* Many superfluous braces and leaving out one initializer for U.s.c[1] */
+  struct U gu4 = { 3, {5,6,7,},  5, { &quot;bla&quot;, {44}} };
+  /* Superfluous braces and useless parens around values */
+  struct S gs3 = { (1), {(2)}, {(((3))), {4}}};
+  /* Superfluous braces, and leaving out braces for V.t, plus cast */
+  struct V gv = {{{3},4,{5,6}}, &quot;haha&quot;, (u8)45, 46};
+  /* Compound literal */
+  struct V gv2 = {(struct S){7,8,{9,10}}, {&quot;hihi&quot;, 47}, 48};
+  /* Parens around compound literal */
+  struct V gv3 = {((struct S){7,8,{9,10}}), {&quot;hoho&quot;, 49}, 50};
+  /* Initialization of a flex array member (warns in GCC) */
+  struct W gw = {{1,2,3,4}, {1,2,3,4,5}};
+  
+  union UU {
+      u8 a;
+      u8 b;
+  };
+  struct SU {
+      union UU u;
+      u8 c;
+  };
+  struct SU gsu = {5,6};
+  
+  /* Unnamed struct/union members aren&#x27;t ISO C, but it&#x27;s a widely accepted
+     extension.  See below for further extensions to that under -fms-extension.*/
+  union UV {
+      struct {u8 a,b;};
+      struct S s;
+  };
+  union UV guv = {{6,5}};
+  union UV guv2 = {{.b = 7, .a = 8}};
+  union UV guv3 = {.b = 8, .a = 7};
+  
+  /* Under -fms-extensions also the following is valid:
+  union UV2 {
+      struct Anon {u8 a,b;};    // unnamed member, but tagged struct, ...
+      struct S s;
+  };
+  struct Anon gan = { 10, 11 }; // ... which makes it available here.
+  union UV2 guv4 = {{4,3}};     // and the other inits from above as well
+  */
+  
+  struct in6_addr {
+      union {
+  	u8 u6_addr8[16];
+  	unsigned short u6_addr16[8];
+      } u;
+  };
+  struct flowi6 {
+      struct in6_addr saddr, daddr;
+  };
+  struct pkthdr {
+      struct in6_addr daddr, saddr;
+  };
+  struct pkthdr phdr = { { { 6,5,4,3 } }, { { 9,8,7,6 } } };
+  
+  struct Wrap {
+      void *func;
+  };
+  int global;
+  void inc_global (void)
+  {
+    global++;
+  }
+  
+  struct Wrap global_wrap[] = {
+      ((struct Wrap) {inc_global}),
+      inc_global,
+  };
+  
+  #include &lt;stdio.h&gt;
+  void print_ (const char *name, const u8 *p, long size)
+  {
+    printf (&quot;%s:&quot;, name);
+    while (size--) {
+        printf (&quot; %x&quot;, *p++);
+    }
+    printf (&quot;\n&quot;);
+  }
+  #define print(x) print_(#x, (u8*)&amp;x, sizeof (x))
+  #if 1
+  void foo (struct W *w, struct pkthdr *phdr_)
+  {
+    struct S ls = {1, 2, 3, 4};
+    struct S ls2 = {1, 2, {3, 4}};
+    struct T lt = {&quot;hello&quot;, 42};
+    struct U lu = {3, 5,6,7,8, 4, &quot;huhu&quot;, 43};
+    struct U lu1 = {3, ls, 4, {&quot;huhu&quot;, 43}};
+    struct U lu2 = {3, (ls), 4, {&quot;huhu&quot;, 43}};
+    const struct S *pls = &amp;ls;
+    struct S ls21 = *pls;
+    struct U lu22 = {3, *pls, 4, {&quot;huhu&quot;, 43}};
+    /* Incomplete bracing.  */
+    struct U lu21 = {3, ls, 4, &quot;huhu&quot;, 43};
+    /* Optional braces around scalar initializers.  Accepted, but with
+       a warning.  */
+    struct U lu3 = { 3, {5,6,7,8,}, 4, {&quot;huhu&quot;, 43}};
+    /* Many superfluous braces and leaving out one initializer for U.s.c[1] */
+    struct U lu4 = { 3, {5,6,7,},  5, { &quot;bla&quot;, 44} };
+    /* Superfluous braces and useless parens around values */
+    struct S ls3 = { (1), (2), {(((3))), 4}};
+    /* Superfluous braces, and leaving out braces for V.t, plus cast */
+    struct V lv = {{3,4,{5,6}}, &quot;haha&quot;, (u8)45, 46};
+    /* Compound literal */
+    struct V lv2 = {(struct S)w-&gt;t.s, {&quot;hihi&quot;, 47}, 48};
+    /* Parens around compound literal */
+    struct V lv3 = {((struct S){7,8,{9,10}}), ((const struct W *)w)-&gt;t.t, 50};
+    const struct pkthdr *phdr = phdr_;
+    struct flowi6 flow = { .daddr = phdr-&gt;daddr, .saddr = phdr-&gt;saddr };
+    int elt = 0x42;
+    /* Range init, overlapping */
+    struct T lt2 = { { [1 ... 5] = 9, [6 ... 10] = elt, [4 ... 7] = elt+1 }, 1 };
+    print(ls);
+    print(ls2);
+    print(lt);
+    print(lu);
+    print(lu1);
+    print(lu2);
+    print(ls21);
+    print(lu21);
+    print(lu22);
+    print(lu3);
+    print(lu4);
+    print(ls3);
+    print(lv);
+    print(lv2);
+    print(lv3);
+    print(lt2);
+    print(flow);
+  }
+  #endif
+  
+  void test_compound_with_relocs (void)
+  {
+    struct Wrap local_wrap[] = {
+        ((struct Wrap) {inc_global}),
+        inc_global,
+    };
+    void (*p)(void);
+    p = global_wrap[0].func; p();
+    p = global_wrap[1].func; p();
+    p = local_wrap[0].func; p();
+    p = local_wrap[1].func; p();
+  }
+  
+  void sys_ni(void) { printf(&quot;ni\n&quot;); }
+  void sys_one(void) { printf(&quot;one\n&quot;); }
+  void sys_two(void) { printf(&quot;two\n&quot;); }
+  void sys_three(void) { printf(&quot;three\n&quot;); }
+  typedef void (*fptr)(void);
+  const fptr table[3] = {
+      [0 ... 2] = &amp;sys_ni,
+      [0] = sys_one,
+      [1] = sys_two,
+      [2] = sys_three,
+  };
+  
+  void test_multi_relocs(void)
+  {
+    int i;
+    for (i = 0; i &lt; sizeof(table)/sizeof(table[0]); i++)
+      table[i]();
+  }
+  
+  /* Following is from GCC gcc.c-torture/execute/20050613-1.c.  */
+  
+  struct SEA { int i; int j; int k; int l; };
+  struct SEB { struct SEA a; int r[1]; };
+  struct SEC { struct SEA a; int r[0]; };
+  struct SED { struct SEA a; int r[]; };
+  
+  static void
+  test_correct_filling (struct SEA *x)
+  {
+    static int i;
+    if (x-&gt;i != 0 || x-&gt;j != 5 || x-&gt;k != 0 || x-&gt;l != 0)
+      printf(&quot;sea_fill%d: wrong\n&quot;, i);
+    else
+      printf(&quot;sea_fill%d: okay\n&quot;, i);
+    i++;
+  }
+  
+  int
+  test_zero_init (void)
+  {
+    /* The peculiarity here is that only a.j is initialized.  That
+       means that all other members must be zero initialized.  TCC
+       once didn&#x27;t do that for sub-level designators.  */
+    struct SEB b = { .a.j = 5 };
+    struct SEC c = { .a.j = 5 };
+    struct SED d = { .a.j = 5 };
+    test_correct_filling (&amp;b.a);
+    test_correct_filling (&amp;c.a);
+    test_correct_filling (&amp;d.a);
+    return 0;
+  }
+  
+  int main()
+  {
+    print(ce);
+    print(gs);
+    print(gs2);
+    print(gt);
+    print(gu);
+    print(gu2);
+    print(gu3);
+    print(gu4);
+    print(gs3);
+    print(gv);
+    print(gv2);
+    print(gv3);
+    print(sinit16);
+    print(gw);
+    print(gsu);
+    print(guv);
+    print(guv.b);
+    print(guv2);
+    print(guv3);
+    print(phdr);
+    foo(&amp;gw, &amp;phdr);
+    //printf(&quot;q: %s\n&quot;, q);
+    test_compound_with_relocs();
+    test_multi_relocs();
+    test_zero_init();
+    return 0;
+  }
+  +ccomp -fall -O2 ./tests/single-exec/00216.c -o ./tests/single-exec/00216.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  ./tests/single-exec/00216.c:8:49: syntax error after &#x27;{&#x27; and before &#x27;}&#x27;.
+  Ill-formed compound literal.
+  At this point, an initializer is expected.
+  Fatal error; compilation aborted.
+  1 error detected.
+  +exit 1
+not ok ./tests/single-exec/00219.c
+  #include &lt;stdio.h&gt;
+  
+  const int a = 0;
+  
+  struct a {
+  	int a;
+  };
+  
+  struct b {
+  	int a;
+  };
+  
+  int a_f()
+  {
+  	return 20;
+  }
+  
+  int b_f()
+  {
+  	return 10;
+  }
+  
+  typedef int (*fptr)(int);
+  int foo(int i)
+  {
+    return i;
+  }
+  
+  typedef int int_type1;
+  
+  #define gen_sw(a) _Generic(a, const char *: 1, default: 8, int: 123);
+  
+  int main()
+  {
+  	int i = 0;
+  	signed long int l = 2;
+  	struct b titi;
+  	const int * const ptr;
+  	const char *ti;
+  	int_type1 i2;
+  
+  	i = _Generic(a, int: a_f, const int: b_f)();
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(a, int: a_f() / 2, const int: b_f() / 2);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(ptr, int *:1, int * const:2, default:20);
+  	printf(&quot;%d\n&quot;, i);
+  	i = gen_sw(a);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(titi, struct a:1, struct b:2, default:20);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(i2, char: 1, int : 0);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(a, char:1, int[4]:2, default:5);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(17, int :1, int **:2);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(17L, int :1, long :2, long long : 3);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(&quot;17, io&quot;, char *: 3, const char *: 1);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(ti, const unsigned char *:1, const char *:4, char *:3,
+  		     const signed char *:2);
+  	printf(&quot;%d\n&quot;, i);
+  	printf(&quot;%s\n&quot;, _Generic(i + 2L, long: &quot;long&quot;, int: &quot;int&quot;,
+  				long long: &quot;long long&quot;));
+  	i = _Generic(l, long: 1, int: 2);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(foo, fptr: 3, int: 4);
+  	printf(&quot;%d\n&quot;, i);
+  	return 0;
+  }
+  +ccomp -fall -O2 ./tests/single-exec/00219.c -o ./tests/single-exec/00219.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  ./tests/single-exec/00219.c:42:18: syntax error after &#x27;,&#x27; and before &#x27;int&#x27;.
+  Ill-formed list of expressions.
+  At this point, an expression is expected.
+  Fatal error; compilation aborted.
+  1 error detected.
+  +exit 1
+not ok ./tests/single-exec/00220.c
+  // this file contains BMP chars encoded in UTF-8
+  #include &lt;stdio.h&gt;
+  #include &lt;wchar.h&gt;
+  
+  int main()
+  {
+      wchar_t s[] = L&quot;hello$$你好¢¢世界€€world&quot;;
+      wchar_t *p;
+      for (p = s; *p; p++) printf(&quot;%04X &quot;, (unsigned) *p);
+      printf(&quot;\n&quot;);
+      return 0;
+  }
+  +ccomp -fall -O2 ./tests/single-exec/00220.c -o ./tests/single-exec/00220.c.bin
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  /nix/store/2ch3pwfv40ls6qhdmzwsz9wky9pq6cyl-bash-4.4-p23/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+  +./tests/single-exec/00220.c.bin
+  +diff -u ./tests/single-exec/00220.c.expected ./tests/single-exec/00220.c.output
+  --- ./tests/single-exec/00220.c.expected	2019-05-15 05:26:54.092515088 +0000
+  +++ ./tests/single-exec/00220.c.output	2019-05-15 05:46:16.885657133 +0000
+  @@ -1 +1 @@
+  -0068 0065 006C 006C 006F 0024 0024 4F60 597D 00A2 00A2 4E16 754C 20AC 20AC 0077 006F 0072 006C 0064 
+  +0068 0065 006C 006C 006F 0024 0024 00E4 00BD 00A0 00E5 00A5 00BD 00C2 00A2 00C2 00A2 00E4 00B8 0096 00E7 0095 008C 00E2 0082 00AC 00E2 0082 00AC 0077 006F 0072 006C 0064 
+  +exit 1
+</pre>
+<br>
+<a href="/compcert-x86_64-single-exec_report.tap">raw TAP data</a> <a href="/compcert-x86_64-single-exec_report.tap.txt">(.txt)</a>
+<br>
+    </body>
+    </html>

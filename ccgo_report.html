@@ -1,0 +1,506 @@
+    <html>
+    <header><title>ccgo report</title></header>
+    <body>
+<h2>ccgo</h2>
+<br>
+ccgo version:
+<br>
+2735556262de4e14c59cdbde832a431b01389efb
+<br>
+test date: 2019-05-15
+<h3>single-exec</h3>
+<br>
+<pre>
+Test summary:
+
+pass 216
+fail 4
+skip 0
+---------
+total 220
+
+not ok ./tests/single-exec/00205.c
+  #include &lt;stdio.h&gt;
+  
+  /* This test is a snippet from the J interpreter */
+  
+  typedef long I;
+  typedef struct{I c[4];I b,e,k;} PT;
+  
+  PT cases[] = {
+   ((I)4194304L +(I)2097152L +(I)67108864L), (I)262144L, (((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), -1L, 1,2,1,
+   ((I)+4194304L +(I)2097152L +(I)67108864L)+( (I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), (I)262144L, (I)262144L, (((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), 2,3,2,
+   ((I)4194304L +(I)2097152L +(I)67108864L)+( (I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), (((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), (I)262144L, (((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), 1,3,2,
+   ((I)4194304L +(I)2097152L +(I)67108864L)+( (I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), (I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), (I)524288L, -1L, 1,2,1,
+   ((I)4194304L +(I)2097152L +(I)67108864L)+( (I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), (I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), (I)1048576L, (I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), 1,3,1,
+   ((I)4194304L +(I)2097152L +(I)67108864L)+( (I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), (I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), (I)262144L, (I)262144L, 1,3,1,
+   ((I)4194304L +(I)2097152L +(I)67108864L), ((I)1048576L +(I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), ((I)1048576L +(I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), -1L, 1,2,1,
+   (I)33554432L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), (I)2097152L, ((I)1048576L +(I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), -1L, 0,2,1,
+   (I)67108864L, ((I)1048576L +(I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), (I)134217728L, -1L, 0,2,0,
+  };
+  
+  int main() {
+      int i, j;
+  
+      for(j=0; j &lt; sizeof(cases)/sizeof(cases[0]); j++) {
+  	for(i=0; i &lt; sizeof(cases-&gt;c)/sizeof(cases-&gt;c[0]); i++)
+  	    printf(&quot;cases[%d].c[%d]=%ld\n&quot;, j, i, cases[j].c[i]);
+  
+  	printf(&quot;cases[%d].b=%ld\n&quot;, j, cases[j].b);
+  	printf(&quot;cases[%d].e=%ld\n&quot;, j, cases[j].e);
+  	printf(&quot;cases[%d].k=%ld\n&quot;, j, cases[j].k);
+  	printf(&quot;\n&quot;);
+      }
+      return 0;
+  }
+  +ccgo ./tests/single-exec/00205.c -o ./tests/single-exec/00205.c.bin
+  ./tests/single-exec/00205.c:9:2: typ PT, op type long
+  github.com/cznic/cc/v2.(*Initializer).check(0xc0002fdd40, 0xc000208000, 0x75a8a0, 0xc0003aab40, 0x0, 0xc00026df00, 0xc0003965a0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/cznic/cc/v2/ast2.go:2205 +0x2595
+  github.com/cznic/cc/v2.(*InitializerList).check(0xc0003119d0, 0xc000208000, 0x75a720, 0xc0003965a0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/cznic/cc/v2/ast2.go:2332 +0x1286
+  github.com/cznic/cc/v2.(*Initializer).check(0xc000336d00, 0xc000208000, 0x75a720, 0xc0003965a0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/cznic/cc/v2/ast2.go:2149 +0x240e
+  github.com/cznic/cc/v2.(*InitDeclarator).check(0xc000319680, 0xc000208000, 0xc0003ad280, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xc000317590)
+  	/home/travis/go/src/github.com/cznic/cc/v2/ast2.go:2128 +0x1eb
+  github.com/cznic/cc/v2.(*InitDeclaratorList).check(0xc0003196b0, 0xc000208000, 0xc0003ad280, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x6c65a0, ...)
+  	/home/travis/go/src/github.com/cznic/cc/v2/ast2.go:2110 +0xd8
+  github.com/cznic/cc/v2.(*InitDeclaratorListOpt).check(0xc00026cd10, 0xc000208000, 0xc0003ad280, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xc00026df90, ...)
+  	/home/travis/go/src/github.com/cznic/cc/v2/ast2.go:2105 +0xa0
+  github.com/cznic/cc/v2.(*Declaration).check(0xc000336d40, 0xc000208000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x6d2000, 0xc00026df90, ...)
+  	/home/travis/go/src/github.com/cznic/cc/v2/ast2.go:2079 +0xfe
+  github.com/cznic/cc/v2.(*ExternalDeclaration).check(0xc000388500, 0xc000208000)
+  	/home/travis/go/src/github.com/cznic/cc/v2/ast2.go:1699 +0x206
+  github.com/cznic/cc/v2.(*ExternalDeclarationList).check(0xc000388520, 0xc000208000, 0x3, 0x4)
+  	/home/travis/go/src/github.com/cznic/cc/v2/ast2.go:1691 +0x40
+  github.com/cznic/cc/v2.Translate(0xc00000db20, 0xc0000883c0, 0x5, 0x5, 0xc0001aec80, 0x4, 0x4, 0xc0001aed00, 0x3, 0x4, ...)
+  	/home/travis/go/src/github.com/cznic/cc/v2/cc.go:341 +0x2c8
+  main.(*config).compileSource(0xc00000a1e0, 0xc000016814, 0x7, 0x7ffc6d6629cb, 0x1b, 0x759240, 0xc000088410, 0x0, 0x0)
+  	/home/travis/go/src/github.com/cznic/ccgo/v2/ccgo/main.go:1155 +0x62a
+  main.(*config).compile(0xc00000a1e0, 0x7ffc6d6629cb, 0x1b, 0xc000016814, 0x7, 0x0, 0x0)
+  	/home/travis/go/src/github.com/cznic/ccgo/v2/ccgo/main.go:1019 +0x207
+  main.main1(0xc000010080, 0x4, 0x4, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/cznic/ccgo/v2/ccgo/main.go:639 +0x972
+  main.main()
+  	/home/travis/go/src/github.com/cznic/ccgo/v2/ccgo/main.go:179 +0x49
+  +exit 1
+not ok ./tests/single-exec/00209.c
+  /* The following are all valid decls, even though some subtypes
+     are incomplete.  */
+  enum E *e;
+  const enum E *e1;
+  enum E const *e2;
+  struct S *s;
+  const struct S *s1;
+  struct S const *s2;
+  
+  /* Various strangely looking declarators, which are all valid
+     and have to map to the same numbered typedefs. */
+  typedef int (*fptr1)();
+  int f1 (int (), int);
+  typedef int (*fptr2)(int x);
+  int f2 (int (int x), int);
+  typedef int (*fptr3)(int);
+  int f3 (int (int), int);
+  typedef int (*fptr4[4])(int);
+  int f4 (int (*[4])(int), int);
+  typedef int (*fptr5)(fptr1);
+  int f5 (int (int()), fptr1);
+  int f1 (fptr1 fp, int i)
+  {
+    return (*fp)(i);
+  }
+  int f2 (fptr2 fp, int i)
+  {
+    return (*fp)(i);
+  }
+  int f3 (fptr3 fp, int i)
+  {
+    return (*fp)(i);
+  }
+  int f4 (fptr4 fp, int i)
+  {
+    return (*fp[i])(i);
+  }
+  int f5 (fptr5 fp, fptr1 i)
+  {
+    return fp(i);
+  }
+  int f8 (int ([4]), int);
+  int main () { return 0; }
+  +ccgo ./tests/single-exec/00209.c -o ./tests/single-exec/00209.c.bin
+  # command-line-arguments
+  /tmp/ccgo-linker-996363073/main.go:45:23: too many arguments in call to fn4(_fp)
+  	have (crt.TLS, int32)
+  	want (crt.TLS)
+  
+  exit status 2
+  +exit 1
+not ok ./tests/single-exec/00216.c
+  typedef unsigned char u8;
+  typedef struct {} empty_s;
+  struct contains_empty {
+      u8 a;
+      empty_s empty;
+      u8 b;
+  };
+  struct contains_empty ce = { { (1) }, (empty_s){}, 022, };
+  /* The following decl of &#x27;q&#x27; would demonstrate the TCC bug in init_putv when
+     handling copying compound literals.  (Compound literals
+     aren&#x27;t acceptable constant initializers in isoc99, but
+     we accept them like gcc, except for this case)
+  //char *q = (char *){ &quot;trara&quot; }; */
+  struct SS {u8 a[3], b; };
+  struct SS sinit16[] = { { 1 }, 2 };
+  struct S
+  {
+    u8 a,b;
+    u8 c[2];
+  };
+  
+  struct T
+  {
+    u8 s[16];
+    u8 a;
+  };
+  
+  struct U
+  {
+    u8 a;
+    struct S s;
+    u8 b;
+    struct T t;
+  };
+  
+  struct V
+  {
+    struct S s;
+    struct T t;
+    u8 a;
+  };
+  
+  struct W
+  {
+    struct V t;
+    struct S s[];
+  };
+  
+  struct S gs = ((struct S){1, 2, 3, 4});
+  struct S gs2 = {1, 2, {3, 4}};
+  struct T gt = {&quot;hello&quot;, 42};
+  struct U gu = {3, 5,6,7,8, 4, &quot;huhu&quot;, 43};
+  struct U gu2 = {3, {5,6,7,8}, 4, {&quot;huhu&quot;, 43}};
+  /* Optional braces around scalar initializers.  Accepted, but with
+     a warning.  */
+  struct U gu3 = { {3}, {5,6,7,8,}, 4, {&quot;huhu&quot;, 43}};
+  /* Many superfluous braces and leaving out one initializer for U.s.c[1] */
+  struct U gu4 = { 3, {5,6,7,},  5, { &quot;bla&quot;, {44}} };
+  /* Superfluous braces and useless parens around values */
+  struct S gs3 = { (1), {(2)}, {(((3))), {4}}};
+  /* Superfluous braces, and leaving out braces for V.t, plus cast */
+  struct V gv = {{{3},4,{5,6}}, &quot;haha&quot;, (u8)45, 46};
+  /* Compound literal */
+  struct V gv2 = {(struct S){7,8,{9,10}}, {&quot;hihi&quot;, 47}, 48};
+  /* Parens around compound literal */
+  struct V gv3 = {((struct S){7,8,{9,10}}), {&quot;hoho&quot;, 49}, 50};
+  /* Initialization of a flex array member (warns in GCC) */
+  struct W gw = {{1,2,3,4}, {1,2,3,4,5}};
+  
+  union UU {
+      u8 a;
+      u8 b;
+  };
+  struct SU {
+      union UU u;
+      u8 c;
+  };
+  struct SU gsu = {5,6};
+  
+  /* Unnamed struct/union members aren&#x27;t ISO C, but it&#x27;s a widely accepted
+     extension.  See below for further extensions to that under -fms-extension.*/
+  union UV {
+      struct {u8 a,b;};
+      struct S s;
+  };
+  union UV guv = {{6,5}};
+  union UV guv2 = {{.b = 7, .a = 8}};
+  union UV guv3 = {.b = 8, .a = 7};
+  
+  /* Under -fms-extensions also the following is valid:
+  union UV2 {
+      struct Anon {u8 a,b;};    // unnamed member, but tagged struct, ...
+      struct S s;
+  };
+  struct Anon gan = { 10, 11 }; // ... which makes it available here.
+  union UV2 guv4 = {{4,3}};     // and the other inits from above as well
+  */
+  
+  struct in6_addr {
+      union {
+  	u8 u6_addr8[16];
+  	unsigned short u6_addr16[8];
+      } u;
+  };
+  struct flowi6 {
+      struct in6_addr saddr, daddr;
+  };
+  struct pkthdr {
+      struct in6_addr daddr, saddr;
+  };
+  struct pkthdr phdr = { { { 6,5,4,3 } }, { { 9,8,7,6 } } };
+  
+  struct Wrap {
+      void *func;
+  };
+  int global;
+  void inc_global (void)
+  {
+    global++;
+  }
+  
+  struct Wrap global_wrap[] = {
+      ((struct Wrap) {inc_global}),
+      inc_global,
+  };
+  
+  #include &lt;stdio.h&gt;
+  void print_ (const char *name, const u8 *p, long size)
+  {
+    printf (&quot;%s:&quot;, name);
+    while (size--) {
+        printf (&quot; %x&quot;, *p++);
+    }
+    printf (&quot;\n&quot;);
+  }
+  #define print(x) print_(#x, (u8*)&amp;x, sizeof (x))
+  #if 1
+  void foo (struct W *w, struct pkthdr *phdr_)
+  {
+    struct S ls = {1, 2, 3, 4};
+    struct S ls2 = {1, 2, {3, 4}};
+    struct T lt = {&quot;hello&quot;, 42};
+    struct U lu = {3, 5,6,7,8, 4, &quot;huhu&quot;, 43};
+    struct U lu1 = {3, ls, 4, {&quot;huhu&quot;, 43}};
+    struct U lu2 = {3, (ls), 4, {&quot;huhu&quot;, 43}};
+    const struct S *pls = &amp;ls;
+    struct S ls21 = *pls;
+    struct U lu22 = {3, *pls, 4, {&quot;huhu&quot;, 43}};
+    /* Incomplete bracing.  */
+    struct U lu21 = {3, ls, 4, &quot;huhu&quot;, 43};
+    /* Optional braces around scalar initializers.  Accepted, but with
+       a warning.  */
+    struct U lu3 = { 3, {5,6,7,8,}, 4, {&quot;huhu&quot;, 43}};
+    /* Many superfluous braces and leaving out one initializer for U.s.c[1] */
+    struct U lu4 = { 3, {5,6,7,},  5, { &quot;bla&quot;, 44} };
+    /* Superfluous braces and useless parens around values */
+    struct S ls3 = { (1), (2), {(((3))), 4}};
+    /* Superfluous braces, and leaving out braces for V.t, plus cast */
+    struct V lv = {{3,4,{5,6}}, &quot;haha&quot;, (u8)45, 46};
+    /* Compound literal */
+    struct V lv2 = {(struct S)w-&gt;t.s, {&quot;hihi&quot;, 47}, 48};
+    /* Parens around compound literal */
+    struct V lv3 = {((struct S){7,8,{9,10}}), ((const struct W *)w)-&gt;t.t, 50};
+    const struct pkthdr *phdr = phdr_;
+    struct flowi6 flow = { .daddr = phdr-&gt;daddr, .saddr = phdr-&gt;saddr };
+    int elt = 0x42;
+    /* Range init, overlapping */
+    struct T lt2 = { { [1 ... 5] = 9, [6 ... 10] = elt, [4 ... 7] = elt+1 }, 1 };
+    print(ls);
+    print(ls2);
+    print(lt);
+    print(lu);
+    print(lu1);
+    print(lu2);
+    print(ls21);
+    print(lu21);
+    print(lu22);
+    print(lu3);
+    print(lu4);
+    print(ls3);
+    print(lv);
+    print(lv2);
+    print(lv3);
+    print(lt2);
+    print(flow);
+  }
+  #endif
+  
+  void test_compound_with_relocs (void)
+  {
+    struct Wrap local_wrap[] = {
+        ((struct Wrap) {inc_global}),
+        inc_global,
+    };
+    void (*p)(void);
+    p = global_wrap[0].func; p();
+    p = global_wrap[1].func; p();
+    p = local_wrap[0].func; p();
+    p = local_wrap[1].func; p();
+  }
+  
+  void sys_ni(void) { printf(&quot;ni\n&quot;); }
+  void sys_one(void) { printf(&quot;one\n&quot;); }
+  void sys_two(void) { printf(&quot;two\n&quot;); }
+  void sys_three(void) { printf(&quot;three\n&quot;); }
+  typedef void (*fptr)(void);
+  const fptr table[3] = {
+      [0 ... 2] = &amp;sys_ni,
+      [0] = sys_one,
+      [1] = sys_two,
+      [2] = sys_three,
+  };
+  
+  void test_multi_relocs(void)
+  {
+    int i;
+    for (i = 0; i &lt; sizeof(table)/sizeof(table[0]); i++)
+      table[i]();
+  }
+  
+  /* Following is from GCC gcc.c-torture/execute/20050613-1.c.  */
+  
+  struct SEA { int i; int j; int k; int l; };
+  struct SEB { struct SEA a; int r[1]; };
+  struct SEC { struct SEA a; int r[0]; };
+  struct SED { struct SEA a; int r[]; };
+  
+  static void
+  test_correct_filling (struct SEA *x)
+  {
+    static int i;
+    if (x-&gt;i != 0 || x-&gt;j != 5 || x-&gt;k != 0 || x-&gt;l != 0)
+      printf(&quot;sea_fill%d: wrong\n&quot;, i);
+    else
+      printf(&quot;sea_fill%d: okay\n&quot;, i);
+    i++;
+  }
+  
+  int
+  test_zero_init (void)
+  {
+    /* The peculiarity here is that only a.j is initialized.  That
+       means that all other members must be zero initialized.  TCC
+       once didn&#x27;t do that for sub-level designators.  */
+    struct SEB b = { .a.j = 5 };
+    struct SEC c = { .a.j = 5 };
+    struct SED d = { .a.j = 5 };
+    test_correct_filling (&amp;b.a);
+    test_correct_filling (&amp;c.a);
+    test_correct_filling (&amp;d.a);
+    return 0;
+  }
+  
+  int main()
+  {
+    print(ce);
+    print(gs);
+    print(gs2);
+    print(gt);
+    print(gu);
+    print(gu2);
+    print(gu3);
+    print(gu4);
+    print(gs3);
+    print(gv);
+    print(gv2);
+    print(gv3);
+    print(sinit16);
+    print(gw);
+    print(gsu);
+    print(guv);
+    print(guv.b);
+    print(guv2);
+    print(guv3);
+    print(phdr);
+    foo(&amp;gw, &amp;phdr);
+    //printf(&quot;q: %s\n&quot;, q);
+    test_compound_with_relocs();
+    test_multi_relocs();
+    test_zero_init();
+    return 0;
+  }
+  +ccgo ./tests/single-exec/00216.c -o ./tests/single-exec/00216.c.bin
+  ./tests/single-exec/00216.c:168:25: unexpected ..., expected one of [!=, $end, %=, &amp;&amp;, &amp;=, &#x27;%&#x27;, &#x27;&amp;&#x27;, &#x27;(&#x27;, &#x27;)&#x27;, &#x27;*&#x27;, &#x27;+&#x27;, &#x27;,&#x27;, &#x27;-&#x27;, &#x27;.&#x27;, &#x27;/&#x27;, &#x27;:&#x27;, &#x27;;&#x27;, &#x27;&lt;&#x27;, &#x27;=&#x27;, &#x27;&gt;&#x27;, &#x27;?&#x27;, &#x27;[&#x27;, &#x27;]&#x27;, &#x27;^&#x27;, &#x27;|&#x27;, &#x27;}&#x27;, *=, ++, +=, --, -=, -&gt;, /=, &lt;&lt;, &lt;&lt;=, &lt;=, ==, &gt;=, &gt;&gt;, &gt;&gt;=, ^=, |=, ||]
+  +exit 1
+not ok ./tests/single-exec/00219.c
+  #include &lt;stdio.h&gt;
+  
+  const int a = 0;
+  
+  struct a {
+  	int a;
+  };
+  
+  struct b {
+  	int a;
+  };
+  
+  int a_f()
+  {
+  	return 20;
+  }
+  
+  int b_f()
+  {
+  	return 10;
+  }
+  
+  typedef int (*fptr)(int);
+  int foo(int i)
+  {
+    return i;
+  }
+  
+  typedef int int_type1;
+  
+  #define gen_sw(a) _Generic(a, const char *: 1, default: 8, int: 123);
+  
+  int main()
+  {
+  	int i = 0;
+  	signed long int l = 2;
+  	struct b titi;
+  	const int * const ptr;
+  	const char *ti;
+  	int_type1 i2;
+  
+  	i = _Generic(a, int: a_f, const int: b_f)();
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(a, int: a_f() / 2, const int: b_f() / 2);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(ptr, int *:1, int * const:2, default:20);
+  	printf(&quot;%d\n&quot;, i);
+  	i = gen_sw(a);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(titi, struct a:1, struct b:2, default:20);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(i2, char: 1, int : 0);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(a, char:1, int[4]:2, default:5);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(17, int :1, int **:2);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(17L, int :1, long :2, long long : 3);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(&quot;17, io&quot;, char *: 3, const char *: 1);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(ti, const unsigned char *:1, const char *:4, char *:3,
+  		     const signed char *:2);
+  	printf(&quot;%d\n&quot;, i);
+  	printf(&quot;%s\n&quot;, _Generic(i + 2L, long: &quot;long&quot;, int: &quot;int&quot;,
+  				long long: &quot;long long&quot;));
+  	i = _Generic(l, long: 1, int: 2);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(foo, fptr: 3, int: 4);
+  	printf(&quot;%d\n&quot;, i);
+  	return 0;
+  }
+  +ccgo ./tests/single-exec/00219.c -o ./tests/single-exec/00219.c.bin
+  ./tests/single-exec/00219.c:42:18: unexpected int, expected expression or one of [&#x27;!&#x27;, &#x27;&amp;&#x27;, &#x27;(&#x27;, &#x27;*&#x27;, &#x27;+&#x27;, &#x27;-&#x27;, &#x27;~&#x27;, ++, --, __alignof__, character constant, floating-point constant, identifier, integer constant, long character constant, long string constant, sizeof, string literal]
+  +exit 1
+</pre>
+<br>
+<a href="/ccgo-single-exec_report.tap">raw TAP data</a> <a href="/ccgo-single-exec_report.tap.txt">(.txt)</a>
+<br>
+    </body>
+    </html>

@@ -1,0 +1,4369 @@
+    <html>
+    <header><title>c2go report</title></header>
+    <body>
+<h2>c2go</h2>
+<br>
+c2go version:
+<br>
+4de3ec97b368135e371d3b0667f6345a9267f43c
+<br>
+test date: 2019-05-15
+<h3>single-exec</h3>
+<br>
+<pre>
+Test summary:
+
+pass 147
+fail 73
+skip 0
+---------
+total 220
+
+not ok ./tests/single-exec/00004.c
+  int
+  main()
+  {
+  	int x;
+  	int *p;
+  	
+  	x = 4;
+  	p = &amp;x;
+  	*p = 0;
+  
+  	return *p;
+  }
+  +mkdir ./tests/single-exec/00004.c-c2go
+  +c2go transpile -o ./tests/single-exec/00004.c-c2go/main.go ./tests/single-exec/00004.c
+  +cd ./tests/single-exec/00004.c-c2go
+  +go build -o ./tests/single-exec/00004.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00004.c-c2go
+  ./main.go:11:8: imported and not used: &quot;unsafe&quot;
+  +exit 1
+not ok ./tests/single-exec/00005.c
+  int
+  main()
+  {
+  	int x;
+  	int *p;
+  	int **pp;
+  
+  	x = 0;
+  	p = &amp;x;
+  	pp = &amp;p;
+  
+  	if(*p)
+  		return 1;
+  	if(**pp)
+  		return 1;
+  	else
+  		**pp = 1;
+  
+  	if(x)
+  		return 0;
+  	else
+  		return 1;
+  }
+  +mkdir ./tests/single-exec/00005.c-c2go
+  +c2go transpile -o ./tests/single-exec/00005.c-c2go/main.go ./tests/single-exec/00005.c
+  +cd ./tests/single-exec/00005.c-c2go
+  +go build -o ./tests/single-exec/00005.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00005.c-c2go
+  ./main.go:11:8: imported and not used: &quot;unsafe&quot;
+  +exit 1
+not ok ./tests/single-exec/00010.c
+  int
+  main()
+  {
+  	start:
+  		goto next;
+  		return 1;
+  	success:
+  		return 0;
+  	next:
+  	foo:
+  		goto success;
+  		return 1;
+  }
+  +mkdir ./tests/single-exec/00010.c-c2go
+  +c2go transpile -o ./tests/single-exec/00010.c-c2go/main.go ./tests/single-exec/00010.c
+  +cd ./tests/single-exec/00010.c-c2go
+  +go build -o ./tests/single-exec/00010.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00010.c-c2go
+  ./main.go:14:1: label start defined and not used
+  ./main.go:23:1: label foo defined and not used
+  +exit 1
+not ok ./tests/single-exec/00013.c
+  int
+  main()
+  {
+  	int x;
+  	int *p;
+  	
+  	x = 0;
+  	p = &amp;x;
+  	return p[0];
+  }
+  +mkdir ./tests/single-exec/00013.c-c2go
+  +c2go transpile -o ./tests/single-exec/00013.c-c2go/main.go ./tests/single-exec/00013.c
+  +cd ./tests/single-exec/00013.c-c2go
+  +go build -o ./tests/single-exec/00013.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00013.c-c2go
+  ./main.go:11:8: imported and not used: &quot;unsafe&quot;
+  +exit 1
+not ok ./tests/single-exec/00014.c
+  int
+  main()
+  {
+  	int x;
+  	int *p;
+  	
+  	x = 1;
+  	p = &amp;x;
+  	p[0] = 0;
+  	return x;
+  }
+  +mkdir ./tests/single-exec/00014.c-c2go
+  +c2go transpile -o ./tests/single-exec/00014.c-c2go/main.go ./tests/single-exec/00014.c
+  +cd ./tests/single-exec/00014.c-c2go
+  +go build -o ./tests/single-exec/00014.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00014.c-c2go
+  ./main.go:11:8: imported and not used: &quot;unsafe&quot;
+  +exit 1
+not ok ./tests/single-exec/00018.c
+  int
+  main()
+  {
+  
+  	struct S { int x; int y; } s;
+  	struct S *p;
+  
+  	p = &amp;s;	
+  	s.x = 1;
+  	p-&gt;y = 2;
+  	return p-&gt;y + p-&gt;x - 3; 
+  }
+  
+  +mkdir ./tests/single-exec/00018.c-c2go
+  +c2go transpile -o ./tests/single-exec/00018.c-c2go/main.go ./tests/single-exec/00018.c
+  +cd ./tests/single-exec/00018.c-c2go
+  +go build -o ./tests/single-exec/00018.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00018.c-c2go
+  ./main.go:11:8: imported and not used: &quot;unsafe&quot;
+  +exit 1
+not ok ./tests/single-exec/00019.c
+  int
+  main()
+  {
+  	struct S { struct S *p; int x; } s;
+  	
+  	s.x = 0;
+  	s.p = &amp;s;
+  	return s.p-&gt;p-&gt;p-&gt;p-&gt;p-&gt;x;
+  }
+  
+  +mkdir ./tests/single-exec/00019.c-c2go
+  +c2go transpile -o ./tests/single-exec/00019.c-c2go/main.go ./tests/single-exec/00019.c
+  +cd ./tests/single-exec/00019.c-c2go
+  +go build -o ./tests/single-exec/00019.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00019.c-c2go
+  ./main.go:11:8: imported and not used: &quot;unsafe&quot;
+  +exit 1
+not ok ./tests/single-exec/00020.c
+  int
+  main()
+  {
+  	int x, *p, **pp;
+  	
+  	x = 0;
+  	p = &amp;x;
+  	pp = &amp;p;
+  	return **pp;
+  }
+  +mkdir ./tests/single-exec/00020.c-c2go
+  +c2go transpile -o ./tests/single-exec/00020.c-c2go/main.go ./tests/single-exec/00020.c
+  +cd ./tests/single-exec/00020.c-c2go
+  +go build -o ./tests/single-exec/00020.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00020.c-c2go
+  ./main.go:11:8: imported and not used: &quot;unsafe&quot;
+  +exit 1
+not ok ./tests/single-exec/00022.c
+  typedef int x;
+  
+  int
+  main()
+  {
+  	x v;
+  	v = 0;
+  	return v;
+  }
+  
+  +mkdir ./tests/single-exec/00022.c-c2go
+  +c2go transpile -o ./tests/single-exec/00022.c-c2go/main.go ./tests/single-exec/00022.c
+  panic: runtime error: slice bounds out of range
+  
+  goroutine 1 [running]:
+  github.com/elliotchance/c2go/types.IsTypedefFunction(0xc000144000, 0xc00013e589, 0x1, 0x707e00)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/resolve.go:487 +0x131
+  github.com/elliotchance/c2go/transpiler.transpileBinaryOperator(0xc00014c900, 0xc000144000, 0xc0001e2901, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/binary.go:369 +0x2b3d
+  github.com/elliotchance/c2go/transpiler.transpileToExpr(0x707ee0, 0xc00014c900, 0xc000144000, 0xc0001e2a01, 0x0, 0x0, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:165 +0xe2f
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x707ee0, 0xc00014c900, 0xc000144000, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:387 +0x1ad
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x707ee0, 0xc00014c900, 0xc000144000, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileCompoundStmt(0xc000188af0, 0xc000144000, 0xc0000c6d40, 0xc0000c6d58, 0x7081a0, 0xc000188af0, 0xc00007c690, 0x5555555555555555, 0x38, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:21 +0xfb
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7081a0, 0xc000188af0, 0xc000144000, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:347 +0xcec
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7081a0, 0xc000188af0, 0xc000144000, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileToBlockStmt(0x7081a0, 0xc000188af0, 0xc000144000, 0x4, 0xc0000af288, 0x8de301, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:38 +0x49
+  github.com/elliotchance/c2go/transpiler.transpileFunctionDecl(0xc00012ec30, 0xc000144000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/functions.go:86 +0x28fa
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x7087e0, 0xc00012ec30, 0xc000144000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:443 +0x44d
+  github.com/elliotchance/c2go/transpiler.transpileTranslationUnitDecl(0xc000144000, 0xc0000743e0, 0xc00006a9c0, 0x1, 0x1, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/translation_unit.go:116 +0x17e
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x709360, 0xc0000743e0, 0xc000144000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:440 +0xb81
+  github.com/elliotchance/c2go/transpiler.TranspileAST(0x7ffffdc1c9d5, 0x28, 0x6abe92, 0x4, 0xc000144000, 0x709360, 0xc0000743e0, 0x1c, 0x1c)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:32 +0x1a2
+  main.Start(0x0, 0xc00008e040, 0x1, 0x1, 0x0, 0x0, 0x0, 0x7ffffdc1c9d5, 0x28, 0x6abe92, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:297 +0xf29
+  main.runCommand(0xc000068058)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:429 +0x495
+  main.main()
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:352 +0x22
+  +exit 1
+not ok ./tests/single-exec/00025.c
+  int strlen(char *);
+  
+  int
+  main()
+  {
+  	char *p;
+  	
+  	p = &quot;hello&quot;;
+  	return strlen(p) - 5;
+  }
+  +mkdir ./tests/single-exec/00025.c-c2go
+  +c2go transpile -o ./tests/single-exec/00025.c-c2go/main.go ./tests/single-exec/00025.c
+  +cd ./tests/single-exec/00025.c-c2go
+  +go build -o ./tests/single-exec/00025.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00025.c-c2go
+  ./main.go:16:20: undefined: strlen
+  +exit 1
+not ok ./tests/single-exec/00038.c
+  int
+  main()
+  {
+  	int x, *p;
+  
+  	if (sizeof(0) &lt; 2)
+  		return 1;
+  	if (sizeof 0 &lt; 2)
+  		return 1;
+  	if (sizeof(char) &lt; 1)
+  		return 1;
+  	if (sizeof(int) - 2 &lt; 0)
+  		return 1;
+  	if (sizeof(&amp;x) != sizeof p)
+  		return 1;
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00038.c-c2go
+  +c2go transpile -o ./tests/single-exec/00038.c-c2go/main.go ./tests/single-exec/00038.c
+  panic: cannot do unary on: &amp;ast.IntegerLiteral{Addr:0x6497ba0, Pos:ast.Position{File:&quot;/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00038.c&quot;, Line:6, LineEnd:0, Column:13, ColumnEnd:0, StringValue:&quot;&quot;}, Type:&quot;int&quot;, Value:&quot;0&quot;, ChildNodes:[]ast.Node{}}
+  
+  goroutine 1 [running]:
+  github.com/elliotchance/c2go/transpiler.transpileUnaryExprOrTypeTraitExpr(0xc0000f4aa0, 0xc0000bc480, 0xc0001f1e28, 0xc0001f1e40, 0xc0001f1d10, 0x4d41e8, 0x4d5739, 0x6ac67e, 0x5, 0x6ab62e, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/unary.go:721 +0x491
+  github.com/elliotchance/c2go/transpiler.transpileToExpr(0x7094a0, 0xc0000f4aa0, 0xc0000bc480, 0xc0001f1e00, 0x0, 0x0, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:198 +0x27a
+  github.com/elliotchance/c2go/transpiler.atomicOperation(0x7094a0, 0xc0000f4aa0, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/operators.go:494 +0xa5
+  github.com/elliotchance/c2go/transpiler.transpileBinaryOperator(0xc0000fa750, 0xc0000bc480, 0xc0001f2800, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/binary.go:215 +0xb4f
+  github.com/elliotchance/c2go/transpiler.transpileToExpr(0x707ee0, 0xc0000fa750, 0xc0000bc480, 0x42a600, 0x0, 0x0, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:165 +0xe2f
+  github.com/elliotchance/c2go/transpiler.transpileIfStmt(0xc00005eea0, 0xc0000bc480, 0xc0001f2ab8, 0xc0001f2ad0, 0x708960, 0xc00005eea0, 0x1, 0x10, 0xc00006af20, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/branch.go:66 +0xe5
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x708960, 0xc00005eea0, 0xc0000bc480, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:337 +0x1003
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x708960, 0xc00005eea0, 0xc0000bc480, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileCompoundStmt(0xc00019be30, 0xc0000bc480, 0xc0000c6d40, 0xc0000c6d58, 0x7081a0, 0xc00019be30, 0xc0000f8000, 0x5555555555555555, 0x38, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:21 +0xfb
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7081a0, 0xc00019be30, 0xc0000bc480, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:347 +0xcec
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7081a0, 0xc00019be30, 0xc0000bc480, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileToBlockStmt(0x7081a0, 0xc00019be30, 0xc0000bc480, 0x4, 0xc0000af708, 0x8de301, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:38 +0x49
+  github.com/elliotchance/c2go/transpiler.transpileFunctionDecl(0xc0001340d0, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/functions.go:86 +0x28fa
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x7087e0, 0xc0001340d0, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:443 +0x44d
+  github.com/elliotchance/c2go/transpiler.transpileTranslationUnitDecl(0xc0000bc480, 0xc00000c4c0, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/translation_unit.go:116 +0x17e
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x709360, 0xc00000c4c0, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:440 +0xb81
+  github.com/elliotchance/c2go/transpiler.TranspileAST(0x7fffebb489d5, 0x28, 0x6abe92, 0x4, 0xc0000bc480, 0x709360, 0xc00000c4c0, 0x52, 0x52)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:32 +0x1a2
+  main.Start(0x0, 0xc00008e040, 0x1, 0x1, 0x0, 0x0, 0x0, 0x7fffebb489d5, 0x28, 0x6abe92, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:297 +0xf29
+  main.runCommand(0xc000068058)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:429 +0x495
+  main.main()
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:352 +0x22
+  +exit 1
+not ok ./tests/single-exec/00040.c
+  #include &lt;stdlib.h&gt;
+  
+  int N;
+  int *t;
+  
+  int
+  chk(int x, int y)
+  {
+          int i;
+          int r;
+  
+          for (r=i=0; i&lt;8; i++) {
+                  r = r + t[x + 8*i];
+                  r = r + t[i + 8*y];
+                  if (x+i &lt; 8 &amp; y+i &lt; 8)
+                          r = r + t[x+i + 8*(y+i)];
+                  if (x+i &lt; 8 &amp; y-i &gt;= 0)
+                          r = r + t[x+i + 8*(y-i)];
+                  if (x-i &gt;= 0 &amp; y+i &lt; 8)
+                          r = r + t[x-i + 8*(y+i)];
+                  if (x-i &gt;= 0 &amp; y-i &gt;= 0)
+                          r = r + t[x-i + 8*(y-i)];
+          }
+          return r;
+  }
+  
+  int
+  go(int n, int x, int y)
+  {
+          if (n == 8) {
+                  N++;
+                  return 0;
+          }
+          for (; y&lt;8; y++) {
+                  for (; x&lt;8; x++)
+                          if (chk(x, y) == 0) {
+                                  t[x + 8*y]++;
+                                  go(n+1, x, y);
+                                  t[x + 8*y]--;
+                          }
+                  x = 0;
+          }
+  	return 0;
+  }
+  
+  int
+  main()
+  {
+          t = calloc(64, sizeof(int));
+          go(0, 0, 0);
+          if(N != 92)
+          	return 1;
+          return 0;
+  }
+  
+  +mkdir ./tests/single-exec/00040.c-c2go
+  +c2go transpile -o ./tests/single-exec/00040.c-c2go/main.go ./tests/single-exec/00040.c
+  +cd ./tests/single-exec/00040.c-c2go
+  +go build -o ./tests/single-exec/00040.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00040.c-c2go
+  ./main.go:539:24: invalid operation: (x + i &lt; int32(8)) &amp; (y + i &lt; int32(8)) (operator &amp; not defined on bool)
+  ./main.go:542:24: invalid operation: (x + i &lt; int32(8)) &amp; (y - i &gt;= int32(0)) (operator &amp; not defined on bool)
+  ./main.go:545:25: invalid operation: (x - i &gt;= int32(0)) &amp; (y + i &lt; int32(8)) (operator &amp; not defined on bool)
+  ./main.go:548:25: invalid operation: (x - i &gt;= int32(0)) &amp; (y - i &gt;= int32(0)) (operator &amp; not defined on bool)
+  ./main.go:577:15: undefined: noarch
+  +exit 1
+not ok ./tests/single-exec/00042.c
+  int
+  main()
+  {
+  	union { int a; int b; } u;
+  	u.a = 1;
+  	u.b = 3;
+  	
+  	if (u.a != 3 || u.b != 3)
+  		return 1;
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00042.c-c2go
+  +c2go transpile -o ./tests/single-exec/00042.c-c2go/main.go ./tests/single-exec/00042.c
+  +cd ./tests/single-exec/00042.c-c2go
+  +go build -o ./tests/single-exec/00042.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00042.c-c2go
+  ./main.go:17:111: syntax error: unexpected BSunionSatSShomeStravisSbuildScTtestsuiteScTtestsuiteStestsSsingleTexecS00042PcD4D2E at end of statement
+  ./main.go:41:2: syntax error: non-declaration statement outside function body
+  +exit 1
+not ok ./tests/single-exec/00044.c
+  struct T;
+  
+  struct T {
+  	int x;
+  };
+  
+  int
+  main()
+  {
+  	struct T v;
+  	{ struct T { int z; }; }
+  	v.x = 2;
+  	if(v.x != 2)
+  		return 1;
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00044.c-c2go
+  +c2go transpile -o ./tests/single-exec/00044.c-c2go/main.go ./tests/single-exec/00044.c
+  +cd ./tests/single-exec/00044.c-c2go
+  +go build -o ./tests/single-exec/00044.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00044.c-c2go
+  ./main.go:25:3: v.x undefined (type T has no field or method x)
+  ./main.go:26:6: v.x undefined (type T has no field or method x)
+  +exit 1
+not ok ./tests/single-exec/00045.c
+  int x = 5;
+  long y = 6;
+  int *p = &amp;x;
+  
+  int
+  main()
+  {
+  	if (x != 5) 
+  		return 1;
+  	if (y != 6)
+  		return 2;
+  	if (*p != 5)
+  		return 3;
+  	return 0;
+  }
+  
+  +mkdir ./tests/single-exec/00045.c-c2go
+  +c2go transpile -o ./tests/single-exec/00045.c-c2go/main.go ./tests/single-exec/00045.c
+  +cd ./tests/single-exec/00045.c-c2go
+  +go build -o ./tests/single-exec/00045.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00045.c-c2go
+  ./main.go:11:8: imported and not used: &quot;unsafe&quot;
+  +exit 1
+not ok ./tests/single-exec/00046.c
+  typedef struct {
+  	int a;
+  	union {
+  		int b1;
+  		int b2;
+  	};
+  	struct { union { struct { int c; }; }; };
+  	struct {
+  		int d;
+  	};
+  } s;
+  
+  int
+  main()
+  {
+  	s v;
+  	
+  	v.a = 1;
+  	v.b1 = 2;
+  	v.c = 3;
+  	v.d = 4;
+  	
+  	if (v.a != 1)
+  		return 1;
+  	if (v.b1 != 2 &amp;&amp; v.b2 != 2)
+  		return 2;
+  	if (v.c != 3)
+  		return 3;
+  	if (v.d != 4)
+  		return 4;
+  	
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00046.c-c2go
+  +c2go transpile -o ./tests/single-exec/00046.c-c2go/main.go ./tests/single-exec/00046.c
+  +cd ./tests/single-exec/00046.c-c2go
+  +go build -o ./tests/single-exec/00046.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00046.c-c2go
+  ./main.go:90:5: v.anon undefined (type s has no field or method anon)
+  ./main.go:91:5: v.anon undefined (type s has no field or method anon)
+  ./main.go:92:3: v.anon undefined (type s has no field or method anon)
+  ./main.go:96:8: v.anon undefined (type s has no field or method anon)
+  ./main.go:99:8: v.anon undefined (type s has no field or method anon)
+  ./main.go:102:6: v.anon undefined (type s has no field or method anon)
+  +exit 1
+not ok ./tests/single-exec/00049.c
+  int x = 10;
+  
+  struct S {int a; int *p;};
+  struct S s = { .p = &amp;x, .a = 1};
+  
+  int
+  main()
+  {
+  	if(s.a != 1)
+  		return 1;
+  	if(*s.p != 10)
+  		return 2;
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00049.c-c2go
+  +c2go transpile -o ./tests/single-exec/00049.c-c2go/main.go ./tests/single-exec/00049.c
+  +cd ./tests/single-exec/00049.c-c2go
+  +go build -o ./tests/single-exec/00049.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00049.c-c2go
+  ./main.go:11:8: imported and not used: &quot;unsafe&quot;
+  +exit 1
+not ok ./tests/single-exec/00050.c
+  struct S1 {
+  	int a;
+  	int b;
+  };
+  
+  struct S2 {
+  	int a;
+  	int b;
+  	union {
+  		int c;
+  		int d;
+  	};
+  	struct S1 s;
+  };
+  
+  struct S2 v = {1, 2, 3, {4, 5}};
+  
+  int
+  main()
+  {
+  	if(v.a != 1)
+  		return 1;
+  	if(v.b != 2)
+  		return 2;
+  	if(v.c != 3 || v.d != 3)
+  		return 3;
+  	if(v.s.a != 4)
+  		return 4;
+  	if(v.s.b != 5)
+  		return 5;
+  	
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00050.c-c2go
+  +c2go transpile -o ./tests/single-exec/00050.c-c2go/main.go ./tests/single-exec/00050.c
+  +cd ./tests/single-exec/00050.c-c2go
+  +go build -o ./tests/single-exec/00050.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00050.c-c2go
+  ./main.go:68:8: v.anon undefined (type S2 has no field or method anon)
+  +exit 1
+not ok ./tests/single-exec/00051.c
+  int x = 0;
+  
+  int
+  main()
+  {
+  	switch(x)
+  		case 0:
+  			;
+  	switch(x)
+  		case 0:
+  			switch(x) {
+  				case 0:
+  					goto next;
+  				default:
+  					return 1;
+  			}
+  	return 1;
+  	next:
+  	switch(x)
+  		case 1:
+  			return 1;
+  	switch(x) {
+  		{
+  			x = 1 + 1;
+  			foo:
+  			case 1:
+  				return 1;
+  		}
+  	}
+  	switch(x) {
+  		case 0:
+  			return x;
+  		case 1:
+  			return 1;
+  		default:
+  			return 1;
+  	}
+  }
+  +mkdir ./tests/single-exec/00051.c-c2go
+  +c2go transpile -o ./tests/single-exec/00051.c-c2go/main.go ./tests/single-exec/00051.c
+  panic: interface conversion: ast.Node is *ast.CaseStmt, not *ast.CompoundStmt
+  
+  goroutine 1 [running]:
+  github.com/elliotchance/c2go/transpiler.transpileSwitchStmt(0xc00008af00, 0xc000152000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/switch.go:44 +0x1e82
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7092e0, 0xc00008af00, 0xc000152000, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:317 +0x94b
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7092e0, 0xc00008af00, 0xc000152000, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileCompoundStmt(0xc0001b95e0, 0xc000152000, 0xc00020ed40, 0xc00020ed58, 0x7081a0, 0xc0001b95e0, 0x46bcc2, 0x5555555555555555, 0x38, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:21 +0xfb
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7081a0, 0xc0001b95e0, 0xc000152000, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:347 +0xcec
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7081a0, 0xc0001b95e0, 0xc000152000, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileToBlockStmt(0x7081a0, 0xc0001b95e0, 0xc000152000, 0x4, 0xc0001b0e08, 0x8de301, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:38 +0x49
+  github.com/elliotchance/c2go/transpiler.transpileFunctionDecl(0xc00013a9c0, 0xc000152000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/functions.go:86 +0x28fa
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x7087e0, 0xc00013a9c0, 0xc000152000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:443 +0x44d
+  github.com/elliotchance/c2go/transpiler.transpileTranslationUnitDecl(0xc000152000, 0xc0000764c0, 0xc0002041b0, 0x1, 0x1, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/translation_unit.go:116 +0x17e
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x709360, 0xc0000764c0, 0xc000152000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:440 +0xb81
+  github.com/elliotchance/c2go/transpiler.TranspileAST(0x7ffc2966e9d5, 0x28, 0x6abe92, 0x4, 0xc000152000, 0x709360, 0xc0000764c0, 0x65, 0x65)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:32 +0x1a2
+  main.Start(0x0, 0xc00008e040, 0x1, 0x1, 0x0, 0x0, 0x0, 0x7ffc2966e9d5, 0x28, 0x6abe92, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:297 +0xf29
+  main.runCommand(0xc000068058)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:429 +0x495
+  main.main()
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:352 +0x22
+  +exit 1
+not ok ./tests/single-exec/00053.c
+  int
+  main()
+  {
+  	struct T { int x; } s1;
+  	s1.x = 1;
+  	{
+  		struct T { int y; } s2;
+  		s2.y = 1;
+  		if (s1.x - s2.y != 0)
+  			return 1;
+  	}
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00053.c-c2go
+  +c2go transpile -o ./tests/single-exec/00053.c-c2go/main.go ./tests/single-exec/00053.c
+  +cd ./tests/single-exec/00053.c-c2go
+  +go build -o ./tests/single-exec/00053.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00053.c-c2go
+  ./main.go:26:5: s2.y undefined (type T has no field or method y)
+  ./main.go:27:13: s2.y undefined (type T has no field or method y)
+  +exit 1
+not ok ./tests/single-exec/00057.c
+  int
+  main()
+  {
+  	char a[16], b[16];
+  	
+  	if(sizeof(a) != sizeof(b))
+  		return 1;
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00057.c-c2go
+  +c2go transpile -o ./tests/single-exec/00057.c-c2go/main.go ./tests/single-exec/00057.c
+  +cd ./tests/single-exec/00057.c-c2go
+  +go build -o ./tests/single-exec/00057.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00057.c-c2go
+  ./main.go:14:6: a declared and not used
+  ./main.go:15:6: b declared and not used
+  +exit 1
+not ok ./tests/single-exec/00078.c
+  int
+  f1(char *p)
+  {
+  	return *p+1;
+  }
+  
+  int
+  main()
+  {
+  	char s = 1;
+  	int v[1000];
+  	int f1(char *);
+  
+  	if (f1(&amp;s) != 2)
+  		return 1;
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00078.c-c2go
+  +c2go transpile -o ./tests/single-exec/00078.c-c2go/main.go ./tests/single-exec/00078.c
+  panic: runtime error: invalid memory address or nil pointer dereference
+  [signal SIGSEGV: segmentation violation code=0x1 addr=0x80 pc=0x5ff465]
+  
+  goroutine 1 [running]:
+  github.com/elliotchance/c2go/transpiler.transpileReturnStmt(0xc00008b080, 0xc00014a000, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/functions.go:345 +0x195
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7091a0, 0xc00008b080, 0xc00014a000, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:344 +0x10bd
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7091a0, 0xc00008b080, 0xc00014a000, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileToBlockStmt(0x7091a0, 0xc00008b080, 0xc00014a000, 0x708900, 0xc00008afc0, 0x6abc00, 0x0, 0x0, 0xc0001d7860, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:38 +0x49
+  github.com/elliotchance/c2go/transpiler.transpileIfStmt(0xc00008afc0, 0xc00014a000, 0xc0001feab8, 0xc0001fead0, 0x708960, 0xc00008afc0, 0x20, 0x677ce0, 0x1, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/branch.go:86 +0x327
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x708960, 0xc00008afc0, 0xc00014a000, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:337 +0x1003
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x708960, 0xc00008afc0, 0xc00014a000, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileCompoundStmt(0xc0001b55e0, 0xc00014a000, 0xc0001fed40, 0xc0001fed58, 0x7081a0, 0xc0001b55e0, 0x5, 0x5555555555555555, 0x38, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:21 +0xfb
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7081a0, 0xc0001b55e0, 0xc00014a000, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:347 +0xcec
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7081a0, 0xc0001b55e0, 0xc00014a000, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileToBlockStmt(0x7081a0, 0xc0001b55e0, 0xc00014a000, 0x4, 0xc0001b6a00, 0x8de301, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:38 +0x49
+  github.com/elliotchance/c2go/transpiler.transpileFunctionDecl(0xc000126a90, 0xc00014a000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/functions.go:86 +0x28fa
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x7087e0, 0xc000126a90, 0xc00014a000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:443 +0x44d
+  github.com/elliotchance/c2go/transpiler.transpileTranslationUnitDecl(0xc00014a000, 0xc000074380, 0xc00006b790, 0x1, 0x1, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/translation_unit.go:116 +0x17e
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x709360, 0xc000074380, 0xc00014a000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:440 +0xb81
+  github.com/elliotchance/c2go/transpiler.TranspileAST(0x7ffd30ccb9d5, 0x28, 0x6abe92, 0x4, 0xc00014a000, 0x709360, 0xc000074380, 0x35, 0x35)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:32 +0x1a2
+  main.Start(0x0, 0xc00008e040, 0x1, 0x1, 0x0, 0x0, 0x0, 0x7ffd30ccb9d5, 0x28, 0x6abe92, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:297 +0xf29
+  main.runCommand(0xc000068058)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:429 +0x495
+  main.main()
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:352 +0x22
+  +exit 1
+not ok ./tests/single-exec/00087.c
+  struct S
+  {
+  	int	(*fptr)();
+  };
+  
+  int
+  foo()
+  {
+  	return 0;
+  }
+  
+  int
+  main()
+  {
+  	struct S v;
+  	
+  	v.fptr = foo;
+  	return v.fptr();
+  }
+  
+  +mkdir ./tests/single-exec/00087.c-c2go
+  +c2go transpile -o ./tests/single-exec/00087.c-c2go/main.go ./tests/single-exec/00087.c
+  +cd ./tests/single-exec/00087.c-c2go
+  +go build -o ./tests/single-exec/00087.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00087.c-c2go
+  ./main.go:27:9: cannot use foo (type func() int32) as type func() in assignment
+  ./main.go:28:20: v.fptr() used as value
+  +exit 1
+not ok ./tests/single-exec/00088.c
+  int (*fptr)() = 0;
+  
+  
+  int
+  main()
+  {
+  	if (fptr)
+  		return 1;
+  	return 0;
+  }
+  
+  +mkdir ./tests/single-exec/00088.c-c2go
+  +c2go transpile -o ./tests/single-exec/00088.c-c2go/main.go ./tests/single-exec/00088.c
+  +cd ./tests/single-exec/00088.c-c2go
+  +go build -o ./tests/single-exec/00088.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00088.c-c2go
+  ./main.go:17:5: undefined: fptr
+  +exit 1
+not ok ./tests/single-exec/00089.c
+  int
+  zero()
+  {
+  	return 0;
+  }
+  
+  struct S
+  {
+  	int (*zerofunc)();
+  } s = { &amp;zero };
+  
+  struct S *
+  anon()
+  {
+  	return &amp;s;
+  }
+  
+  typedef struct S * (*fty)();
+  
+  fty
+  go()
+  {
+  	return &amp;anon;
+  }
+  
+  int
+  main()
+  {
+  	return go()()-&gt;zerofunc();
+  }
+  +mkdir ./tests/single-exec/00089.c-c2go
+  +c2go transpile -o ./tests/single-exec/00089.c-c2go/main.go ./tests/single-exec/00089.c
+  panic: unknown node type: &#x27;FunctionNoProtoType 0x5151ea0 &#x27;struct S *()&#x27; cdecl&#x27;
+  
+  goroutine 11 [running]:
+  github.com/elliotchance/c2go/ast.Parse(0xc0001468d3, 0x32, 0x6acb24, 0x5)
+  	/home/travis/go/src/github.com/elliotchance/c2go/ast/ast.go:270 +0x4027
+  main.convertLinesToNodes(0xc0000436b0, 0x1b, 0x1b, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:89 +0x1c8
+  main.convertLinesToNodesParallel.func1.2(0xc00001ea80, 0xc00000e120, 0xc0000436b0, 0x1b, 0x1b, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:121 +0x53
+  created by main.convertLinesToNodesParallel.func1
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:119 +0x1a6
+  +exit 1
+not ok ./tests/single-exec/00091.c
+  typedef struct {
+  	int v;
+  	int sub[2];
+  } S;
+  
+  S a[1] = {{1, {2, 3}}};
+  
+  int
+  main()
+  {
+  	if (a[0].v != 1)
+  		return 1;
+  	if (a[0].sub[0] != 2)
+  		return 2;
+  	if (a[0].sub[1] != 3)
+  		return 3;
+  	
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00091.c-c2go
+  +c2go transpile -o ./tests/single-exec/00091.c-c2go/main.go ./tests/single-exec/00091.c
+  +cd ./tests/single-exec/00091.c-c2go
+  +go build -o ./tests/single-exec/00091.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00091.c-c2go
+  ./main.go:18:36: cannot use []int32 literal (type []int32) as type [2]int32 in field value
+  +exit 1
+not ok ./tests/single-exec/00095.c
+  int x;
+  int x = 3;
+  int x;
+  
+  int main();
+  
+  void *
+  foo()
+  {
+  	return &amp;main;
+  }
+  
+  int
+  main()
+  {
+  	if (x != 3)
+  		return 0;
+  
+  	x = 0;
+  	return x;
+  }
+  
+  +mkdir ./tests/single-exec/00095.c-c2go
+  +c2go transpile -o ./tests/single-exec/00095.c-c2go/main.go ./tests/single-exec/00095.c
+  +cd ./tests/single-exec/00095.c-c2go
+  +go build -o ./tests/single-exec/00095.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00095.c-c2go
+  ./main.go:15:5: x redeclared in this block
+  	previous declaration at ./main.go:14:5
+  ./main.go:16:5: x redeclared in this block
+  	previous declaration at ./main.go:15:5
+  +exit 1
+not ok ./tests/single-exec/00096.c
+  int x, x = 3, x;
+  
+  int
+  main()
+  {
+  	if (x != 3)
+  		return 0;
+  
+  	x = 0;
+  	return x;
+  }
+  
+  +mkdir ./tests/single-exec/00096.c-c2go
+  +c2go transpile -o ./tests/single-exec/00096.c-c2go/main.go ./tests/single-exec/00096.c
+  +cd ./tests/single-exec/00096.c-c2go
+  +go build -o ./tests/single-exec/00096.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00096.c-c2go
+  ./main.go:13:5: x redeclared in this block
+  	previous declaration at ./main.go:12:5
+  ./main.go:14:5: x redeclared in this block
+  	previous declaration at ./main.go:13:5
+  +exit 1
+not ok ./tests/single-exec/00104.c
+  #include &lt;stdint.h&gt;
+  
+  int
+  main()
+  {
+  	int32_t x;
+  	int64_t l;
+  	
+  	x = 0;
+  	l = 0;
+  	
+  	x = ~x;
+  	if (x != 0xffffffff)
+  		return 1;
+  	
+  	l = ~l;
+  	if (x != 0xffffffffffffffff)
+  		return 2;
+  
+  	
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00104.c-c2go
+  +c2go transpile -o ./tests/single-exec/00104.c-c2go/main.go ./tests/single-exec/00104.c
+  +cd ./tests/single-exec/00104.c-c2go
+  +go build -o ./tests/single-exec/00104.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00104.c-c2go
+  ./main.go:52:33: constant 18446744073709551615 overflows uint32
+  +exit 1
+not ok ./tests/single-exec/00120.c
+  struct {
+  	enum { X } x;
+  } s;
+  
+  
+  int
+  main()
+  {
+  	return X;
+  }
+  +mkdir ./tests/single-exec/00120.c-c2go
+  +c2go transpile -o ./tests/single-exec/00120.c-c2go/main.go ./tests/single-exec/00120.c
+  panic: cannot decode: &amp;ast.EnumDecl{Addr:0x66208e0, Pos:ast.Position{File:&quot;/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00120.c&quot;, Line:2, LineEnd:0, Column:2, ColumnEnd:11, StringValue:&quot;&quot;}, Position2:&quot; col:2&quot;, Name:&quot;&quot;, ChildNodes:[]ast.Node{(*ast.EnumConstantDecl)(0xc00013aa00)}}
+  
+  goroutine 1 [running]:
+  github.com/elliotchance/c2go/program.NewStruct(0xc00014e160, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/program/struct.go:54 +0x91c
+  github.com/elliotchance/c2go/transpiler.transpileRecordDecl(0xc000134000, 0xc00014e160, 0xc00004f4a8, 0xc000134000, 0x7090e0, 0xc00014e160, 0x5c)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/declarations.go:207 +0x1370
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x7090e0, 0xc00014e160, 0xc000134000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:463 +0x250
+  github.com/elliotchance/c2go/transpiler.transpileTranslationUnitDecl(0xc000134000, 0xc00000c420, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/translation_unit.go:116 +0x17e
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x709360, 0xc00000c420, 0xc000134000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:440 +0xb81
+  github.com/elliotchance/c2go/transpiler.TranspileAST(0x7fff753e69d5, 0x28, 0x6abe92, 0x4, 0xc000134000, 0x709360, 0xc00000c420, 0x19, 0x19)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:32 +0x1a2
+  main.Start(0x0, 0xc000010090, 0x1, 0x1, 0x0, 0x0, 0x0, 0x7fff753e69d5, 0x28, 0x6abe92, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:297 +0xf29
+  main.runCommand(0xc00001e1d8)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:429 +0x495
+  main.main()
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:352 +0x22
+  +exit 1
+not ok ./tests/single-exec/00124.c
+  int
+  f2(int c, int b)
+  {
+  	return c - b;
+  }
+  
+  int (*
+  f1(int a, int b))(int c, int b)
+  {
+  	if (a != b)
+  		return f2;
+  	return 0;
+  }
+  
+  int
+  main()
+  {
+  	int (* (*p)(int a, int b))(int c, int d) = f1;
+  
+  
+  	return (*(*p)(0, 2))(2, 2);
+  }
+  +mkdir ./tests/single-exec/00124.c-c2go
+  +c2go transpile -o ./tests/single-exec/00124.c-c2go/main.go ./tests/single-exec/00124.c
+  +cd ./tests/single-exec/00124.c-c2go
+  +go build -o ./tests/single-exec/00124.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00124.c-c2go
+  ./main.go:23:3: cannot use f2 (type func(int32, int32) int32) as type int32 in return argument
+  ./main.go:25:2: cannot use nil as type int32 in return argument
+  +exit 1
+not ok ./tests/single-exec/00129.c
+  typedef struct s s;
+  
+  struct s {
+  	struct s1 {
+  		int s;
+  		struct s2 {
+  			int s;
+  		} s1;
+  	} s;
+  } s2;
+  
+  #define s s
+  
+  int
+  main(void)
+  {
+  #undef s
+  	goto s;
+  	struct s s;
+  		{
+  			int s;
+  			return s;
+  		}
+  	return s.s.s + s.s.s1.s;
+  	s:
+  		{
+  			return 0;
+  		}
+  	return 1;
+  }
+  +mkdir ./tests/single-exec/00129.c-c2go
+  +c2go transpile -o ./tests/single-exec/00129.c-c2go/main.go ./tests/single-exec/00129.c
+  +cd ./tests/single-exec/00129.c-c2go
+  +go build -o ./tests/single-exec/00129.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00129.c-c2go
+  ./main.go:23:5: s2 redeclared in this block
+  	previous declaration at ./main.go:12:6
+  ./main.go:27:7: goto s jumps over declaration of s at ./main.go:28:6
+  +exit 1
+not ok ./tests/single-exec/00130.c
+  int
+  main()
+  {
+  	char arr[2][4], (*p)[4], *q;
+  	int v[4];
+  
+  	p = arr;
+  	q = &amp;arr[1][3];
+  	arr[1][3] = 2;
+  	v[0] = 2;
+  
+  	if (arr[1][3] != 2)
+  		return 1;
+  	if (p[1][3] != 2)
+  		return 1;
+  	if (*q != 2)
+  		return 1;
+  	if (*v != 2)
+  		return 1;
+  
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00130.c-c2go
+  +c2go transpile -o ./tests/single-exec/00130.c-c2go/main.go ./tests/single-exec/00130.c
+  +cd ./tests/single-exec/00130.c-c2go
+  +go build -o ./tests/single-exec/00130.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00130.c-c2go
+  ./main.go:33:2: p declared and not used
+  +exit 1
+not ok ./tests/single-exec/00133.c
+  int main(void)
+  {
+  	int i;
+  	unsigned u;
+  
+  	i = 1;
+  	i = -1;
+  	i = -1l;
+  	i = -1u;
+  	i = -1ll;
+  	i = 32766 + 1 &amp; 3;
+  	i = (int) 32768 &lt; 0;
+  	i = -1u &lt; 0;
+  
+  	u = 1;
+  	u = -1;
+  	u = -1l;
+  	u = -1u;
+  	u = -1ll;
+  	u = (unsigned) 32768 &lt; 0;
+  	u = 32766 + 1 &amp; 3;
+  	u = -1u &lt; 0;
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00133.c-c2go
+  +c2go transpile -o ./tests/single-exec/00133.c-c2go/main.go ./tests/single-exec/00133.c
+  +cd ./tests/single-exec/00133.c-c2go
+  +go build -o ./tests/single-exec/00133.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00133.c-c2go
+  ./main.go:35:12: constant -1 overflows uint32
+  ./main.go:36:12: constant -1 overflows uint32
+  ./main.go:37:12: constant -1 overflows uint32
+  ./main.go:38:12: constant -1 overflows uint32
+  +exit 1
+not ok ./tests/single-exec/00134.c
+  int
+  main(void)
+  {
+  	long i;
+  	unsigned long u;
+  
+  	i = 1;
+  	i = -1;
+  	i = -1l;
+  	i = -1u;
+  	i = -1ll;
+  	i = (1ll &lt;&lt; 32) - 1 &amp; 3;
+  	i = (long) ((1ll &lt;&lt; 32) - 1) &lt; 0;
+  	i = -1u &lt; 0;
+  
+  	u = 1;
+  	u = -1;
+  	u = -1l;
+  	u = -1u;
+  	u = -1ll;
+  	u = (1ll &lt;&lt; 32) - 1 &amp; 3;
+  	u = (long) ((1ll &lt;&lt; 32) - 1) &lt; 0;
+  	u = -1u &lt; 0;
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00134.c-c2go
+  +c2go transpile -o ./tests/single-exec/00134.c-c2go/main.go ./tests/single-exec/00134.c
+  +cd ./tests/single-exec/00134.c-c2go
+  +go build -o ./tests/single-exec/00134.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00134.c-c2go
+  ./main.go:19:6: constant 4294967296 overflows int32
+  ./main.go:19:28: constant 4294967295 overflows int32
+  ./main.go:26:38: constant 4294967296 overflows int32
+  ./main.go:26:38: constant 4294967295 overflows int32
+  ./main.go:35:12: constant -1 overflows uint32
+  ./main.go:36:12: constant -1 overflows uint32
+  ./main.go:37:12: constant -1 overflows uint32
+  ./main.go:38:12: constant -1 overflows uint32
+  ./main.go:39:13: constant 4294967296 overflows int32
+  ./main.go:39:35: constant 4294967295 overflows int32
+  ./main.go:39:35: too many errors
+  +exit 1
+not ok ./tests/single-exec/00135.c
+  int
+  main(void)
+  {
+  	long long i;
+  	unsigned long long u;
+  
+  	i = 1;
+  	i = -1;
+  	i = -1l;
+  	i = -1u;
+  	i = -1ll;
+  	i = -1ll &amp; 3;
+  	i = -1ll &lt; 0;
+  
+  	u = 1;
+  	u = -1;
+  	u = -1l;
+  	u = -1u;
+  	u = -1ll;
+  	u = -1llu &amp; 3;
+  	u = -1llu &lt; 0;
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00135.c-c2go
+  +c2go transpile -o ./tests/single-exec/00135.c-c2go/main.go ./tests/single-exec/00135.c
+  +cd ./tests/single-exec/00135.c-c2go
+  +go build -o ./tests/single-exec/00135.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00135.c-c2go
+  ./main.go:28:12: constant -1 overflows uint64
+  ./main.go:29:12: constant -1 overflows uint64
+  ./main.go:30:12: constant -1 overflows uint64
+  ./main.go:31:12: constant -1 overflows uint64
+  +exit 1
+not ok ./tests/single-exec/00136.c
+  #define FOO
+  
+  #ifdef FOO
+  	int a;
+  	int b;
+  	#undef FOO
+  	#ifndef FOO
+  		int c;
+  		int d;
+  	#else
+  		int e;
+  		int f;
+  	#endif
+  	int e;
+  	int f;
+  	#ifdef FOO
+  		int c_;
+  		int d_;
+  	#else
+  		int e_;
+  		int f_;
+  	#endif
+  	int e_;
+  	int f_;
+  int
+  main()
+  {
+  	return 0;
+  }
+  #else
+  	int j;
+  	int k;
+  	#ifdef FOO
+  		int j;
+  		int k;
+  	#else
+  		int n;
+  		int o;
+  	#endif
+  	int n;
+  	int o;
+  	#ifndef FOO
+  		int r;
+  		int s;
+  	#else
+  		int t;
+  		int u;
+  	#endif
+  	int t;
+  	int u;
+  	#error bad branch
+  #endif
+  +mkdir ./tests/single-exec/00136.c-c2go
+  +c2go transpile -o ./tests/single-exec/00136.c-c2go/main.go ./tests/single-exec/00136.c
+  +cd ./tests/single-exec/00136.c-c2go
+  +go build -o ./tests/single-exec/00136.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00136.c-c2go
+  ./main.go:18:5: e_ redeclared in this block
+  	previous declaration at ./main.go:16:5
+  ./main.go:19:5: f_ redeclared in this block
+  	previous declaration at ./main.go:17:5
+  +exit 1
+not ok ./tests/single-exec/00140.c
+  struct foo {
+  	int i, j, k;
+  	char *p;
+  	float v;
+  };
+  
+  int
+  f1(struct foo f, struct foo *p, int n, ...)
+  {
+  	if (f.i != p-&gt;i)
+  		return 0;
+  	return p-&gt;j + n;
+  }
+  
+  int
+  main(void)
+  {
+  	struct foo f;
+  
+  	f.i = f.j = 1;
+  	f1(f, &amp;f, 2);
+  	f1(f, &amp;f, 2, 1, f, &amp;f);
+  
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00140.c-c2go
+  +c2go transpile -o ./tests/single-exec/00140.c-c2go/main.go ./tests/single-exec/00140.c
+  +cd ./tests/single-exec/00140.c-c2go
+  +go build -o ./tests/single-exec/00140.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00140.c-c2go
+  ./main.go:10:8: imported and not used: &quot;unsafe&quot;
+  +exit 1
+not ok ./tests/single-exec/00141.c
+  #define CAT(x,y) x ## y
+  #define XCAT(x,y) CAT(x,y)
+  #define FOO foo
+  #define BAR bar
+  
+  int
+  main(void)
+  {
+  	int foo, bar, foobar;
+  
+  	CAT(foo,bar) = foo + bar;
+  	XCAT(FOO,BAR) = foo + bar;
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00141.c-c2go
+  +c2go transpile -o ./tests/single-exec/00141.c-c2go/main.go ./tests/single-exec/00141.c
+  +cd ./tests/single-exec/00141.c-c2go
+  +go build -o ./tests/single-exec/00141.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00141.c-c2go
+  ./main.go:14:6: foobar declared and not used
+  +exit 1
+not ok ./tests/single-exec/00143.c
+  /* Disgusting, no?  But it compiles and runs just fine.  I feel a combination of
+     pride and revulsion at this discovery.  If no one&#x27;s thought of it before,
+     I think I&#x27;ll name it after myself.
+     It amazes me that after 10 years of writing C there are still
+     little corners that I haven&#x27;t explored fully.
+     - Tom Duff */
+  
+  int main()
+  {
+      int  count, n;
+      short *from, *to;
+      short a[39], b[39];
+  
+      for(n = 0; n &lt; 39; n++) {
+          a[n] = n;
+          b[n] = 0;
+      }
+      from = a;
+      to = b;
+      count = 39;
+      n = (count + 7) / 8;
+      switch (count % 8) {
+      case 0: do { *to++ = *from++;
+      case 7:      *to++ = *from++;
+      case 6:      *to++ = *from++;
+      case 5:      *to++ = *from++;
+      case 4:      *to++ = *from++;
+      case 3:      *to++ = *from++;
+      case 2:      *to++ = *from++;
+      case 1:      *to++ = *from++;
+              } while (--n &gt; 0);
+      }
+      for(n = 0; n &lt; 39; n++)
+          if(a[n] != b[n])
+              return 1;
+      return 0;
+  }+mkdir ./tests/single-exec/00143.c-c2go
+  +c2go transpile -o ./tests/single-exec/00143.c-c2go/main.go ./tests/single-exec/00143.c
+  +cd ./tests/single-exec/00143.c-c2go
+  +go build -o ./tests/single-exec/00143.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00143.c-c2go
+  ./main.go:59:5: syntax error: unexpected case, expecting }
+  ./main.go:65:7: syntax error: unexpected ( at end of statement
+  ./main.go:70:7: syntax error: unexpected ( at end of statement
+  ./main.go:71:5: syntax error: unexpected case, expecting }
+  ./main.go:72:14: syntax error: unexpected *, expecting name or (
+  ./main.go:72:15: method has no receiver
+  ./main.go:73:20: method has no receiver
+  ./main.go:73:20: syntax error: unexpected {, expecting name or (
+  ./main.go:77:20: syntax error: unexpected *, expecting name or (
+  ./main.go:77:21: method has no receiver
+  ./main.go:77:20: too many errors
+  +exit 1
+not ok ./tests/single-exec/00144.c
+  int
+  main(void)
+  {
+  	int i, *q;
+  	void *p;
+  
+  	i = i ? 0 : 0l;
+  	p = i ? (void *) 0 : 0;
+  	p = i ? 0 : (void *) 0;
+  	p = i ? 0 : (const void *) 0;
+  	q = i ? 0 : p;
+  	q = i ? p : 0;
+  	q = i ? q : 0;
+  	q = i ? 0 : q;
+  
+  	return (int) q;
+  }
+  +mkdir ./tests/single-exec/00144.c-c2go
+  +c2go transpile -o ./tests/single-exec/00144.c-c2go/main.go ./tests/single-exec/00144.c
+  +cd ./tests/single-exec/00144.c-c2go
+  +go build -o ./tests/single-exec/00144.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00144.c-c2go
+  ./main.go:75:14: undefined: noarch.Int32ToInt32
+  +exit 1
+not ok ./tests/single-exec/00149.c
+  struct S { int a; int b; };
+  struct S *s = &amp;(struct S) { 1, 2 };
+  
+  int
+  main()
+  {
+  	if(s-&gt;a != 1)
+  		return 1;
+  	if(s-&gt;b != 2)
+  		return 2;
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00149.c-c2go
+  +c2go transpile -o ./tests/single-exec/00149.c-c2go/main.go ./tests/single-exec/00149.c
+  +cd ./tests/single-exec/00149.c-c2go
+  +go build -o ./tests/single-exec/00149.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00149.c-c2go
+  ./main.go:11:8: imported and not used: &quot;unsafe&quot;
+  +exit 1
+not ok ./tests/single-exec/00150.c
+  struct S1 {
+  	int a;
+  	int b;
+  };
+  struct S2 {
+  	struct S1 s1;
+  	struct S1 *ps1;
+  	int arr[2];
+  };
+  struct S1 gs1 = (struct S1) {.a = 1, 2};
+  struct S2 *s = &amp;(struct S2) {
+  	{.b = 2, .a = 1},
+  	&amp;gs1,
+  	{[0] = 1,  1+1}
+  };
+  
+  int
+  main()
+  {
+  	if(s-&gt;s1.a != 1)
+  		return 1;
+  	if(s-&gt;s1.b != 2)
+  		return 2;
+  	if(s-&gt;ps1-&gt;a != 1)
+  		return 3;
+  	if(s-&gt;ps1-&gt;b != 2)
+  		return 4;
+  	if(s-&gt;arr[0] != 1)
+  		return 5;
+  	if(s-&gt;arr[1] != 2)
+  		return 6;
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00150.c-c2go
+  +c2go transpile -o ./tests/single-exec/00150.c-c2go/main.go ./tests/single-exec/00150.c
+  +cd ./tests/single-exec/00150.c-c2go
+  +go build -o ./tests/single-exec/00150.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00150.c-c2go
+  ./main.go:24:54: cannot use []int32 literal (type []int32) as type [2]int32 in field value
+  +exit 1
+not ok ./tests/single-exec/00155.c
+  
+  int
+  main(void)
+  {
+  	sizeof((int) 1);
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00155.c-c2go
+  +c2go transpile -o ./tests/single-exec/00155.c-c2go/main.go ./tests/single-exec/00155.c
+  panic: cannot do unary on: &amp;ast.CStyleCastExpr{Addr:0x4f27a10, Pos:ast.Position{File:&quot;/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00155.c&quot;, Line:5, LineEnd:0, Column:9, ColumnEnd:15, StringValue:&quot;&quot;}, Type:&quot;int&quot;, Type2:&quot;&quot;, Kind:&quot;NoOp&quot;, ChildNodes:[]ast.Node{(*ast.IntegerLiteral)(0xc000114a80)}}
+  
+  goroutine 1 [running]:
+  github.com/elliotchance/c2go/transpiler.transpileUnaryExprOrTypeTraitExpr(0xc000142a00, 0xc000140000, 0xc0000c69f8, 0xc0000c6a10, 0x8, 0x0, 0x4, 0xc00006cde0, 0x0, 0x7, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/unary.go:721 +0x491
+  github.com/elliotchance/c2go/transpiler.transpileToExpr(0x7094a0, 0xc000142a00, 0xc000140000, 0xc0000c6a01, 0x0, 0x0, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:198 +0x27a
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7094a0, 0xc000142a00, 0xc000140000, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:387 +0x1ad
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7094a0, 0xc000142a00, 0xc000140000, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileCompoundStmt(0xc0001ad8f0, 0xc000140000, 0xc0000c6d40, 0xc0000c6d58, 0x7081a0, 0xc0001ad8f0, 0xc0000ba280, 0x5555555555555555, 0x38, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:21 +0xfb
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7081a0, 0xc0001ad8f0, 0xc000140000, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:347 +0xcec
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7081a0, 0xc0001ad8f0, 0xc000140000, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileToBlockStmt(0x7081a0, 0xc0001ad8f0, 0xc000140000, 0x4, 0xc00012db88, 0x8de301, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:38 +0x49
+  github.com/elliotchance/c2go/transpiler.transpileFunctionDecl(0xc0001215f0, 0xc000140000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/functions.go:86 +0x28fa
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x7087e0, 0xc0001215f0, 0xc000140000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:443 +0x44d
+  github.com/elliotchance/c2go/transpiler.transpileTranslationUnitDecl(0xc000140000, 0xc000074500, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/translation_unit.go:116 +0x17e
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x709360, 0xc000074500, 0xc000140000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:440 +0xb81
+  github.com/elliotchance/c2go/transpiler.TranspileAST(0x7ffca469c9d5, 0x28, 0x6abe92, 0x4, 0xc000140000, 0x709360, 0xc000074500, 0x18, 0x18)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:32 +0x1a2
+  main.Start(0x0, 0xc00008e040, 0x1, 0x1, 0x0, 0x0, 0x0, 0x7ffca469c9d5, 0x28, 0x6abe92, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:297 +0xf29
+  main.runCommand(0xc000068058)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:429 +0x495
+  main.main()
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:352 +0x22
+  +exit 1
+not ok ./tests/single-exec/00163.c
+  #include &lt;stdio.h&gt;
+  
+  struct ziggy
+  {
+     int a;
+     int b;
+     int c;
+  } bolshevic;
+  
+  int main()
+  {
+     int a;
+     int *b;
+     int c;
+  
+     a = 42;
+     b = &amp;a;
+     printf(&quot;a = %d\n&quot;, *b);
+  
+     bolshevic.a = 12;
+     bolshevic.b = 34;
+     bolshevic.c = 56;
+  
+     printf(&quot;bolshevic.a = %d\n&quot;, bolshevic.a);
+     printf(&quot;bolshevic.b = %d\n&quot;, bolshevic.b);
+     printf(&quot;bolshevic.c = %d\n&quot;, bolshevic.c);
+  
+     struct ziggy *tsar = &amp;bolshevic;
+  
+     printf(&quot;tsar-&gt;a = %d\n&quot;, tsar-&gt;a);
+     printf(&quot;tsar-&gt;b = %d\n&quot;, tsar-&gt;b);
+     printf(&quot;tsar-&gt;c = %d\n&quot;, tsar-&gt;c);
+  
+     b = &amp;(bolshevic.b);
+     printf(&quot;bolshevic.b = %d\n&quot;, *b);
+  
+     return 0;
+  }
+  
+  // vim: set expandtab ts=4 sw=3 sts=3 tw=80 :
+  +mkdir ./tests/single-exec/00163.c-c2go
+  +c2go transpile -o ./tests/single-exec/00163.c-c2go/main.go ./tests/single-exec/00163.c
+  +cd ./tests/single-exec/00163.c-c2go
+  +go build -o ./tests/single-exec/00163.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00163.c-c2go
+  ./main.go:205:6: c declared and not used
+  +exit 1
+not ok ./tests/single-exec/00164.c
+  #include &lt;stdio.h&gt;
+  
+  int main()
+  {
+     int a;
+     int b;
+     int c;
+     int d;
+     int e;
+     int f;
+     int x;
+     int y;
+  
+     a = 12;
+     b = 34;
+     c = 56;
+     d = 78;
+     e = 0;
+     f = 1;
+  
+     printf(&quot;%d\n&quot;, c + d);
+     printf(&quot;%d\n&quot;, (y = c + d));
+     printf(&quot;%d\n&quot;, e || e &amp;&amp; f);
+     printf(&quot;%d\n&quot;, e || f &amp;&amp; f);
+     printf(&quot;%d\n&quot;, e &amp;&amp; e || f);
+     printf(&quot;%d\n&quot;, e &amp;&amp; f || f);
+     printf(&quot;%d\n&quot;, a &amp;&amp; f | f);
+     printf(&quot;%d\n&quot;, a | b ^ c &amp; d);
+     printf(&quot;%d, %d\n&quot;, a == a, a == b);
+     printf(&quot;%d, %d\n&quot;, a != a, a != b);
+     printf(&quot;%d\n&quot;, a != b &amp;&amp; c != d);
+     printf(&quot;%d\n&quot;, a + b * c / f);
+     printf(&quot;%d\n&quot;, a + b * c / f);
+     printf(&quot;%d\n&quot;, (4 &lt;&lt; 4));
+     printf(&quot;%d\n&quot;, (64 &gt;&gt; 4));
+  
+     return 0;
+  }
+  
+  // vim: set expandtab ts=4 sw=3 sts=3 tw=80 :
+  +mkdir ./tests/single-exec/00164.c-c2go
+  +c2go transpile -o ./tests/single-exec/00164.c-c2go/main.go ./tests/single-exec/00164.c
+  +cd ./tests/single-exec/00164.c-c2go
+  +go build -o ./tests/single-exec/00164.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00164.c-c2go
+  ./main.go:202:6: x declared and not used
+  +exit 1
+not ok ./tests/single-exec/00170.c
+  #include &lt;stdio.h&gt;
+  
+  enum fred
+  {
+     a,
+     b,
+     c,
+     d,
+     e = 54,
+     f = 73,
+     g,
+     h
+  };
+  
+  /* All following uses of enum efoo should compile
+     without warning.  While forward enums aren&#x27;t ISO C,
+     it&#x27;s accepted by GCC also in strict mode, and only warned
+     about with -pedantic.  This happens in the real world.  */
+  /* Strict ISO C doesn&#x27;t allow this kind of forward declaration of
+     enums, but GCC accepts it (and gives only pedantic warning), and
+     it occurs in the wild.  */
+  enum efoo;
+  struct Sforward_use {
+      int (*fmember) (enum efoo x);
+  };
+  
+  extern enum efoo it_real_fn(void);
+  enum efoo {
+    ONE,
+    TWO,
+  };
+  struct S2 {
+    enum efoo (*f2) (void);
+  };
+  void should_compile(struct S2 *s)
+  {
+    s-&gt;f2 = it_real_fn;
+  }
+  
+  enum efoo it_real_fn(void)
+  {
+    return TWO;
+  }
+  
+  static unsigned int deref_uintptr(unsigned int *p)
+  {
+    return *p;
+  }
+  
+  enum Epositive {
+      epos_one, epos_two
+  };
+  
+  int main()
+  {
+     enum fred frod;
+     enum Epositive epos = epos_two;
+  
+     printf(&quot;%d %d %d %d %d %d %d %d\n&quot;, a, b, c, d, e, f, g, h);
+     /* printf(&quot;%d\n&quot;, frod); */
+     frod = 12;
+     printf(&quot;%d\n&quot;, frod);
+     frod = e;
+     printf(&quot;%d\n&quot;, frod);
+  
+     /* Following should compile without warning.  */
+     printf (&quot;enum to int: %u\n&quot;, deref_uintptr(&amp;epos));
+  
+     return 0;
+  }
+  
+  /* vim: set expandtab ts=4 sw=3 sts=3 tw=80 :*/
+  +mkdir ./tests/single-exec/00170.c-c2go
+  +c2go transpile -o ./tests/single-exec/00170.c-c2go/main.go ./tests/single-exec/00170.c
+  panic: could not match regexp with string
+  ^(?P&lt;address&gt;[0-9a-fx]+) &lt;(?P&lt;position&gt;.*)&gt;(?P&lt;position2&gt; .+:\d+)?(?P&lt;name&gt;.*)[\s]*$
+  0x525c5c8 prev 0x525b020 &lt;line:28:1, line:31:1&gt; line:28:6 efoo
+  
+  
+  goroutine 24 [running]:
+  github.com/elliotchance/c2go/ast.groupsFromRegex(0xc0000699e0, 0x54, 0xc00026cf6e, 0x3e, 0x1b)
+  	/home/travis/go/src/github.com/elliotchance/c2go/ast/ast.go:286 +0x35d
+  github.com/elliotchance/c2go/ast.parseEnumDecl(0xc00026cf6e, 0x3e, 0x6aeb24)
+  	/home/travis/go/src/github.com/elliotchance/c2go/ast/enum_decl.go:17 +0x62
+  github.com/elliotchance/c2go/ast.Parse(0xc00026cf65, 0x47, 0x6acb24, 0x5)
+  	/home/travis/go/src/github.com/elliotchance/c2go/ast/ast.go:122 +0x541
+  main.convertLinesToNodes(0xc000271db0, 0x1dc, 0x1dc, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:89 +0x1c8
+  main.convertLinesToNodesParallel.func1.2(0xc000068780, 0xc0000c80c0, 0xc000271db0, 0x1dc, 0x1dc, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:121 +0x53
+  created by main.convertLinesToNodesParallel.func1
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:119 +0x1a6
+  +exit 1
+not ok ./tests/single-exec/00173.c
+  #include &lt;stdio.h&gt;
+  
+  int main()
+  {
+     int x = &#x27;a&#x27;;
+     char y = x;
+  
+     char *a = &quot;hello&quot;;
+  
+     printf(&quot;%s\n&quot;, a);
+  
+     int c;
+     c = *a;
+  
+     char *b;
+     for (b = a; *b != 0; b++)
+        printf(&quot;%c: %d\n&quot;, *b, *b);
+  
+     char destarray[10];
+     char *dest = &amp;destarray[0];
+     char *src = a;
+  
+     while (*src != 0)
+        *dest++ = *src++;
+  
+     *dest = 0;
+  
+     printf(&quot;copied string is %s\n&quot;, destarray);
+  
+     return 0;
+  }
+  
+  /* vim: set expandtab ts=4 sw=3 sts=3 tw=80 :*/
+  +mkdir ./tests/single-exec/00173.c-c2go
+  +c2go transpile -o ./tests/single-exec/00173.c-c2go/main.go ./tests/single-exec/00173.c
+  +cd ./tests/single-exec/00173.c-c2go
+  +go build -o ./tests/single-exec/00173.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00173.c-c2go
+  ./main.go:197:6: y declared and not used
+  ./main.go:200:6: c declared and not used
+  +exit 1
+not ok ./tests/single-exec/00178.c
+  #include &lt;stdio.h&gt;
+  
+  int main()
+  {
+     char a;
+     int b;
+     double c;
+  
+     printf(&quot;%d\n&quot;, sizeof(a));
+     printf(&quot;%d\n&quot;, sizeof(b));
+     printf(&quot;%d\n&quot;, sizeof(c));
+  
+     printf(&quot;%d\n&quot;, sizeof(!a));
+  
+     return 0;
+  }
+  
+  /* vim: set expandtab ts=4 sw=3 sts=3 tw=80 :*/
+  +mkdir ./tests/single-exec/00178.c-c2go
+  +c2go transpile -o ./tests/single-exec/00178.c-c2go/main.go ./tests/single-exec/00178.c
+  +cd ./tests/single-exec/00178.c-c2go
+  +go build -o ./tests/single-exec/00178.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00178.c-c2go
+  ./main.go:196:6: a declared and not used
+  ./main.go:197:6: b declared and not used
+  ./main.go:198:6: c declared and not used
+  +exit 1
+not ok ./tests/single-exec/00179.c
+  #include &lt;stdio.h&gt;
+  #include &lt;string.h&gt;
+  
+  int main()
+  {
+     char a[10];
+  
+     strcpy(a, &quot;hello&quot;);
+     printf(&quot;%s\n&quot;, a);
+  
+     strncpy(a, &quot;gosh&quot;, 2);
+     printf(&quot;%s\n&quot;, a);
+  
+     printf(&quot;%d\n&quot;, strcmp(a, &quot;apple&quot;) &gt; 0);
+     printf(&quot;%d\n&quot;, strcmp(a, &quot;goere&quot;) &gt; 0);
+     printf(&quot;%d\n&quot;, strcmp(a, &quot;zebra&quot;) &lt; 0);
+  
+     printf(&quot;%d\n&quot;, strlen(a));
+  
+     strcat(a, &quot;!&quot;);
+     printf(&quot;%s\n&quot;, a);
+  
+     printf(&quot;%d\n&quot;, strncmp(a, &quot;apple&quot;, 2) &gt; 0);
+     printf(&quot;%d\n&quot;, strncmp(a, &quot;goere&quot;, 2) == 0);
+     printf(&quot;%d\n&quot;, strncmp(a, &quot;goerg&quot;, 2) == 0);
+     printf(&quot;%d\n&quot;, strncmp(a, &quot;zebra&quot;, 2) &lt; 0);
+  
+     printf(&quot;%s\n&quot;, strchr(a, &#x27;o&#x27;));
+     printf(&quot;%s\n&quot;, strrchr(a, &#x27;l&#x27;));
+     printf(&quot;%d\n&quot;, strrchr(a, &#x27;x&#x27;) == NULL);
+  
+     memset(&amp;a[1], &#x27;r&#x27;, 4);
+     printf(&quot;%s\n&quot;, a);
+  
+     memcpy(&amp;a[2], a, 2);
+     printf(&quot;%s\n&quot;, a);
+  
+     printf(&quot;%d\n&quot;, memcmp(a, &quot;apple&quot;, 4) &gt; 0);
+     printf(&quot;%d\n&quot;, memcmp(a, &quot;grgr&quot;, 4) == 0);
+     printf(&quot;%d\n&quot;, memcmp(a, &quot;zebra&quot;, 4) &lt; 0);
+  
+     return 0;
+  }
+  
+  /* vim: set expandtab ts=4 sw=3 sts=3 tw=80 :*/
+  +mkdir ./tests/single-exec/00179.c-c2go
+  +c2go transpile -o ./tests/single-exec/00179.c-c2go/main.go ./tests/single-exec/00179.c
+  +cd ./tests/single-exec/00179.c-c2go
+  +go build -o ./tests/single-exec/00179.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00179.c-c2go
+  ./main.go:214:42: undefined: strrchr
+  ./main.go:215:42: undefined: strrchr
+  +exit 1
+not ok ./tests/single-exec/00181.c
+  /* example from http://barnyard.syr.edu/quickies/hanoi.c */
+  
+  /* hanoi.c: solves the tower of hanoi problem. (Programming exercise.) */
+  /* By Terry R. McConnell (12/2/97) */
+  /* Compile: cc -o hanoi hanoi.c */
+  
+  /* This program does no error checking. But then, if it&#x27;s right, 
+     it&#x27;s right ... right ? */
+  
+  
+  /* The original towers of hanoi problem seems to have been originally posed
+     by one M. Claus in 1883. There is a popular legend that goes along with
+     it that has been often repeated and paraphrased. It goes something like this:
+     In the great temple at Benares there are 3 golden spikes. On one of them,
+     God placed 64 disks increasing in size from bottom to top, at the beginning
+     of time. Since then, and to this day, the priest on duty constantly transfers
+     disks, one at a time, in such a way that no larger disk is ever put on top
+     of a smaller one. When the disks have been transferred entirely to another
+     spike the Universe will come to an end in a large thunderclap.
+  
+     This paraphrases the original legend due to DeParville, La Nature, Paris 1884,
+     Part I, 285-286. For this and further information see: Mathematical 
+     Recreations &amp; Essays, W.W. Rouse Ball, MacMillan, NewYork, 11th Ed. 1967,
+     303-305.
+   *
+   *
+   */
+  
+  #include &lt;stdio.h&gt;
+  #include &lt;stdlib.h&gt;
+  
+  #define TRUE 1
+  #define FALSE 0
+  
+  /* This is the number of &quot;disks&quot; on tower A initially. Taken to be 64 in the
+   * legend. The number of moves required, in general, is 2^N - 1. For N = 64,
+   * this is 18,446,744,073,709,551,615 */
+  #define N 4
+  
+  /* These are the three towers. For example if the state of A is 0,1,3,4, that
+   * means that there are three discs on A of sizes 1, 3, and 4. (Think of right
+   * as being the &quot;down&quot; direction.) */
+  int A[N], B[N], C[N]; 
+  
+  void Hanoi(int,int*,int*,int*);
+  
+  /* Print the current configuration of A, B, and C to the screen */
+  void PrintAll()
+  {
+     int i;
+  
+     printf(&quot;A: &quot;);
+     for(i=0;i&lt;N;i++)printf(&quot; %d &quot;,A[i]);
+     printf(&quot;\n&quot;);
+  
+     printf(&quot;B: &quot;);
+     for(i=0;i&lt;N;i++)printf(&quot; %d &quot;,B[i]);
+     printf(&quot;\n&quot;);
+  
+     printf(&quot;C: &quot;);
+     for(i=0;i&lt;N;i++)printf(&quot; %d &quot;,C[i]);
+     printf(&quot;\n&quot;);
+     printf(&quot;------------------------------------------\n&quot;);
+     return;
+  }
+  
+  /* Move the leftmost nonzero element of source to dest, leave behind 0. */
+  /* Returns the value moved (not used.) */
+  int Move(int *source, int *dest)
+  {
+     int i = 0, j = 0;
+  
+     while (i&lt;N &amp;&amp; (source[i])==0) i++;
+     while (j&lt;N &amp;&amp; (dest[j])==0) j++;
+  
+     dest[j-1] = source[i];
+     source[i] = 0;
+     PrintAll();       /* Print configuration after each move. */
+     return dest[j-1];
+  }
+  
+  
+  /* Moves first n nonzero numbers from source to dest using the rules of Hanoi.
+     Calls itself recursively.
+     */
+  void Hanoi(int n,int *source, int *dest, int *spare)
+  {
+     int i;
+     if(n==1){
+        Move(source,dest);
+        return;
+     }
+  
+     Hanoi(n-1,source,spare,dest);
+     Move(source,dest);
+     Hanoi(n-1,spare,dest,source);	
+     return;
+  }
+  
+  int main()
+  {
+     int i;
+  
+     /* initialize the towers */
+     for(i=0;i&lt;N;i++)A[i]=i+1;
+     for(i=0;i&lt;N;i++)B[i]=0;
+     for(i=0;i&lt;N;i++)C[i]=0;
+  
+     printf(&quot;Solution of Tower of Hanoi Problem with %d Disks\n\n&quot;,N);
+  
+     /* Print the starting state */
+     printf(&quot;Starting state:\n&quot;);
+     PrintAll();
+     printf(&quot;\n\nSubsequent states:\n\n&quot;);
+  
+     /* Do it! Use A = Source, B = Destination, C = Spare */
+     Hanoi(N,A,B,C);
+  
+     return 0;
+  }
+  
+  /* vim: set expandtab ts=4 sw=3 sts=3 tw=80 :*/
+  +mkdir ./tests/single-exec/00181.c-c2go
+  +c2go transpile -o ./tests/single-exec/00181.c-c2go/main.go ./tests/single-exec/00181.c
+  +cd ./tests/single-exec/00181.c-c2go
+  +go build -o ./tests/single-exec/00181.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00181.c-c2go
+  ./main.go:740:6: i declared and not used
+  +exit 1
+not ok ./tests/single-exec/00184.c
+  #include &lt;stdio.h&gt;
+  
+  int main()
+  {
+     char a;
+     short b;
+  
+     printf(&quot;%d %d\n&quot;, sizeof(char), sizeof(a));
+     printf(&quot;%d %d\n&quot;, sizeof(short), sizeof(b));
+  
+     return 0;
+  }
+  
+  /* vim: set expandtab ts=4 sw=3 sts=3 tw=80 :*/
+  +mkdir ./tests/single-exec/00184.c-c2go
+  +c2go transpile -o ./tests/single-exec/00184.c-c2go/main.go ./tests/single-exec/00184.c
+  +cd ./tests/single-exec/00184.c-c2go
+  +go build -o ./tests/single-exec/00184.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00184.c-c2go
+  ./main.go:196:6: a declared and not used
+  ./main.go:197:6: b declared and not used
+  +exit 1
+not ok ./tests/single-exec/00189.c
+  #include &lt;stdio.h&gt;
+  
+  int fred(int p)
+  {
+     printf(&quot;yo %d\n&quot;, p);
+     return 42;
+  }
+  
+  int (*f)(int) = &amp;fred;
+  
+  /* To test what this is supposed to test the destination function
+     (fprint here) must not be called directly anywhere in the test.  */
+  int (*fprintfptr)(FILE *, const char *, ...) = &amp;fprintf;
+  
+  int main()
+  {
+     fprintfptr(stdout, &quot;%d\n&quot;, (*f)(24));
+  
+     return 0;
+  }
+  
+  /* vim: set expandtab ts=4 sw=3 sts=3 tw=80 :*/
+  +mkdir ./tests/single-exec/00189.c-c2go
+  +c2go transpile -o ./tests/single-exec/00189.c-c2go/main.go ./tests/single-exec/00189.c
+  +cd ./tests/single-exec/00189.c-c2go
+  +go build -o ./tests/single-exec/00189.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00189.c-c2go
+  ./main.go:211:2: undefined: fprintfptr
+  +exit 1
+not ok ./tests/single-exec/00191.c
+  #include &lt;stdio.h&gt;
+  
+  int main()
+  {
+     int a;
+  
+     for (a = 0; a &lt; 2; a++)
+     {
+        int b = a;
+     }
+  
+     printf(&quot;it&#x27;s all good\n&quot;);
+  
+     return 0;
+  }
+  
+  /* vim: set expandtab ts=4 sw=3 sts=3 tw=80 :*/
+  +mkdir ./tests/single-exec/00191.c-c2go
+  +c2go transpile -o ./tests/single-exec/00191.c-c2go/main.go ./tests/single-exec/00191.c
+  +cd ./tests/single-exec/00191.c-c2go
+  +go build -o ./tests/single-exec/00191.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00191.c-c2go
+  ./main.go:198:7: b declared and not used
+  +exit 1
+not ok ./tests/single-exec/00194.c
+  #include &lt;stdio.h&gt;
+  
+  int main()
+  {
+     int a;
+     char b;
+  
+     a = 0;
+     while (a &lt; 2)
+     {
+        printf(&quot;%d&quot;, a++);
+        break;
+  
+        b = &#x27;A&#x27;;
+        while (b &lt; &#x27;C&#x27;)
+        {
+           printf(&quot;%c&quot;, b++);
+        }
+        printf(&quot;e&quot;);
+     }
+     printf(&quot;\n&quot;);
+  
+     return 0;
+  }
+  
+  /* vim: set expandtab ts=4 sw=3 sts=3 tw=80 :*/
+  +mkdir ./tests/single-exec/00194.c-c2go
+  +c2go transpile -o ./tests/single-exec/00194.c-c2go/main.go ./tests/single-exec/00194.c
+  +cd ./tests/single-exec/00194.c-c2go
+  +go build -o ./tests/single-exec/00194.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00194.c-c2go
+  ./main.go:199:43: syntax error: unexpected +=, expecting comma or )
+  ./main.go:203:50: syntax error: unexpected +=, expecting comma or )
+  +exit 1
+not ok ./tests/single-exec/00198.c
+  #include &lt;stdio.h&gt;
+  
+  enum fred { a, b, c };
+  
+  int main()
+  {
+     printf(&quot;a=%d\n&quot;, a);
+     printf(&quot;b=%d\n&quot;, b);
+     printf(&quot;c=%d\n&quot;, c);
+  
+     enum fred d;
+  
+     typedef enum { e, f, g } h;
+     typedef enum { i, j, k } m;
+  
+     printf(&quot;e=%d\n&quot;, e);
+     printf(&quot;f=%d\n&quot;, f);
+     printf(&quot;g=%d\n&quot;, g);
+  
+     printf(&quot;i=%d\n&quot;, i);
+     printf(&quot;j=%d\n&quot;, j);
+     printf(&quot;k=%d\n&quot;, k);
+  
+     return 0;
+  }
+  
+  /* vim: set expandtab ts=4 sw=3 sts=3 tw=80 :*/
+  +mkdir ./tests/single-exec/00198.c-c2go
+  +c2go transpile -o ./tests/single-exec/00198.c-c2go/main.go ./tests/single-exec/00198.c
+  +cd ./tests/single-exec/00198.c-c2go
+  +go build -o ./tests/single-exec/00198.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00198.c-c2go
+  ./main.go:206:6: d declared and not used
+  +exit 1
+not ok ./tests/single-exec/00199.c
+  #include &lt;stdio.h&gt;
+  
+  void fred()
+  {
+     printf(&quot;In fred()\n&quot;);
+     goto done;
+     printf(&quot;In middle\n&quot;);
+  done:
+     printf(&quot;At end\n&quot;);
+  }
+  
+  void joe()
+  {
+     int b = 5678;
+  
+     printf(&quot;In joe()\n&quot;);
+  
+     {
+        int c = 1234;
+        printf(&quot;c = %d\n&quot;, c);
+        goto outer;
+        printf(&quot;uh-oh\n&quot;);
+     }
+  
+  outer:    
+  
+     printf(&quot;done\n&quot;);
+  }
+  
+  void henry()
+  {
+     int a;
+  
+     printf(&quot;In henry()\n&quot;);
+     goto inner;
+  
+     {
+        int b;
+  inner:    
+        b = 1234;
+        printf(&quot;b = %d\n&quot;, b);
+     }
+  
+     printf(&quot;done\n&quot;);
+  }
+  
+  int main()
+  {
+     fred();
+     joe();
+     henry();
+  
+     return 0;
+  }
+  
+  /* vim: set expandtab ts=4 sw=3 sts=3 tw=80 :*/
+  +mkdir ./tests/single-exec/00199.c-c2go
+  +c2go transpile -o ./tests/single-exec/00199.c-c2go/main.go ./tests/single-exec/00199.c
+  +cd ./tests/single-exec/00199.c-c2go
+  +go build -o ./tests/single-exec/00199.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00199.c-c2go
+  ./main.go:223:7: goto inner jumps into block starting at ./main.go:224:2
+  +exit 1
+not ok ./tests/single-exec/00200.c
+  /* $Id: lshift-type.c 53089 2012-07-06 11:18:26Z vinc17/ypig $
+  
+  Tests on left-shift type, written by Vincent Lefevre &lt;vincent@vinc17.net&gt;.
+  
+  ISO C99 TC3 says: [6.5.7#3] &quot;The integer promotions are performed on
+  each of the operands. The type of the result is that of the promoted
+  left operand.&quot;
+  */
+  
+  #include &lt;stdio.h&gt;
+  
+  #define PTYPE(M) ((M) &lt; 0 || -(M) &lt; 0 ? -1 : 1) * (int) sizeof((M)+0)
+  #define CHECK(X,T) check(#X, PTYPE(X), PTYPE((X) &lt;&lt; (T) 1))
+  #define TEST1(X,T) do { CHECK(X,T); CHECK(X,unsigned T); } while (0)
+  #define TEST2(X)                 \
+    do                             \
+      {                            \
+        TEST1((X),short);          \
+        TEST1((X),int);            \
+        TEST1((X),long);           \
+        TEST1((X),long long);      \
+      }                            \
+    while (0)
+  #define TEST3(X,T) do { TEST2((T)(X)); TEST2((unsigned T)(X)); } while (0)
+  #define TEST4(X)                 \
+    do                             \
+      {                            \
+        TEST3((X),short);          \
+        TEST3((X),int);            \
+        TEST3((X),long);           \
+        TEST3((X),long long);      \
+      }                            \
+   while (0)
+  
+  static int debug, nfailed = 0;
+  
+  static void check (const char *s, int arg1, int shift)
+  {
+    int failed = arg1 != shift;
+    if (debug || failed)
+      printf (&quot;%s %d %d\n&quot;, s, arg1, shift);
+    nfailed += failed;
+  }
+  
+  int main (int argc, char **argv)
+  {
+    debug = argc &gt; 1;
+    TEST4(1);
+    TEST4(-1);
+    printf (&quot;%d test(s) failed\n&quot;, nfailed);
+    return nfailed != 0;
+  }
+  +mkdir ./tests/single-exec/00200.c-c2go
+  +c2go transpile -o ./tests/single-exec/00200.c-c2go/main.go ./tests/single-exec/00200.c
+  panic: cannot do unary on: &amp;ast.BinaryOperator{Addr:0x5da5e90, Pos:ast.Position{File:&quot;/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00200.c&quot;, Line:48, LineEnd:0, Column:119, ColumnEnd:136, StringValue:&quot;&quot;}, Type:&quot;int&quot;, Type2:&quot;&quot;, Operator:&quot;+&quot;, ChildNodes:[]ast.Node{(*ast.ImplicitCastExpr)(0xc000148240), (*ast.IntegerLiteral)(0xc00049ee00)}}
+  
+  goroutine 1 [running]:
+  github.com/elliotchance/c2go/transpiler.transpileUnaryExprOrTypeTraitExpr(0xc0003cfb80, 0xc0000aa5a0, 0xc0000fb250, 0xc0000fb268, 0xc0000fb280, 0xc0004ee7c0, 0xc00065fe20, 0x203000, 0x203000, 0xc00065fe20, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/unary.go:721 +0x491
+  github.com/elliotchance/c2go/transpiler.transpileToExpr(0x7094a0, 0xc0003cfb80, 0xc0000aa5a0, 0x8de300, 0x0, 0x0, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:198 +0x27a
+  github.com/elliotchance/c2go/transpiler.transpileCStyleCastExpr(0xc000148090, 0xc0000aa5a0, 0xc0000fb400, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/cast.go:147 +0x4cc
+  github.com/elliotchance/c2go/transpiler.transpileToExpr(0x708020, 0xc000148090, 0xc0000aa5a0, 0x706c00, 0x0, 0x0, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:186 +0x35a
+  github.com/elliotchance/c2go/transpiler.atomicOperation(0x708020, 0xc000148090, 0xc0000aa5a0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/operators.go:494 +0xa5
+  github.com/elliotchance/c2go/transpiler.transpileBinaryOperator(0xc000499680, 0xc0000aa5a0, 0xc0008bde00, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/binary.go:222 +0xcc6
+  github.com/elliotchance/c2go/transpiler.transpileToExpr(0x707ee0, 0xc000499680, 0xc0000aa5a0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:165 +0xe2f
+  github.com/elliotchance/c2go/transpiler.transpileCallExpr(0xc00033f650, 0xc0000aa5a0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/call.go:312 +0x1349
+  github.com/elliotchance/c2go/transpiler.transpileToExpr(0x708060, 0xc00033f650, 0xc0000aa5a0, 0xc0005d8601, 0x0, 0x0, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:192 +0x7a9
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x708060, 0xc00033f650, 0xc0000aa5a0, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:387 +0x1ad
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x708060, 0xc00033f650, 0xc0000aa5a0, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileCompoundStmt(0xc00033f570, 0xc0000aa5a0, 0xc0005d88c0, 0xc0005d88d8, 0x7081a0, 0xc00033f570, 0x0, 0x0, 0xc0005d88c8, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:21 +0xfb
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7081a0, 0xc00033f570, 0xc0000aa5a0, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:347 +0xcec
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7081a0, 0xc00033f570, 0xc0000aa5a0, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileToBlockStmt(0x7081a0, 0xc00033f570, 0xc0000aa5a0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:38 +0x49
+  github.com/elliotchance/c2go/transpiler.transpileForStmt(0xc000b80fc0, 0xc0000aa5a0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/branch.go:350 +0xa33
+  github.com/elliotchance/c2go/transpiler.transpileDoStmt(0xc00008a660, 0xc0000aa5a0, 0xc0005d8f58, 0xc0005d8f70, 0x708460, 0xc00008a660, 0x74, 0x1, 0x1, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/branch.go:540 +0x2fc
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x708460, 0xc00008a660, 0xc0000aa5a0, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:330 +0xe1d
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x708460, 0xc00008a660, 0xc0000aa5a0, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileCompoundStmt(0xc00033f500, 0xc0000aa5a0, 0xc0005d91e0, 0xc0005d91f8, 0x7081a0, 0xc00033f500, 0x40b339, 0xc0008744a0, 0x20, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:21 +0xfb
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7081a0, 0xc00033f500, 0xc0000aa5a0, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:347 +0xcec
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7081a0, 0xc00033f500, 0xc0000aa5a0, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileToBlockStmt(0x7081a0, 0xc00033f500, 0xc0000aa5a0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:38 +0x49
+  github.com/elliotchance/c2go/transpiler.transpileForStmt(0xc000b80960, 0xc0000aa5a0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/branch.go:350 +0xa33
+  github.com/elliotchance/c2go/transpiler.transpileDoStmt(0xc00008a600, 0xc0000aa5a0, 0xc0005d9878, 0xc0005d9890, 0x708460, 0xc00008a600, 0x40b339, 0xc000874680, 0x4d541a, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/branch.go:540 +0x2fc
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x708460, 0xc00008a600, 0xc0000aa5a0, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:330 +0xe1d
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x708460, 0xc00008a600, 0xc0000aa5a0, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileCompoundStmt(0xc00033f490, 0xc0000aa5a0, 0xc0005d9b00, 0xc0005d9b18, 0x7081a0, 0xc00033f490, 0xc00005d040, 0xc00005d400, 0x28, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:21 +0xfb
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7081a0, 0xc00033f490, 0xc0000aa5a0, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:347 +0xcec
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7081a0, 0xc00033f490, 0xc0000aa5a0, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileToBlockStmt(0x7081a0, 0xc00033f490, 0xc0000aa5a0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:38 +0x49
+  github.com/elliotchance/c2go/transpiler.transpileForStmt(0xc000b80840, 0xc0000aa5a0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/branch.go:350 +0xa33
+  github.com/elliotchance/c2go/transpiler.transpileDoStmt(0xc00008a5a0, 0xc0000aa5a0, 0xc0005da198, 0xc0005da1b0, 0x708460, 0xc00008a5a0, 0x59aa3a, 0xc00065f5dd, 0xc00065f5dd, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/branch.go:540 +0x2fc
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x708460, 0xc00008a5a0, 0xc0000aa5a0, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:330 +0xe1d
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x708460, 0xc00008a5a0, 0xc0000aa5a0, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileCompoundStmt(0xc00033f420, 0xc0000aa5a0, 0xc0005da420, 0xc0005da438, 0x7081a0, 0xc00033f420, 0x203000, 0x203000, 0x3, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:21 +0xfb
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7081a0, 0xc00033f420, 0xc0000aa5a0, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:347 +0xcec
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7081a0, 0xc00033f420, 0xc0000aa5a0, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileToBlockStmt(0x7081a0, 0xc00033f420, 0xc0000aa5a0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:38 +0x49
+  github.com/elliotchance/c2go/transpiler.transpileForStmt(0xc000b80720, 0xc0000aa5a0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/branch.go:350 +0xa33
+  github.com/elliotchance/c2go/transpiler.transpileDoStmt(0xc00008a540, 0xc0000aa5a0, 0xc0005daab8, 0xc0005daad0, 0x708460, 0xc00008a540, 0x10, 0x16, 0x66cfe0, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/branch.go:540 +0x2fc
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x708460, 0xc00008a540, 0xc0000aa5a0, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:330 +0xe1d
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x708460, 0xc00008a540, 0xc0000aa5a0, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileCompoundStmt(0xc00033f180, 0xc0000aa5a0, 0xc0005dad40, 0xc0005dad58, 0x7081a0, 0xc00033f180, 0x0, 0x5555555555555555, 0x5555555555555555, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:21 +0xfb
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7081a0, 0xc00033f180, 0xc0000aa5a0, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:347 +0xcec
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7081a0, 0xc00033f180, 0xc0000aa5a0, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileToBlockStmt(0x7081a0, 0xc00033f180, 0xc0000aa5a0, 0x4, 0xc0006058a8, 0xc000874301, 0x2, 0x2, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:38 +0x49
+  github.com/elliotchance/c2go/transpiler.transpileFunctionDecl(0xc000204a90, 0xc0000aa5a0, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/functions.go:86 +0x28fa
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x7087e0, 0xc000204a90, 0xc0000aa5a0, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:443 +0x44d
+  github.com/elliotchance/c2go/transpiler.transpileTranslationUnitDecl(0xc0000aa5a0, 0xc000074120, 0xc000013000, 0x5e, 0x80, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/translation_unit.go:116 +0x17e
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x709360, 0xc000074120, 0xc0000aa5a0, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:440 +0xb81
+  github.com/elliotchance/c2go/transpiler.TranspileAST(0x7ffc30de09d5, 0x28, 0x6abe92, 0x4, 0xc0000aa5a0, 0x709360, 0xc000074120, 0x3519, 0x3519)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:32 +0x1a2
+  main.Start(0x0, 0xc00008e040, 0x1, 0x1, 0x0, 0x0, 0x0, 0x7ffc30de09d5, 0x28, 0x6abe92, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:297 +0xf29
+  main.runCommand(0xc000068058)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:429 +0x495
+  main.main()
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:352 +0x22
+  +exit 1
+not ok ./tests/single-exec/00204.c
+  // This program is designed to test some arm64-specific things, such as the
+  // calling convention, but should give the same results on any architecture.
+  
+  #include &lt;stdarg.h&gt;
+  #include &lt;stdint.h&gt;
+  #include &lt;stdio.h&gt;
+  
+  struct s1 { char x[1]; } s1 = { &quot;0&quot; };
+  struct s2 { char x[2]; } s2 = { &quot;12&quot; };
+  struct s3 { char x[3]; } s3 = { &quot;345&quot; };
+  struct s4 { char x[4]; } s4 = { &quot;6789&quot; };
+  struct s5 { char x[5]; } s5 = { &quot;abcde&quot; };
+  struct s6 { char x[6]; } s6 = { &quot;fghijk&quot; };
+  struct s7 { char x[7]; } s7 = { &quot;lmnopqr&quot; };
+  struct s8 { char x[8]; } s8 = { &quot;stuvwxyz&quot; };
+  struct s9 { char x[9]; } s9 = { &quot;ABCDEFGHI&quot; };
+  struct s10 { char x[10]; } s10 = { &quot;JKLMNOPQRS&quot; };
+  struct s11 { char x[11]; } s11 = { &quot;TUVWXYZ0123&quot; };
+  struct s12 { char x[12]; } s12 = { &quot;456789abcdef&quot; };
+  struct s13 { char x[13]; } s13 = { &quot;ghijklmnopqrs&quot; };
+  struct s14 { char x[14]; } s14 = { &quot;tuvwxyzABCDEFG&quot; };
+  struct s15 { char x[15]; } s15 = { &quot;HIJKLMNOPQRSTUV&quot; };
+  struct s16 { char x[16]; } s16 = { &quot;WXYZ0123456789ab&quot; };
+  struct s17 { char x[17]; } s17 = { &quot;cdefghijklmnopqrs&quot; };
+  
+  struct hfa11 { float a; } hfa11 = { 11.1 };
+  struct hfa12 { float a, b; } hfa12 = { 12.1, 12.2 };
+  struct hfa13 { float a, b, c; } hfa13 = { 13.1, 13.2, 13.3 };
+  struct hfa14 { float a, b, c, d; } hfa14 = { 14.1, 14.2, 14.3, 14.4 };
+  
+  struct hfa21 { double a; } hfa21 = { 21.1 };
+  struct hfa22 { double a, b; } hfa22 = { 22.1, 22.2 };
+  struct hfa23 { double a, b, c; } hfa23 = { 23.1, 23.2, 23.3 };
+  struct hfa24 { double a, b, c, d; } hfa24 = { 24.1, 24.2, 24.3, 24.4 };
+  
+  struct hfa31 { long double a; } hfa31 = { 31.1 };
+  struct hfa32 { long double a, b; } hfa32 = { 32.1, 32.2 };
+  struct hfa33 { long double a, b, c; } hfa33 = { 33.1, 33.2, 33.3 };
+  struct hfa34 { long double a, b, c, d; } hfa34 = { 34.1, 34.2, 34.3, 34.4 };
+  
+  void fa_s1(struct s1 a) { printf(&quot;%.1s\n&quot;, a.x); }
+  void fa_s2(struct s2 a) { printf(&quot;%.2s\n&quot;, a.x); }
+  void fa_s3(struct s3 a) { printf(&quot;%.3s\n&quot;, a.x); }
+  void fa_s4(struct s4 a) { printf(&quot;%.4s\n&quot;, a.x); }
+  void fa_s5(struct s5 a) { printf(&quot;%.5s\n&quot;, a.x); }
+  void fa_s6(struct s6 a) { printf(&quot;%.6s\n&quot;, a.x); }
+  void fa_s7(struct s7 a) { printf(&quot;%.7s\n&quot;, a.x); }
+  void fa_s8(struct s8 a) { printf(&quot;%.8s\n&quot;, a.x); }
+  void fa_s9(struct s9 a) { printf(&quot;%.9s\n&quot;, a.x); }
+  void fa_s10(struct s10 a) { printf(&quot;%.10s\n&quot;, a.x); }
+  void fa_s11(struct s11 a) { printf(&quot;%.11s\n&quot;, a.x); }
+  void fa_s12(struct s12 a) { printf(&quot;%.12s\n&quot;, a.x); }
+  void fa_s13(struct s13 a) { printf(&quot;%.13s\n&quot;, a.x); }
+  void fa_s14(struct s14 a) { printf(&quot;%.14s\n&quot;, a.x); }
+  void fa_s15(struct s15 a) { printf(&quot;%.15s\n&quot;, a.x); }
+  void fa_s16(struct s16 a) { printf(&quot;%.16s\n&quot;, a.x); }
+  void fa_s17(struct s17 a) { printf(&quot;%.17s\n&quot;, a.x); }
+  
+  void fa_hfa11(struct hfa11 a)
+  { printf(&quot;%.1f\n&quot;, a.a); }
+  void fa_hfa12(struct hfa12 a)
+  { printf(&quot;%.1f %.1f\n&quot;, a.a, a.a); }
+  void fa_hfa13(struct hfa13 a)
+  { printf(&quot;%.1f %.1f %.1f\n&quot;, a.a, a.b, a.c); }
+  void fa_hfa14(struct hfa14 a)
+  { printf(&quot;%.1f %.1f %.1f %.1f\n&quot;, a.a, a.b, a.c, a.d); }
+  
+  void fa_hfa21(struct hfa21 a)
+  { printf(&quot;%.1f\n&quot;, a.a); }
+  void fa_hfa22(struct hfa22 a)
+  { printf(&quot;%.1f %.1f\n&quot;, a.a, a.a); }
+  void fa_hfa23(struct hfa23 a)
+  { printf(&quot;%.1f %.1f %.1f\n&quot;, a.a, a.b, a.c); }
+  void fa_hfa24(struct hfa24 a)
+  { printf(&quot;%.1f %.1f %.1f %.1f\n&quot;, a.a, a.b, a.c, a.d); }
+  
+  void fa_hfa31(struct hfa31 a)
+  { printf(&quot;%.1Lf\n&quot;, a.a); }
+  void fa_hfa32(struct hfa32 a)
+  { printf(&quot;%.1Lf %.1Lf\n&quot;, a.a, a.a); }
+  void fa_hfa33(struct hfa33 a)
+  { printf(&quot;%.1Lf %.1Lf %.1Lf\n&quot;, a.a, a.b, a.c); }
+  void fa_hfa34(struct hfa34 a)
+  { printf(&quot;%.1Lf %.1Lf %.1Lf %.1Lf\n&quot;, a.a, a.b, a.c, a.d); }
+  
+  void fa1(struct s8 a, struct s9 b, struct s10 c, struct s11 d,
+           struct s12 e, struct s13 f)
+  {
+      printf(&quot;%.3s %.3s %.3s %.3s %.3s %.3s\n&quot;, a.x, b.x, c.x, d.x, e.x, f.x);
+  }
+  
+  void fa2(struct s9 a, struct s10 b, struct s11 c, struct s12 d,
+           struct s13 e, struct s14 f)
+  {
+      printf(&quot;%.3s %.3s %.3s %.3s %.3s %.3s\n&quot;, a.x, b.x, c.x, d.x, e.x, f.x);
+  }
+  
+  void fa3(struct hfa14 a, struct hfa23 b, struct hfa32 c)
+  {
+      printf(&quot;%.1f %.1f %.1f %.1f %.1Lf %.1Lf\n&quot;,
+             a.a, a.d, b.a, b.c, c.a, c.b);
+  }
+  
+  void fa4(struct s1 a, struct hfa14 b, struct s2 c, struct hfa24 d,
+           struct s3 e, struct hfa34 f)
+  {
+      printf(&quot;%.1s %.1f %.1f %.2s %.1f %.1f %.3s %.1Lf %.1Lf\n&quot;,
+             a.x, b.a, b.d, c.x, d.a, d.d, e.x, f.a, f.d);
+  }
+  
+  void arg(void)
+  {
+      printf(&quot;Arguments:\n&quot;);
+      fa_s1(s1);
+      fa_s2(s2);
+      fa_s3(s3);
+      fa_s4(s4);
+      fa_s5(s5);
+      fa_s6(s6);
+      fa_s7(s7);
+      fa_s8(s8);
+      fa_s9(s9);
+      fa_s10(s10);
+      fa_s11(s11);
+      fa_s12(s12);
+      fa_s13(s13);
+      fa_s14(s14);
+      fa_s15(s15);
+      fa_s16(s16);
+      fa_s17(s17);
+      fa_hfa11(hfa11);
+      fa_hfa12(hfa12);
+      fa_hfa13(hfa13);
+      fa_hfa14(hfa14);
+      fa_hfa21(hfa21);
+      fa_hfa22(hfa22);
+      fa_hfa23(hfa23);
+      fa_hfa24(hfa24);
+      fa_hfa31(hfa31);
+      fa_hfa32(hfa32);
+      fa_hfa33(hfa33);
+      fa_hfa34(hfa34);
+      fa1(s8, s9, s10, s11, s12, s13);
+      fa2(s9, s10, s11, s12, s13, s14);
+      fa3(hfa14, hfa23, hfa32);
+      fa4(s1, hfa14, s2, hfa24, s3, hfa34);
+  }
+  
+  struct s1 fr_s1(void) { return s1; }
+  struct s2 fr_s2(void) { return s2; }
+  struct s3 fr_s3(void) { return s3; }
+  struct s4 fr_s4(void) { return s4; }
+  struct s5 fr_s5(void) { return s5; }
+  struct s6 fr_s6(void) { return s6; }
+  struct s7 fr_s7(void) { return s7; }
+  struct s8 fr_s8(void) { return s8; }
+  struct s9 fr_s9(void) { return s9; }
+  struct s10 fr_s10(void) { return s10; }
+  struct s11 fr_s11(void) { return s11; }
+  struct s12 fr_s12(void) { return s12; }
+  struct s13 fr_s13(void) { return s13; }
+  struct s14 fr_s14(void) { return s14; }
+  struct s15 fr_s15(void) { return s15; }
+  struct s16 fr_s16(void) { return s16; }
+  struct s17 fr_s17(void) { return s17; }
+  
+  struct hfa11 fr_hfa11(void) { return hfa11; }
+  struct hfa12 fr_hfa12(void) { return hfa12; }
+  struct hfa13 fr_hfa13(void) { return hfa13; }
+  struct hfa14 fr_hfa14(void) { return hfa14; }
+  
+  struct hfa21 fr_hfa21(void) { return hfa21; }
+  struct hfa22 fr_hfa22(void) { return hfa22; }
+  struct hfa23 fr_hfa23(void) { return hfa23; }
+  struct hfa24 fr_hfa24(void) { return hfa24; }
+  
+  struct hfa31 fr_hfa31(void) { return hfa31; }
+  struct hfa32 fr_hfa32(void) { return hfa32; }
+  struct hfa33 fr_hfa33(void) { return hfa33; }
+  struct hfa34 fr_hfa34(void) { return hfa34; }
+  
+  void ret(void)
+  {
+      struct s1 t1 = fr_s1();
+      struct s2 t2 = fr_s2();
+      struct s3 t3 = fr_s3();
+      struct s4 t4 = fr_s4();
+      struct s5 t5 = fr_s5();
+      struct s6 t6 = fr_s6();
+      struct s7 t7 = fr_s7();
+      struct s8 t8 = fr_s8();
+      struct s9 t9 = fr_s9();
+      struct s10 t10 = fr_s10();
+      struct s11 t11 = fr_s11();
+      struct s12 t12 = fr_s12();
+      struct s13 t13 = fr_s13();
+      struct s14 t14 = fr_s14();
+      struct s15 t15 = fr_s15();
+      struct s16 t16 = fr_s16();
+      struct s17 t17 = fr_s17();
+      printf(&quot;Return values:\n&quot;);
+      printf(&quot;%.1s\n&quot;, t1.x);
+      printf(&quot;%.2s\n&quot;, t2.x);
+      printf(&quot;%.3s\n&quot;, t3.x);
+      printf(&quot;%.4s\n&quot;, t4.x);
+      printf(&quot;%.5s\n&quot;, t5.x);
+      printf(&quot;%.6s\n&quot;, t6.x);
+      printf(&quot;%.7s\n&quot;, t7.x);
+      printf(&quot;%.8s\n&quot;, t8.x);
+      printf(&quot;%.9s\n&quot;, t9.x);
+      printf(&quot;%.10s\n&quot;, t10.x);
+      printf(&quot;%.11s\n&quot;, t11.x);
+      printf(&quot;%.12s\n&quot;, t12.x);
+      printf(&quot;%.13s\n&quot;, t13.x);
+      printf(&quot;%.14s\n&quot;, t14.x);
+      printf(&quot;%.15s\n&quot;, t15.x);
+      printf(&quot;%.16s\n&quot;, t16.x);
+      printf(&quot;%.17s\n&quot;, t17.x);
+      printf(&quot;%.1f\n&quot;, fr_hfa11().a);
+      printf(&quot;%.1f %.1f\n&quot;, fr_hfa12().a, fr_hfa12().b);
+      printf(&quot;%.1f %.1f\n&quot;, fr_hfa13().a, fr_hfa13().c);
+      printf(&quot;%.1f %.1f\n&quot;, fr_hfa14().a, fr_hfa14().d);
+      printf(&quot;%.1f\n&quot;, fr_hfa21().a);
+      printf(&quot;%.1f %.1f\n&quot;, fr_hfa22().a, fr_hfa22().b);
+      printf(&quot;%.1f %.1f\n&quot;, fr_hfa23().a, fr_hfa23().c);
+      printf(&quot;%.1f %.1f\n&quot;, fr_hfa24().a, fr_hfa24().d);
+      printf(&quot;%.1Lf\n&quot;, fr_hfa31().a);
+      printf(&quot;%.1Lf %.1Lf\n&quot;, fr_hfa32().a, fr_hfa32().b);
+      printf(&quot;%.1Lf %.1Lf\n&quot;, fr_hfa33().a, fr_hfa33().c);
+      printf(&quot;%.1Lf %.1Lf\n&quot;, fr_hfa34().a, fr_hfa34().d);
+  }
+  
+  int match(const char **s, const char *f)
+  {
+      const char *p = *s;
+      for (p = *s; *f &amp;&amp; *f == *p; f++, p++)
+          ;
+      if (!*f) {
+          *s = p - 1;
+          return 1;
+      }
+      return 0;
+  }
+  
+  void myprintf(const char *format, ...)
+  {
+      const char *s;
+      va_list ap;
+      va_start(ap, format);
+      for (s = format; *s; s++) {
+          if (match(&amp;s, &quot;%7s&quot;)) {
+              struct s7 t7 = va_arg(ap, struct s7);
+              printf(&quot;%.7s&quot;, t7.x);
+          }
+          else if (match(&amp;s, &quot;%9s&quot;)) {
+              struct s9 t9 = va_arg(ap, struct s9);
+              printf(&quot;%.9s&quot;, t9.x);
+          }
+          else if (match(&amp;s, &quot;%hfa11&quot;)) {
+              struct hfa11 x = va_arg(ap, struct hfa11);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.a);
+          }
+          else if (match(&amp;s, &quot;%hfa12&quot;)) {
+              struct hfa12 x = va_arg(ap, struct hfa12);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.b);
+          }
+          else if (match(&amp;s, &quot;%hfa13&quot;)) {
+              struct hfa13 x = va_arg(ap, struct hfa13);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.c);
+          }
+          else if (match(&amp;s, &quot;%hfa14&quot;)) {
+              struct hfa14 x = va_arg(ap, struct hfa14);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.d);
+          }
+          else if (match(&amp;s, &quot;%hfa21&quot;)) {
+              struct hfa21 x = va_arg(ap, struct hfa21);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.a);
+          }
+          else if (match(&amp;s, &quot;%hfa22&quot;)) {
+              struct hfa22 x = va_arg(ap, struct hfa22);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.b);
+          }
+          else if (match(&amp;s, &quot;%hfa23&quot;)) {
+              struct hfa23 x = va_arg(ap, struct hfa23);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.c);
+          }
+          else if (match(&amp;s, &quot;%hfa24&quot;)) {
+              struct hfa24 x = va_arg(ap, struct hfa24);
+              printf(&quot;%.1f,%.1f&quot;, x.a, x.d);
+          }
+          else if (match(&amp;s, &quot;%hfa31&quot;)) {
+              struct hfa31 x = va_arg(ap, struct hfa31);
+              printf(&quot;%.1Lf,%.1Lf&quot;, x.a, x.a);
+          }
+          else if (match(&amp;s, &quot;%hfa32&quot;)) {
+              struct hfa32 x = va_arg(ap, struct hfa32);
+              printf(&quot;%.1Lf,%.1Lf&quot;, x.a, x.b);
+          }
+          else if (match(&amp;s, &quot;%hfa33&quot;)) {
+              struct hfa33 x = va_arg(ap, struct hfa33);
+              printf(&quot;%.1Lf,%.1Lf&quot;, x.a, x.c);
+          }
+          else if (match(&amp;s, &quot;%hfa34&quot;)) {
+              struct hfa34 x = va_arg(ap, struct hfa34);
+              printf(&quot;%.1Lf,%.1Lf&quot;, x.a, x.d);
+          }
+          else
+              putchar(*s);
+      }
+      putchar(&#x27;\n&#x27;);
+  }
+  
+  void stdarg(void)
+  {
+      printf(&quot;stdarg:\n&quot;);
+      myprintf(&quot;%9s %9s %9s %9s %9s %9s&quot;, s9, s9, s9, s9, s9, s9);
+      myprintf(&quot;%7s %9s %9s %9s %9s %9s&quot;, s7, s9, s9, s9, s9, s9);
+  
+      myprintf(&quot;HFA long double:&quot;);
+      myprintf(&quot;%hfa34 %hfa34 %hfa34 %hfa34&quot;, hfa34, hfa34, hfa34, hfa34);
+      myprintf(&quot;%hfa33 %hfa34 %hfa34 %hfa34&quot;, hfa33, hfa34, hfa34, hfa34);
+      myprintf(&quot;%hfa32 %hfa34 %hfa34 %hfa34&quot;, hfa32, hfa34, hfa34, hfa34);
+      myprintf(&quot;%hfa31 %hfa34 %hfa34 %hfa34&quot;, hfa31, hfa34, hfa34, hfa34);
+  
+      myprintf(&quot;%hfa32 %hfa33 %hfa33 %hfa33 %hfa33&quot;,
+               hfa32, hfa33, hfa33, hfa33, hfa33);
+      myprintf(&quot;%hfa31 %hfa33 %hfa33 %hfa33 %hfa33&quot;,
+               hfa31, hfa33, hfa33, hfa33, hfa33);
+      myprintf(&quot;%hfa33 %hfa33 %hfa33 %hfa33&quot;,
+               hfa33, hfa33, hfa33, hfa33);
+  
+      myprintf(&quot;%hfa34 %hfa32 %hfa32 %hfa32 %hfa32&quot;,
+               hfa34, hfa32, hfa32, hfa32, hfa32);
+      myprintf(&quot;%hfa33 %hfa32 %hfa32 %hfa32 %hfa32&quot;,
+               hfa33, hfa32, hfa32, hfa32, hfa32);
+  
+      myprintf(&quot;%hfa34 %hfa32 %hfa31 %hfa31 %hfa31 %hfa31&quot;,
+               hfa34, hfa32, hfa31, hfa31, hfa31, hfa31);
+  
+      myprintf(&quot;HFA double:&quot;);
+      myprintf(&quot;%hfa24 %hfa24 %hfa24 %hfa24&quot;, hfa24, hfa24, hfa24, hfa24);
+      myprintf(&quot;%hfa23 %hfa24 %hfa24 %hfa24&quot;, hfa23, hfa24, hfa24, hfa24);
+      myprintf(&quot;%hfa22 %hfa24 %hfa24 %hfa24&quot;, hfa22, hfa24, hfa24, hfa24);
+      myprintf(&quot;%hfa21 %hfa24 %hfa24 %hfa24&quot;, hfa21, hfa24, hfa24, hfa24);
+  
+      myprintf(&quot;%hfa22 %hfa23 %hfa23 %hfa23 %hfa23&quot;,
+               hfa22, hfa23, hfa23, hfa23, hfa23);
+      myprintf(&quot;%hfa21 %hfa23 %hfa23 %hfa23 %hfa23&quot;,
+               hfa21, hfa23, hfa23, hfa23, hfa23);
+      myprintf(&quot;%hfa23 %hfa23 %hfa23 %hfa23&quot;,
+               hfa23, hfa23, hfa23, hfa23);
+  
+      myprintf(&quot;%hfa24 %hfa22 %hfa22 %hfa22 %hfa22&quot;,
+               hfa24, hfa22, hfa22, hfa22, hfa22);
+      myprintf(&quot;%hfa23 %hfa22 %hfa22 %hfa22 %hfa22&quot;,
+               hfa23, hfa22, hfa22, hfa22, hfa22);
+  
+      myprintf(&quot;%hfa24 %hfa22 %hfa21 %hfa21 %hfa21 %hfa21&quot;,
+               hfa24, hfa22, hfa21, hfa21, hfa21, hfa21);
+  
+      myprintf(&quot;HFA float:&quot;);
+      myprintf(&quot;%hfa14 %hfa14 %hfa14 %hfa14&quot;, hfa14, hfa14, hfa14, hfa14);
+      myprintf(&quot;%hfa13 %hfa14 %hfa14 %hfa14&quot;, hfa13, hfa14, hfa14, hfa14);
+      myprintf(&quot;%hfa12 %hfa14 %hfa14 %hfa14&quot;, hfa12, hfa14, hfa14, hfa14);
+      myprintf(&quot;%hfa11 %hfa14 %hfa14 %hfa14&quot;, hfa11, hfa14, hfa14, hfa14);
+  
+      myprintf(&quot;%hfa12 %hfa13 %hfa13 %hfa13 %hfa13&quot;,
+               hfa12, hfa13, hfa13, hfa13, hfa13);
+      myprintf(&quot;%hfa11 %hfa13 %hfa13 %hfa13 %hfa13&quot;,
+               hfa11, hfa13, hfa13, hfa13, hfa13);
+      myprintf(&quot;%hfa13 %hfa13 %hfa13 %hfa13&quot;,
+               hfa13, hfa13, hfa13, hfa13);
+  
+      myprintf(&quot;%hfa14 %hfa12 %hfa12 %hfa12 %hfa12&quot;,
+               hfa14, hfa12, hfa12, hfa12, hfa12);
+      myprintf(&quot;%hfa13 %hfa12 %hfa12 %hfa12 %hfa12&quot;,
+               hfa13, hfa12, hfa12, hfa12, hfa12);
+  
+      myprintf(&quot;%hfa14 %hfa12 %hfa11 %hfa11 %hfa11 %hfa11&quot;,
+               hfa14, hfa12, hfa11, hfa11, hfa11, hfa11);
+  }
+  
+  void pll(unsigned long long x)
+  {
+      printf(&quot;%llx\n&quot;, x);
+  }
+  
+  void movi(void)
+  {
+      printf(&quot;MOVI:\n&quot;);
+      pll(0);
+      pll(0xabcd);
+      pll(0xabcd0000);
+      pll(0xabcd00000000);
+      pll(0xabcd000000000000);
+      pll(0xffffabcd);
+      pll(0xabcdffff);
+      pll(0xffffffffffffabcd);
+      pll(0xffffffffabcdffff);
+      pll(0xffffabcdffffffff);
+      pll(0xabcdffffffffffff);
+      pll(0xaaaaaaaa);
+      pll(0x5555555555555555);
+      pll(0x77777777);
+      pll(0x3333333333333333);
+      pll(0xf8f8f8f8);
+      pll(0x1e1e1e1e1e1e1e1e);
+      pll(0x3f803f80);
+      pll(0x01ff01ff01ff01ff);
+      pll(0x007fffc0);
+      pll(0x03fff80003fff800);
+      pll(0x0007fffffffffe00);
+  
+      pll(0xabcd1234);
+      pll(0xabcd00001234);
+      pll(0xabcd000000001234);
+      pll(0xabcd12340000);
+      pll(0xabcd000012340000);
+      pll(0xabcd123400000000);
+      pll(0xffffffffabcd1234);
+      pll(0xffffabcdffff1234);
+      pll(0xabcdffffffff1234);
+      pll(0xffffabcd1234ffff);
+      pll(0xabcdffff1234ffff);
+      pll(0xabcd1234ffffffff);
+  
+      pll(0xffffef0123456789);
+      pll(0xabcdef012345ffff);
+  
+      pll(0xabcdef0123456789);
+  }
+  
+  static uint32_t addip0(uint32_t x) { return x + 0; }
+  static uint64_t sublp0(uint64_t x) { return x - 0; }
+  static uint32_t addip123(uint32_t x) { return x + 123; }
+  static uint64_t addlm123(uint64_t x) { return x + -123; }
+  static uint64_t sublp4095(uint64_t x) { return x - 4095; }
+  static uint32_t subim503808(uint32_t x) { return x - -503808; }
+  static uint64_t addp12345(uint64_t x) { return x + 12345; }
+  static uint32_t subp12345(uint32_t x) { return x - 12345; }
+  
+  static uint32_t mvni(uint32_t x) { return 0xffffffff - x; }
+  static uint64_t negl(uint64_t x) { return 0 - x; }
+  static uint32_t rsbi123(uint32_t x) { return 123 - x; }
+  static uint64_t rsbl123(uint64_t x) { return 123 - x; }
+  
+  static uint32_t andi0(uint32_t x) { return x &amp; 0; }
+  static uint64_t andlm1(uint64_t x) { return x &amp; -1; }
+  static uint64_t orrl0(uint64_t x) { return x | 0; }
+  static uint32_t orrim1(uint32_t x) { return x | -1; }
+  static uint32_t eori0(uint32_t x) { return x ^ 0; }
+  static uint64_t eorlm1(uint64_t x) { return x ^ -1; }
+  static uint32_t and0xf0(uint32_t x) { return x &amp; 0xf0; }
+  static uint64_t orr0xf0(uint64_t x) { return x | 0xf0; }
+  static uint64_t eor0xf0(uint64_t x) { return x ^ 0xf0; }
+  
+  static uint32_t lsli0(uint32_t x) { return x &lt;&lt; 0; }
+  static uint32_t lsri0(uint32_t x) { return x &gt;&gt; 0; }
+  static int64_t asrl0(int64_t x) { return x &gt;&gt; 0; }
+  static uint32_t lsli1(uint32_t x) { return x &lt;&lt; 1; }
+  static uint32_t lsli31(uint32_t x) { return x &lt;&lt; 31; }
+  static uint64_t lsll1(uint64_t x) { return x &lt;&lt; 1; }
+  static uint64_t lsll63(uint64_t x) { return x &lt;&lt; 63; }
+  static uint32_t lsri1(uint32_t x) { return x &gt;&gt; 1; }
+  static uint32_t lsri31(uint32_t x) { return x &gt;&gt; 31; }
+  static uint64_t lsrl1(uint64_t x) { return x &gt;&gt; 1; }
+  static uint64_t lsrl63(uint64_t x) { return x &gt;&gt; 63; }
+  static int32_t asri1(int32_t x) { return x &gt;&gt; 1; }
+  static int32_t asri31(int32_t x) { return x &gt;&gt; 31; }
+  static int64_t asrl1(int64_t x) { return x &gt;&gt; 1; }
+  static int64_t asrl63(int64_t x) { return x &gt;&gt; 63; }
+  
+  void opi(void)
+  {
+      int x = 1000;
+      pll(addip0(x));
+      pll(sublp0(x));
+      pll(addip123(x));
+      pll(addlm123(x));
+      pll(sublp4095(x));
+      pll(subim503808(x));
+      pll(addp12345(x));
+      pll(subp12345(x));
+      pll(mvni(x));
+      pll(negl(x));
+      pll(rsbi123(x));
+      pll(rsbl123(x));
+      pll(andi0(x));
+      pll(andlm1(x));
+      pll(orrl0(x));
+      pll(orrim1(x));
+      pll(eori0(x));
+      pll(eorlm1(x));
+      pll(and0xf0(x));
+      pll(orr0xf0(x));
+      pll(eor0xf0(x));
+      pll(lsli0(x));
+      pll(lsri0(x));
+      pll(asrl0(x));
+      pll(lsli1(x));
+      pll(lsli31(x));
+      pll(lsll1(x));
+      pll(lsll63(x));
+      pll(lsri1(x));
+      pll(lsri31(x));
+      pll(lsrl1(x));
+      pll(lsrl63(x));
+      pll(asri1(x));
+      pll(asri31(x));
+      pll(asrl1(x));
+      pll(asrl63(x));
+  }
+  
+  void pcs(void)
+  {
+      arg();
+      ret();
+      stdarg();
+      movi();
+      opi();
+  }
+  
+  int main()
+  {
+      pcs();
+      return 0;
+  }
+  +mkdir ./tests/single-exec/00204.c-c2go
+  +c2go transpile -o ./tests/single-exec/00204.c-c2go/main.go ./tests/single-exec/00204.c
+  +cd ./tests/single-exec/00204.c-c2go
+  +go build -o ./tests/single-exec/00204.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00204.c-c2go
+  ./main.go:239:5: s1 redeclared in this block
+  	previous declaration at ./main.go:235:6
+  ./main.go:245:5: s2 redeclared in this block
+  	previous declaration at ./main.go:241:6
+  ./main.go:251:5: s3 redeclared in this block
+  	previous declaration at ./main.go:247:6
+  ./main.go:257:5: s4 redeclared in this block
+  	previous declaration at ./main.go:253:6
+  ./main.go:263:5: s5 redeclared in this block
+  	previous declaration at ./main.go:259:6
+  ./main.go:269:5: s6 redeclared in this block
+  	previous declaration at ./main.go:265:6
+  ./main.go:275:5: s7 redeclared in this block
+  	previous declaration at ./main.go:271:6
+  ./main.go:281:5: s8 redeclared in this block
+  	previous declaration at ./main.go:277:6
+  ./main.go:287:5: s9 redeclared in this block
+  	previous declaration at ./main.go:283:6
+  ./main.go:293:5: s10 redeclared in this block
+  	previous declaration at ./main.go:289:6
+  ./main.go:293:5: too many errors
+  +exit 1
+not ok ./tests/single-exec/00205.c
+  #include &lt;stdio.h&gt;
+  
+  /* This test is a snippet from the J interpreter */
+  
+  typedef long I;
+  typedef struct{I c[4];I b,e,k;} PT;
+  
+  PT cases[] = {
+   ((I)4194304L +(I)2097152L +(I)67108864L), (I)262144L, (((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), -1L, 1,2,1,
+   ((I)+4194304L +(I)2097152L +(I)67108864L)+( (I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), (I)262144L, (I)262144L, (((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), 2,3,2,
+   ((I)4194304L +(I)2097152L +(I)67108864L)+( (I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), (((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), (I)262144L, (((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), 1,3,2,
+   ((I)4194304L +(I)2097152L +(I)67108864L)+( (I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), (I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), (I)524288L, -1L, 1,2,1,
+   ((I)4194304L +(I)2097152L +(I)67108864L)+( (I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), (I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), (I)1048576L, (I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), 1,3,1,
+   ((I)4194304L +(I)2097152L +(I)67108864L)+( (I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), (I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), (I)262144L, (I)262144L, 1,3,1,
+   ((I)4194304L +(I)2097152L +(I)67108864L), ((I)1048576L +(I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), ((I)1048576L +(I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), -1L, 1,2,1,
+   (I)33554432L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L), (I)2097152L, ((I)1048576L +(I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), -1L, 0,2,1,
+   (I)67108864L, ((I)1048576L +(I)524288L +(I)262144L +(((I)1L +(I)256L +(I)4L +(I)8L +(I)16L +(I)64L +(I)128L +(I)268435456L +(I)536870912L +(I)1024L +(I)4096L +(I)8192L +(I)16384L)+((I)2L +(I)131072L +(I)2048L)+(I)32L +(I)32768L +(I)65536L)), (I)134217728L, -1L, 0,2,0,
+  };
+  
+  int main() {
+      int i, j;
+  
+      for(j=0; j &lt; sizeof(cases)/sizeof(cases[0]); j++) {
+  	for(i=0; i &lt; sizeof(cases-&gt;c)/sizeof(cases-&gt;c[0]); i++)
+  	    printf(&quot;cases[%d].c[%d]=%ld\n&quot;, j, i, cases[j].c[i]);
+  
+  	printf(&quot;cases[%d].b=%ld\n&quot;, j, cases[j].b);
+  	printf(&quot;cases[%d].e=%ld\n&quot;, j, cases[j].e);
+  	printf(&quot;cases[%d].k=%ld\n&quot;, j, cases[j].k);
+  	printf(&quot;\n&quot;);
+      }
+      return 0;
+  }
+  +mkdir ./tests/single-exec/00205.c-c2go
+  +c2go transpile -o ./tests/single-exec/00205.c-c2go/main.go ./tests/single-exec/00205.c
+  +cd ./tests/single-exec/00205.c-c2go
+  +go build -o ./tests/single-exec/00205.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00205.c-c2go
+  ./main.go:201:29: cannot use []I literal (type []I) as type [4]I in field value
+  ./main.go:201:30: cannot use int32(I(4194304) + I(2097152) + I(67108864)) (type int32) as type I in array or slice literal
+  ./main.go:201:91: cannot use int32(I(1) + I(256) + I(4) + I(8) + I(16) + I(64) + I(128) + I(268435456) + I(536870912) + I(1024) + I(4096) + I(8192) + I(16384) + (I(2) + I(131072) + I(2048)) + I(32) + I(32768) + I(65536)) (type int32) as type I in array or slice literal
+  ./main.go:201: cannot use int32(I(1) + I(256) + I(4) + I(8) + I(16) + I(64) + I(128) + I(268435456) + I(536870912) + I(1024) + I(4096) + I(8192) + I(16384) + (I(2) + I(131072) + I(2048)) + I(32) + I(32768) + I(65536)) (type int32) as type I in array or slice literal
+  ./main.go:201: cannot use []I literal (type []I) as type [4]I in field value
+  ./main.go:201: cannot use int32(I(1) + I(256) + I(4) + I(8) + I(16) + I(64) + I(128) + I(268435456) + I(536870912) + I(1024) + I(4096) + I(8192) + I(16384) + (I(2) + I(131072) + I(2048)) + I(32) + I(32768) + I(65536)) (type int32) as type I in array or slice literal
+  ./main.go:201: cannot use []I literal (type []I) as type [4]I in field value
+  ./main.go:201: cannot use int32(I(4194304) + I(2097152) + I(67108864)) (type int32) as type I in array or slice literal
+  ./main.go:201: cannot use int32(I(1048576) + I(524288) + I(262144) + (I(1) + I(256) + I(4) + I(8) + I(16) + I(64) + I(128) + I(268435456) + I(536870912) + I(1024) + I(4096) + I(8192) + I(16384) + (I(2) + I(131072) + I(2048)) + I(32) + I(32768) + I(65536))) (type int32) as type I in array or slice literal
+  ./main.go:201: cannot use []I literal (type []I) as type [4]I in field value
+  ./main.go:201: too many errors
+  +exit 1
+not ok ./tests/single-exec/00207.c
+  #include &lt;stdio.h&gt;
+  
+  /* This test segfaults as of April 27, 2015. */
+  void f1(int argc)
+  {
+    char test[argc];
+    if(0)
+    label:
+      printf(&quot;boom!\n&quot;);
+    if(argc-- == 0)
+      return;
+    goto label;
+  }
+  
+  /* This segfaulted on 2015-11-19. */
+  void f2(void)
+  {
+      goto start;
+      {
+          int a[1 &amp;&amp; 1]; /* not a variable-length array */
+          int b[1 || 1]; /* not a variable-length array */
+          int c[1 ? 1 : 1]; /* not a variable-length array */
+      start:
+          a[0] = 0;
+          b[0] = 0;
+          c[0] = 0;
+      }
+  }
+  
+  void f3(void)
+  {
+      printf(&quot;%d\n&quot;, 0 ? printf(&quot;x1\n&quot;) : 11);
+      printf(&quot;%d\n&quot;, 1 ? 12 : printf(&quot;x2\n&quot;));
+      printf(&quot;%d\n&quot;, 0 &amp;&amp; printf(&quot;x3\n&quot;));
+      printf(&quot;%d\n&quot;, 1 || printf(&quot;x4\n&quot;));
+  }
+  
+  int main()
+  {
+    f1(2);
+    f2();
+    f3();
+  
+    return 0;
+  }
+  +mkdir ./tests/single-exec/00207.c-c2go
+  +c2go transpile -o ./tests/single-exec/00207.c-c2go/main.go ./tests/single-exec/00207.c
+  +cd ./tests/single-exec/00207.c-c2go
+  +go build -o ./tests/single-exec/00207.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00207.c-c2go
+  ./main.go:214:7: goto label jumps into block starting at ./main.go:201:19
+  ./main.go:224:7: goto start jumps into block starting at ./main.go:225:2
+  +exit 1
+not ok ./tests/single-exec/00208.c
+  #include &lt;stdio.h&gt;
+  struct wchar {
+      char *data; char mem[];
+  };
+  struct wint {
+      char *data; int mem[];
+  };
+  int f1char (void) {
+      char s[9]=&quot;nonono&quot;;
+      struct wchar q = {&quot;bugs&quot;};
+      return !s[0];
+  }
+  int f1int (void) {
+      char s[9]=&quot;nonono&quot;;
+      struct wint q = {&quot;bugs&quot;};
+      return !s[0];
+  }
+  int main (void) {
+     char s[9]=&quot;nonono&quot;;
+     static struct wchar q = {&quot;bugs&quot;, {&#x27;c&#x27;}};
+     //printf (&quot;tcc has %s %s\n&quot;, s, q.data);
+     if (f1char() || f1int())
+       printf (&quot;bla\n&quot;);
+     return !s[0];
+  }
+  +mkdir ./tests/single-exec/00208.c-c2go
+  +c2go transpile -o ./tests/single-exec/00208.c-c2go/main.go ./tests/single-exec/00208.c
+  +cd ./tests/single-exec/00208.c-c2go
+  +go build -o ./tests/single-exec/00208.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00208.c-c2go
+  ./main.go:214:15: undefined: noarch.NotByte
+  ./main.go:222:15: undefined: noarch.NotByte
+  ./main.go:230:54: cannot use []byte literal (type []byte) as type unsafe.Pointer in field value
+  ./main.go:234:20: undefined: noarch.NotByte
+  +exit 1
+not ok ./tests/single-exec/00209.c
+  /* The following are all valid decls, even though some subtypes
+     are incomplete.  */
+  enum E *e;
+  const enum E *e1;
+  enum E const *e2;
+  struct S *s;
+  const struct S *s1;
+  struct S const *s2;
+  
+  /* Various strangely looking declarators, which are all valid
+     and have to map to the same numbered typedefs. */
+  typedef int (*fptr1)();
+  int f1 (int (), int);
+  typedef int (*fptr2)(int x);
+  int f2 (int (int x), int);
+  typedef int (*fptr3)(int);
+  int f3 (int (int), int);
+  typedef int (*fptr4[4])(int);
+  int f4 (int (*[4])(int), int);
+  typedef int (*fptr5)(fptr1);
+  int f5 (int (int()), fptr1);
+  int f1 (fptr1 fp, int i)
+  {
+    return (*fp)(i);
+  }
+  int f2 (fptr2 fp, int i)
+  {
+    return (*fp)(i);
+  }
+  int f3 (fptr3 fp, int i)
+  {
+    return (*fp)(i);
+  }
+  int f4 (fptr4 fp, int i)
+  {
+    return (*fp[i])(i);
+  }
+  int f5 (fptr5 fp, fptr1 i)
+  {
+    return fp(i);
+  }
+  int f8 (int ([4]), int);
+  int main () { return 0; }
+  +mkdir ./tests/single-exec/00209.c-c2go
+  +c2go transpile -o ./tests/single-exec/00209.c-c2go/main.go ./tests/single-exec/00209.c
+  panic: unknown node type: &#x27;FunctionNoProtoType 0x5106230 &#x27;int ()&#x27; cdecl&#x27;
+  
+  goroutine 9 [running]:
+  github.com/elliotchance/c2go/ast.Parse(0xc000146670, 0x2c, 0x6acb24, 0x5)
+  	/home/travis/go/src/github.com/elliotchance/c2go/ast/ast.go:270 +0x4027
+  main.convertLinesToNodes(0xc000150000, 0x49, 0x92, 0xc0000f84e0, 0xc0000407b0, 0x1)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:89 +0x1c8
+  main.convertLinesToNodesParallel.func1.1(0xc00001e660, 0xc00000e108, 0xc000150000, 0x49, 0x92, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:113 +0x53
+  created by main.convertLinesToNodesParallel.func1
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:111 +0x11b
+  +exit 1
+not ok ./tests/single-exec/00210.c
+  typedef unsigned short uint16_t;
+  typedef unsigned char uint8_t;
+  
+  typedef union Unaligned16a {
+    uint16_t u;
+    uint8_t b[2];
+  } __attribute__((packed)) Unaligned16a;
+  
+  typedef union __attribute__((packed)) Unaligned16b {
+    uint16_t u;
+    uint8_t b[2];
+  } Unaligned16b;
+  
+  extern void foo (void) __attribute__((stdcall));
+  void __attribute__((stdcall)) foo (void)
+  {
+  }
+  
+  /* The actual attribute isn&#x27;t important, must just be
+     parsable.  */
+  #define ATTR __attribute__((__noinline__))
+  int ATTR actual_function() {
+    return 42;
+  }
+  
+  extern int printf (const char *, ...);
+  int main()
+  {
+      void *function_pointer = &amp;actual_function;
+  
+      int a = ((ATTR int(*) (void)) function_pointer)();
+      printf(&quot;%i\n&quot;, a);
+  
+      /* In the following we once misparsed &#x27;ATTR *&#x27; is a btype
+         and hence the whole type was garbled.  */
+      int b = ( (int(ATTR *)(void))  function_pointer)();
+      printf(&quot;%i\n&quot;, b);
+  
+      return 0;
+  }
+  +mkdir ./tests/single-exec/00210.c-c2go
+  +c2go transpile -o ./tests/single-exec/00210.c-c2go/main.go ./tests/single-exec/00210.c
+  panic: cannot decode: &amp;ast.PackedAttr{Addr:0x533aea0, Pos:ast.Position{File:&quot;/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00210.c&quot;, Line:7, LineEnd:0, Column:18, ColumnEnd:0, StringValue:&quot;&quot;}, ChildNodes:[]ast.Node{}}
+  
+  goroutine 1 [running]:
+  github.com/elliotchance/c2go/program.NewStruct(0xc00009a580, 0xc0000881e0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/program/struct.go:54 +0x91c
+  github.com/elliotchance/c2go/transpiler.transpileRecordDecl(0xc000156000, 0xc00009a580, 0xc0000c74a8, 0xc000156000, 0x7090e0, 0xc00009a580, 0xc0000c7418)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/declarations.go:207 +0x1370
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x7090e0, 0xc00009a580, 0xc000156000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:463 +0x250
+  github.com/elliotchance/c2go/transpiler.transpileTranslationUnitDecl(0xc000156000, 0xc000074540, 0xc000244d20, 0x2, 0x2, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/translation_unit.go:116 +0x17e
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x709360, 0xc000074540, 0xc000156000, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:440 +0xb81
+  github.com/elliotchance/c2go/transpiler.TranspileAST(0x7ffeb3b069d5, 0x28, 0x6abe92, 0x4, 0xc000156000, 0x709360, 0xc000074540, 0x59, 0x59)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:32 +0x1a2
+  main.Start(0x0, 0xc00008e040, 0x1, 0x1, 0x0, 0x0, 0x0, 0x7ffeb3b069d5, 0x28, 0x6abe92, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:297 +0xf29
+  main.runCommand(0xc000068058)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:429 +0x495
+  main.main()
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:352 +0x22
+  +exit 1
+not ok ./tests/single-exec/00211.c
+  extern int printf(const char *format, ...);
+  
+  #define ACPI_TYPE_INVALID       0x1E
+  #define NUM_NS_TYPES            ACPI_TYPE_INVALID+1
+  int array[NUM_NS_TYPES];
+  
+  #define n 0xe
+  int main()
+  {
+      printf(&quot;n+1 = %d\n&quot;, n+1);
+  //    printf(&quot;n+1 = %d\n&quot;, 0xe+1);
+  }
+  +mkdir ./tests/single-exec/00211.c-c2go
+  +c2go transpile -o ./tests/single-exec/00211.c-c2go/main.go ./tests/single-exec/00211.c
+  +cd ./tests/single-exec/00211.c-c2go
+  +go build -o ./tests/single-exec/00211.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00211.c-c2go
+  ./main.go:16:2: undefined: printf
+  +exit 1
+not ok ./tests/single-exec/00213.c
+  /* This checks various ways of dead code inside if statements
+     where there are non-obvious ways of how the code is actually
+     not dead due to reachable by labels.  */
+  extern int printf (const char *, ...);
+  static void kb_wait_1(void)
+  {
+    unsigned long timeout = 2;
+    do {
+        /* Here the else arm is a statement expression that&#x27;s supposed
+           to be suppressed.  The label inside the while would unsuppress
+  	 code generation again if not handled correctly.  And that
+  	 would wreak havoc to the cond-expression because there&#x27;s no
+  	 jump-around emitted, the whole statement expression really
+  	 needs to not generate code (perhaps except useless forward jumps).  */
+        (1 ? 
+         printf(&quot;timeout=%ld\n&quot;, timeout) :
+         ({
+  	int i = 1;
+  	while (1)
+  	  while (i--)
+  	    some_label:
+  	      printf(&quot;error\n&quot;);
+  	goto some_label;
+  	})
+        );
+        timeout--;
+    } while (timeout);
+  }
+  
+  static int global;
+  
+  static void foo(int i)
+  {
+    global+=i;
+    printf (&quot;g=%d\n&quot;, global);
+  }
+  
+  static int check(void)
+  {
+    printf (&quot;check %d\n&quot;, global);
+    return 1;
+  }
+  
+  static void dowhile(void)
+  {
+    do {
+        foo(1);
+        if (global == 1) {
+  	  continue;
+        } else if (global == 2) {
+  	  continue;
+        }
+        /* The following break shouldn&#x27;t disable the check() call,
+           as it&#x27;s reachable by the continues above.  */
+        break;
+    } while (check());
+  }
+  
+  int main (void)
+  {
+    int i = 1;
+    kb_wait_1();
+  
+    /* Simple test of dead code at first sight which isn&#x27;t actually dead. */
+    if (0) {
+  yeah:
+        printf (&quot;yeah\n&quot;);
+    } else {
+        printf (&quot;boo\n&quot;);
+    }
+    if (i--)
+      goto yeah;
+  
+    /* Some more non-obvious uses where the problems are loops, so that even
+       the first loop statements aren&#x27;t actually dead.  */
+    i = 1;
+    if (0) {
+        while (i--) {
+  	  printf (&quot;once\n&quot;);
+  enterloop:
+  	  printf (&quot;twice\n&quot;);
+        }
+    }
+    if (i &gt;= 0)
+      goto enterloop;
+  
+    /* The same with statement expressions.  One might be tempted to
+       handle them specially by counting if inside statement exprs and
+       not unsuppressing code at loops at all then.
+       See kb_wait_1 for the other side of the medal where that wouldn&#x27;t work.  */
+    i = ({
+        int j = 1;
+        if (0) {
+  	  while (j--) {
+  	      printf (&quot;SEonce\n&quot;);
+      enterexprloop:
+  	      printf (&quot;SEtwice\n&quot;);
+  	  }
+        }
+        if (j &gt;= 0)
+  	goto enterexprloop;
+        j; });
+  
+    /* The other two loop forms: */
+    i = 1;
+    if (0) {
+        for (i = 1; i--;) {
+  	  printf (&quot;once2\n&quot;);
+  enterloop2:
+  	  printf (&quot;twice2\n&quot;);
+        }
+    }
+    if (i &gt; 0)
+      goto enterloop2;
+  
+    i = 1;
+    if (0) {
+        do {
+  	  printf (&quot;once3\n&quot;);
+  enterloop3:
+  	  printf (&quot;twice3\n&quot;);
+        } while (i--);
+    }
+    if (i &gt; 0)
+      goto enterloop3;
+  
+    /* And check that case and default labels have the same effect
+       of disabling code suppression.  */
+    i = 41;
+    switch (i) {
+        if (0) {
+  	  printf (&quot;error\n&quot;);
+        case 42:
+  	  printf (&quot;error2\n&quot;);
+        case 41:
+  	  printf (&quot;caseok\n&quot;);
+        }
+    }
+  
+    i = 41;
+    switch (i) {
+        if (0) {
+  	  printf (&quot;error3\n&quot;);
+        default:
+  	  printf (&quot;caseok2\n&quot;);
+  	  break;
+        case 42:
+  	  printf (&quot;error4\n&quot;);
+        }
+    }
+  
+    dowhile();
+  
+    return 0;
+  }
+  +mkdir ./tests/single-exec/00213.c-c2go
+  +c2go transpile -o ./tests/single-exec/00213.c-c2go/main.go ./tests/single-exec/00213.c
+  panic: interface conversion: ast.Stmt is *ast.BranchStmt, not *ast.ExprStmt
+  
+  goroutine 1 [running]:
+  github.com/elliotchance/c2go/transpiler.transpileStmtExpr(0xc00022de30, 0xc0000bc480, 0xc000349bf8, 0xc000349c10, 0x66f360, 0x0, 0x0, 0x8de390, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/unary.go:748 +0x5d0
+  github.com/elliotchance/c2go/transpiler.transpileToExpr(0x709260, 0xc00022de30, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:207 +0x1979
+  github.com/elliotchance/c2go/transpiler.transpileConditionalOperator(0xc00022d3b0, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/operators.go:86 +0x6fd
+  github.com/elliotchance/c2go/transpiler.transpileToExpr(0x7081e0, 0xc00022d3b0, 0xc0000bc480, 0xc0000bc400, 0x0, 0x0, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:159 +0x4a0
+  github.com/elliotchance/c2go/transpiler.transpileParenExpr(0xc000102870, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/operators.go:160 +0xfc
+  github.com/elliotchance/c2go/transpiler.transpileToExpr(0x708ee0, 0xc000102870, 0xc0000bc480, 0xc000340101, 0x0, 0x0, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:183 +0xce2
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x708ee0, 0xc000102870, 0xc0000bc480, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:387 +0x1ad
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x708ee0, 0xc000102870, 0xc0000bc480, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileCompoundStmt(0xc00022c5b0, 0xc0000bc480, 0xc000340420, 0xc000340438, 0x7081a0, 0xc00022c5b0, 0x0, 0x0, 0x0, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:21 +0xfb
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7081a0, 0xc00022c5b0, 0xc0000bc480, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:347 +0xcec
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7081a0, 0xc00022c5b0, 0xc0000bc480, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileToBlockStmt(0x7081a0, 0xc00022c5b0, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:38 +0x49
+  github.com/elliotchance/c2go/transpiler.transpileForStmt(0xc000315e60, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/branch.go:350 +0xa33
+  github.com/elliotchance/c2go/transpiler.transpileDoStmt(0xc00005eea0, 0xc0000bc480, 0xc000340ab8, 0xc000340ad0, 0x708460, 0xc00005eea0, 0x0, 0x0, 0x0, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/branch.go:540 +0x2fc
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x708460, 0xc00005eea0, 0xc0000bc480, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:330 +0xe1d
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x708460, 0xc00005eea0, 0xc0000bc480, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileCompoundStmt(0xc00022c4d0, 0xc0000bc480, 0xc0000c6d40, 0xc0000c6d58, 0x7081a0, 0xc00022c4d0, 0x40bb00, 0x5555555555555555, 0x38, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:21 +0xfb
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7081a0, 0xc00022c4d0, 0xc0000bc480, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:347 +0xcec
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7081a0, 0xc00022c4d0, 0xc0000bc480, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileToBlockStmt(0x7081a0, 0xc00022c4d0, 0xc0000bc480, 0x9, 0xc000296580, 0x8de301, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:38 +0x49
+  github.com/elliotchance/c2go/transpiler.transpileFunctionDecl(0xc0002300d0, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/functions.go:86 +0x28fa
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x7087e0, 0xc0002300d0, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:443 +0x44d
+  github.com/elliotchance/c2go/transpiler.transpileTranslationUnitDecl(0xc0000bc480, 0xc00000c4c0, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/translation_unit.go:116 +0x17e
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x709360, 0xc00000c4c0, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:440 +0xb81
+  github.com/elliotchance/c2go/transpiler.TranspileAST(0x7fff94a7f9d5, 0x28, 0x6abe92, 0x4, 0xc0000bc480, 0x709360, 0xc00000c4c0, 0x18a, 0x18a)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:32 +0x1a2
+  main.Start(0x0, 0xc00008e040, 0x1, 0x1, 0x0, 0x0, 0x0, 0x7fff94a7f9d5, 0x28, 0x6abe92, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:297 +0xf29
+  main.runCommand(0xc000068058)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:429 +0x495
+  main.main()
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:352 +0x22
+  +exit 1
+not ok ./tests/single-exec/00214.c
+  /* Check some way in where code suppression caused various
+     miscompilations.  */
+  extern int printf (const char *, ...);
+  typedef unsigned long size_t;
+  
+  size_t _brk_start, _brk_end;
+  void * extend_brk(size_t size, size_t align)
+  {
+      size_t mask = align - 1;
+      void *ret = 0;
+  
+       do {
+  	 if (__builtin_expect(!!(_brk_start == 0), 0))
+  	   do {
+  	       printf(&quot;wrong1\n&quot;);
+  	   } while (0);
+       } while (0);
+       _brk_end = (_brk_end + mask) &amp; ~mask;
+       ret = (void *)_brk_end;
+       _brk_end += size;
+  
+       return ret;
+  }
+  
+  static void get_args (int a, int b)
+  {
+    if (a != 1)
+      printf(&quot;wrong2\n&quot;);
+    else
+      printf(&quot;okay\n&quot;);
+  }
+  
+  void bla(void)
+  {
+    int __ret = 42;
+    ({
+      if (__builtin_expect(!!(0), 0)) {
+        if (__builtin_expect(!!__ret, 0))
+          printf(&quot;wrong3\n&quot;);
+        int x = !!(__ret);
+      }
+      __ret;
+    });
+    get_args(!!__ret, sizeof(__ret));
+  }
+  
+  _Bool chk(unsigned long addr, unsigned long limit, unsigned long size)
+  {
+    _Bool ret;
+    /* This just needs to compile, no runtime test.  (And it doesn&#x27;t compile
+       only with certain internal checking added that&#x27;s not committed).  */
+    if (0)
+      ret = 0 != (!!(addr &gt; limit - size));
+  }
+  
+  int main()
+  {
+    void *r;
+    _brk_start = 1024;
+    _brk_end = 1024;
+    r = extend_brk (4096, 16);
+    if (!r)
+      printf(&quot;wrong4\n&quot;);
+    else
+      printf(&quot;okay\n&quot;);
+    bla();
+    return 0;
+  }
+  +mkdir ./tests/single-exec/00214.c-c2go
+  +c2go transpile -o ./tests/single-exec/00214.c-c2go/main.go ./tests/single-exec/00214.c
+  +cd ./tests/single-exec/00214.c-c2go
+  +go build -o ./tests/single-exec/00214.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00214.c-c2go
+  ./main.go:26:6: undefined: __builtin_expect
+  ./main.go:34:5: undefined: printf
+  ./main.go:45:22: cannot convert uint32(uint32(_brk_end)) (type uint32) to type unsafe.Pointer
+  ./main.go:53:3: undefined: printf
+  ./main.go:55:3: undefined: printf
+  ./main.go:63:6: undefined: __builtin_expect
+  ./main.go:64:7: undefined: __builtin_expect
+  ./main.go:65:5: undefined: printf
+  ./main.go:105:3: undefined: printf
+  ./main.go:107:3: undefined: printf
+  ./main.go:107:3: too many errors
+  +exit 1
+not ok ./tests/single-exec/00215.c
+  extern int printf(const char *format, ...);
+  static void kb_wait_1(void)
+  {
+      unsigned long timeout = 2;
+      do {
+          (1 ?
+              printf(&quot;timeout=%ld\n&quot;, timeout) :
+              ({
+                  while (1)
+                      printf(&quot;error\n&quot;);
+              })
+          );
+          timeout--;
+      } while (timeout);
+  }
+  static void kb_wait_2(void)
+  {
+      unsigned long timeout = 2;
+      do {
+          (1 ?
+              printf(&quot;timeout=%ld\n&quot;, timeout) :
+              ({
+                  for (;;)
+                      printf(&quot;error\n&quot;);
+              })
+          );
+          timeout--;
+      } while (timeout);
+  }
+  static void kb_wait_2_1(void)
+  {
+      unsigned long timeout = 2;
+      do {
+          (1 ?
+              printf(&quot;timeout=%ld\n&quot;, timeout) :
+              ({
+                  do {
+                      printf(&quot;error\n&quot;);
+  		} while (1);
+              })
+          );
+          timeout--;
+      } while (timeout);
+  }
+  static void kb_wait_2_2(void)
+  {
+      unsigned long timeout = 2;
+      do {
+          (1 ?
+              printf(&quot;timeout=%ld\n&quot;, timeout) :
+              ({
+                  label:
+                      printf(&quot;error\n&quot;);
+  		goto label;
+              })
+          );
+          timeout--;
+      } while (timeout);
+  }
+  static void kb_wait_3(void)
+  {
+      unsigned long timeout = 2;
+      do {
+          (1 ?
+              printf(&quot;timeout=%ld\n&quot;, timeout) :
+              ({
+                  int i = 1;
+                  goto label;
+                  i = i + 2;
+              label:
+                  i = i + 3;
+              })
+          );
+          timeout--;
+      } while (timeout);
+  }
+  static void kb_wait_4(void)
+  {
+      unsigned long timeout = 2;
+      do {
+          (1 ?
+              printf(&quot;timeout=%ld\n&quot;, timeout) :
+              ({
+                  switch(timeout) {
+                      case 2:
+                          printf(&quot;timeout is 2&quot;);
+                          break;
+                      case 1:
+                          printf(&quot;timeout is 1&quot;);
+                          break;
+                      default:
+                          printf(&quot;timeout is 0?&quot;);
+                          break;
+                  };
+                  // return;
+              })
+          );
+          timeout--;
+      } while (timeout);
+  }
+  int main()
+  {
+      printf(&quot;begin\n&quot;);
+      kb_wait_1();
+      kb_wait_2();
+      kb_wait_2_1();
+      kb_wait_2_2();
+      kb_wait_3();
+      kb_wait_4();
+      printf(&quot;end\n&quot;);
+      return 0;
+  }
+  +mkdir ./tests/single-exec/00215.c-c2go
+  +c2go transpile -o ./tests/single-exec/00215.c-c2go/main.go ./tests/single-exec/00215.c
+  panic: interface conversion: ast.Stmt is *ast.ForStmt, not *ast.ExprStmt
+  
+  goroutine 1 [running]:
+  github.com/elliotchance/c2go/transpiler.transpileStmtExpr(0xc0001ee850, 0xc0000bc480, 0xc000315bf8, 0xc000315c10, 0x66f360, 0x0, 0x0, 0x8de390, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/unary.go:748 +0x5d0
+  github.com/elliotchance/c2go/transpiler.transpileToExpr(0x709260, 0xc0001ee850, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:207 +0x1979
+  github.com/elliotchance/c2go/transpiler.transpileConditionalOperator(0xc0001ee540, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/operators.go:86 +0x6fd
+  github.com/elliotchance/c2go/transpiler.transpileToExpr(0x7081e0, 0xc0001ee540, 0xc0000bc480, 0xc0000bc400, 0x0, 0x0, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:159 +0x4a0
+  github.com/elliotchance/c2go/transpiler.transpileParenExpr(0xc000170bd0, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/operators.go:160 +0xfc
+  github.com/elliotchance/c2go/transpiler.transpileToExpr(0x708ee0, 0xc000170bd0, 0xc0000bc480, 0xc00030a101, 0x0, 0x0, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:183 +0xce2
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x708ee0, 0xc000170bd0, 0xc0000bc480, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:387 +0x1ad
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x708ee0, 0xc000170bd0, 0xc0000bc480, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileCompoundStmt(0xc0001ee4d0, 0xc0000bc480, 0xc00030a420, 0xc00030a438, 0x7081a0, 0xc0001ee4d0, 0x0, 0x0, 0x0, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:21 +0xfb
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7081a0, 0xc0001ee4d0, 0xc0000bc480, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:347 +0xcec
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7081a0, 0xc0001ee4d0, 0xc0000bc480, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileToBlockStmt(0x7081a0, 0xc0001ee4d0, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:38 +0x49
+  github.com/elliotchance/c2go/transpiler.transpileForStmt(0xc0002e6ba0, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/branch.go:350 +0xa33
+  github.com/elliotchance/c2go/transpiler.transpileDoStmt(0xc00005eb40, 0xc0000bc480, 0xc00030aab8, 0xc00030aad0, 0x708460, 0xc00005eb40, 0x0, 0x0, 0x0, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/branch.go:540 +0x2fc
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x708460, 0xc00005eb40, 0xc0000bc480, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:330 +0xe1d
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x708460, 0xc00005eb40, 0xc0000bc480, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileCompoundStmt(0xc0001ee460, 0xc0000bc480, 0xc0000c6d40, 0xc0000c6d58, 0x7081a0, 0xc0001ee460, 0x48000000040bb00, 0x5555555555555555, 0x38, 0xc000000180, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:21 +0xfb
+  github.com/elliotchance/c2go/transpiler.transpileToStmt(0x7081a0, 0xc0001ee460, 0xc0000bc480, 0x0, 0x0, 0x8de390, 0x0, 0x0, 0x8de390, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:347 +0xcec
+  github.com/elliotchance/c2go/transpiler.transpileToStmts(0x7081a0, 0xc0001ee460, 0xc0000bc480, 0x8de390, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:265 +0xe3
+  github.com/elliotchance/c2go/transpiler.transpileToBlockStmt(0x7081a0, 0xc0001ee460, 0xc0000bc480, 0x9, 0xc000302100, 0x8de301, 0x0, 0x0, 0x0, 0x0, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/scope.go:38 +0x49
+  github.com/elliotchance/c2go/transpiler.transpileFunctionDecl(0xc000133790, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/functions.go:86 +0x28fa
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x7087e0, 0xc000133790, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:443 +0x44d
+  github.com/elliotchance/c2go/transpiler.transpileTranslationUnitDecl(0xc0000bc480, 0xc00000c200, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/translation_unit.go:116 +0x17e
+  github.com/elliotchance/c2go/transpiler.transpileToNode(0x709360, 0xc00000c200, 0xc0000bc480, 0x0, 0x0, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:440 +0xb81
+  github.com/elliotchance/c2go/transpiler.TranspileAST(0x7ffd4b8729d5, 0x28, 0x6abe92, 0x4, 0xc0000bc480, 0x709360, 0xc00000c200, 0x12e, 0x12e)
+  	/home/travis/go/src/github.com/elliotchance/c2go/transpiler/transpiler.go:32 +0x1a2
+  main.Start(0x0, 0xc00008e040, 0x1, 0x1, 0x0, 0x0, 0x0, 0x7ffd4b8729d5, 0x28, 0x6abe92, ...)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:297 +0xf29
+  main.runCommand(0xc000068058)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:429 +0x495
+  main.main()
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:352 +0x22
+  +exit 1
+not ok ./tests/single-exec/00216.c
+  typedef unsigned char u8;
+  typedef struct {} empty_s;
+  struct contains_empty {
+      u8 a;
+      empty_s empty;
+      u8 b;
+  };
+  struct contains_empty ce = { { (1) }, (empty_s){}, 022, };
+  /* The following decl of &#x27;q&#x27; would demonstrate the TCC bug in init_putv when
+     handling copying compound literals.  (Compound literals
+     aren&#x27;t acceptable constant initializers in isoc99, but
+     we accept them like gcc, except for this case)
+  //char *q = (char *){ &quot;trara&quot; }; */
+  struct SS {u8 a[3], b; };
+  struct SS sinit16[] = { { 1 }, 2 };
+  struct S
+  {
+    u8 a,b;
+    u8 c[2];
+  };
+  
+  struct T
+  {
+    u8 s[16];
+    u8 a;
+  };
+  
+  struct U
+  {
+    u8 a;
+    struct S s;
+    u8 b;
+    struct T t;
+  };
+  
+  struct V
+  {
+    struct S s;
+    struct T t;
+    u8 a;
+  };
+  
+  struct W
+  {
+    struct V t;
+    struct S s[];
+  };
+  
+  struct S gs = ((struct S){1, 2, 3, 4});
+  struct S gs2 = {1, 2, {3, 4}};
+  struct T gt = {&quot;hello&quot;, 42};
+  struct U gu = {3, 5,6,7,8, 4, &quot;huhu&quot;, 43};
+  struct U gu2 = {3, {5,6,7,8}, 4, {&quot;huhu&quot;, 43}};
+  /* Optional braces around scalar initializers.  Accepted, but with
+     a warning.  */
+  struct U gu3 = { {3}, {5,6,7,8,}, 4, {&quot;huhu&quot;, 43}};
+  /* Many superfluous braces and leaving out one initializer for U.s.c[1] */
+  struct U gu4 = { 3, {5,6,7,},  5, { &quot;bla&quot;, {44}} };
+  /* Superfluous braces and useless parens around values */
+  struct S gs3 = { (1), {(2)}, {(((3))), {4}}};
+  /* Superfluous braces, and leaving out braces for V.t, plus cast */
+  struct V gv = {{{3},4,{5,6}}, &quot;haha&quot;, (u8)45, 46};
+  /* Compound literal */
+  struct V gv2 = {(struct S){7,8,{9,10}}, {&quot;hihi&quot;, 47}, 48};
+  /* Parens around compound literal */
+  struct V gv3 = {((struct S){7,8,{9,10}}), {&quot;hoho&quot;, 49}, 50};
+  /* Initialization of a flex array member (warns in GCC) */
+  struct W gw = {{1,2,3,4}, {1,2,3,4,5}};
+  
+  union UU {
+      u8 a;
+      u8 b;
+  };
+  struct SU {
+      union UU u;
+      u8 c;
+  };
+  struct SU gsu = {5,6};
+  
+  /* Unnamed struct/union members aren&#x27;t ISO C, but it&#x27;s a widely accepted
+     extension.  See below for further extensions to that under -fms-extension.*/
+  union UV {
+      struct {u8 a,b;};
+      struct S s;
+  };
+  union UV guv = {{6,5}};
+  union UV guv2 = {{.b = 7, .a = 8}};
+  union UV guv3 = {.b = 8, .a = 7};
+  
+  /* Under -fms-extensions also the following is valid:
+  union UV2 {
+      struct Anon {u8 a,b;};    // unnamed member, but tagged struct, ...
+      struct S s;
+  };
+  struct Anon gan = { 10, 11 }; // ... which makes it available here.
+  union UV2 guv4 = {{4,3}};     // and the other inits from above as well
+  */
+  
+  struct in6_addr {
+      union {
+  	u8 u6_addr8[16];
+  	unsigned short u6_addr16[8];
+      } u;
+  };
+  struct flowi6 {
+      struct in6_addr saddr, daddr;
+  };
+  struct pkthdr {
+      struct in6_addr daddr, saddr;
+  };
+  struct pkthdr phdr = { { { 6,5,4,3 } }, { { 9,8,7,6 } } };
+  
+  struct Wrap {
+      void *func;
+  };
+  int global;
+  void inc_global (void)
+  {
+    global++;
+  }
+  
+  struct Wrap global_wrap[] = {
+      ((struct Wrap) {inc_global}),
+      inc_global,
+  };
+  
+  #include &lt;stdio.h&gt;
+  void print_ (const char *name, const u8 *p, long size)
+  {
+    printf (&quot;%s:&quot;, name);
+    while (size--) {
+        printf (&quot; %x&quot;, *p++);
+    }
+    printf (&quot;\n&quot;);
+  }
+  #define print(x) print_(#x, (u8*)&amp;x, sizeof (x))
+  #if 1
+  void foo (struct W *w, struct pkthdr *phdr_)
+  {
+    struct S ls = {1, 2, 3, 4};
+    struct S ls2 = {1, 2, {3, 4}};
+    struct T lt = {&quot;hello&quot;, 42};
+    struct U lu = {3, 5,6,7,8, 4, &quot;huhu&quot;, 43};
+    struct U lu1 = {3, ls, 4, {&quot;huhu&quot;, 43}};
+    struct U lu2 = {3, (ls), 4, {&quot;huhu&quot;, 43}};
+    const struct S *pls = &amp;ls;
+    struct S ls21 = *pls;
+    struct U lu22 = {3, *pls, 4, {&quot;huhu&quot;, 43}};
+    /* Incomplete bracing.  */
+    struct U lu21 = {3, ls, 4, &quot;huhu&quot;, 43};
+    /* Optional braces around scalar initializers.  Accepted, but with
+       a warning.  */
+    struct U lu3 = { 3, {5,6,7,8,}, 4, {&quot;huhu&quot;, 43}};
+    /* Many superfluous braces and leaving out one initializer for U.s.c[1] */
+    struct U lu4 = { 3, {5,6,7,},  5, { &quot;bla&quot;, 44} };
+    /* Superfluous braces and useless parens around values */
+    struct S ls3 = { (1), (2), {(((3))), 4}};
+    /* Superfluous braces, and leaving out braces for V.t, plus cast */
+    struct V lv = {{3,4,{5,6}}, &quot;haha&quot;, (u8)45, 46};
+    /* Compound literal */
+    struct V lv2 = {(struct S)w-&gt;t.s, {&quot;hihi&quot;, 47}, 48};
+    /* Parens around compound literal */
+    struct V lv3 = {((struct S){7,8,{9,10}}), ((const struct W *)w)-&gt;t.t, 50};
+    const struct pkthdr *phdr = phdr_;
+    struct flowi6 flow = { .daddr = phdr-&gt;daddr, .saddr = phdr-&gt;saddr };
+    int elt = 0x42;
+    /* Range init, overlapping */
+    struct T lt2 = { { [1 ... 5] = 9, [6 ... 10] = elt, [4 ... 7] = elt+1 }, 1 };
+    print(ls);
+    print(ls2);
+    print(lt);
+    print(lu);
+    print(lu1);
+    print(lu2);
+    print(ls21);
+    print(lu21);
+    print(lu22);
+    print(lu3);
+    print(lu4);
+    print(ls3);
+    print(lv);
+    print(lv2);
+    print(lv3);
+    print(lt2);
+    print(flow);
+  }
+  #endif
+  
+  void test_compound_with_relocs (void)
+  {
+    struct Wrap local_wrap[] = {
+        ((struct Wrap) {inc_global}),
+        inc_global,
+    };
+    void (*p)(void);
+    p = global_wrap[0].func; p();
+    p = global_wrap[1].func; p();
+    p = local_wrap[0].func; p();
+    p = local_wrap[1].func; p();
+  }
+  
+  void sys_ni(void) { printf(&quot;ni\n&quot;); }
+  void sys_one(void) { printf(&quot;one\n&quot;); }
+  void sys_two(void) { printf(&quot;two\n&quot;); }
+  void sys_three(void) { printf(&quot;three\n&quot;); }
+  typedef void (*fptr)(void);
+  const fptr table[3] = {
+      [0 ... 2] = &amp;sys_ni,
+      [0] = sys_one,
+      [1] = sys_two,
+      [2] = sys_three,
+  };
+  
+  void test_multi_relocs(void)
+  {
+    int i;
+    for (i = 0; i &lt; sizeof(table)/sizeof(table[0]); i++)
+      table[i]();
+  }
+  
+  /* Following is from GCC gcc.c-torture/execute/20050613-1.c.  */
+  
+  struct SEA { int i; int j; int k; int l; };
+  struct SEB { struct SEA a; int r[1]; };
+  struct SEC { struct SEA a; int r[0]; };
+  struct SED { struct SEA a; int r[]; };
+  
+  static void
+  test_correct_filling (struct SEA *x)
+  {
+    static int i;
+    if (x-&gt;i != 0 || x-&gt;j != 5 || x-&gt;k != 0 || x-&gt;l != 0)
+      printf(&quot;sea_fill%d: wrong\n&quot;, i);
+    else
+      printf(&quot;sea_fill%d: okay\n&quot;, i);
+    i++;
+  }
+  
+  int
+  test_zero_init (void)
+  {
+    /* The peculiarity here is that only a.j is initialized.  That
+       means that all other members must be zero initialized.  TCC
+       once didn&#x27;t do that for sub-level designators.  */
+    struct SEB b = { .a.j = 5 };
+    struct SEC c = { .a.j = 5 };
+    struct SED d = { .a.j = 5 };
+    test_correct_filling (&amp;b.a);
+    test_correct_filling (&amp;c.a);
+    test_correct_filling (&amp;d.a);
+    return 0;
+  }
+  
+  int main()
+  {
+    print(ce);
+    print(gs);
+    print(gs2);
+    print(gt);
+    print(gu);
+    print(gu2);
+    print(gu3);
+    print(gu4);
+    print(gs3);
+    print(gv);
+    print(gv2);
+    print(gv3);
+    print(sinit16);
+    print(gw);
+    print(gsu);
+    print(guv);
+    print(guv.b);
+    print(guv2);
+    print(guv3);
+    print(phdr);
+    foo(&amp;gw, &amp;phdr);
+    //printf(&quot;q: %s\n&quot;, q);
+    test_compound_with_relocs();
+    test_multi_relocs();
+    test_zero_init();
+    return 0;
+  }
+  +mkdir ./tests/single-exec/00216.c-c2go
+  +c2go transpile -o ./tests/single-exec/00216.c-c2go/main.go ./tests/single-exec/00216.c
+  +cd ./tests/single-exec/00216.c-c2go
+  +go build -o ./tests/single-exec/00216.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00216.c-c2go
+  ./main.go:46:42: invalid type for composite literal: u8
+  ./main.go:83:42: cannot use []u8 literal (type []u8) as type [2]u8 in field value
+  ./main.go:84:47: cannot use []u8 literal (type []u8) as type [2]u8 in field value
+  ./main.go:86:10: cannot use *(*[]u8)(unsafe.Pointer(noarch.UnsafeSliceToSlice(([]byte)(&quot;hello\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00&quot;), 1, 1))) (type []u8) as type [16]u8 in field value
+  ./main.go:87:62: cannot use []u8 literal (type []u8) as type [2]u8 in field value
+  ./main.go:87:109: cannot use *(*[]u8)(unsafe.Pointer(noarch.UnsafeSliceToSlice(([]byte)(&quot;huhu\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00&quot;), 1, 1))) (type []u8) as type [16]u8 in field value
+  ./main.go:88:63: cannot use []u8 literal (type []u8) as type [2]u8 in field value
+  ./main.go:88:110: cannot use *(*[]u8)(unsafe.Pointer(noarch.UnsafeSliceToSlice(([]byte)(&quot;huhu\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00&quot;), 1, 1))) (type []u8) as type [16]u8 in field value
+  ./main.go:89:17: invalid type for composite literal: u8
+  ./main.go:89:67: cannot use []u8 literal (type []u8) as type [2]u8 in field value
+  ./main.go:89:67: too many errors
+  +exit 1
+not ok ./tests/single-exec/00217.c
+  int printf(const char *, ...);
+  char t[] = &quot;012345678&quot;;
+  
+  int main(void)
+  {
+      char *data = t;
+      unsigned long long r = 4;
+      unsigned a = 5;
+      unsigned long long b = 12;
+  
+      *(unsigned*)(data + r) += a - b;
+  
+      printf(&quot;data = \&quot;%s\&quot;\n&quot;, data);
+      return 0;
+  }
+  +mkdir ./tests/single-exec/00217.c-c2go
+  +c2go transpile -o ./tests/single-exec/00217.c-c2go/main.go ./tests/single-exec/00217.c
+  +cd ./tests/single-exec/00217.c-c2go
+  +go build -o ./tests/single-exec/00217.c.bin
+  # _/home/travis/build/c-testsuite/c-testsuite/tests/single-exec/00217.c-c2go
+  ./main.go:21:2: undefined: printf
+  +exit 1
+not ok ./tests/single-exec/00218.c
+  /* This checks if enums needing 8 bit but only having positive
+     values are correctly zero extended (instead of sign extended)
+     when stored into/loaded from a 8 bit bit-field of enum type (which
+     itself is implementation defined, so isn&#x27;t necessarily supported by all
+     other compilers).  */
+  enum tree_code {
+    SOME_CODE = 148, /* has bit 7 set, and hence all further enum values as well */
+    LAST_AND_UNUSED_TREE_CODE
+  };
+  typedef union tree_node *tree;
+  struct tree_common
+  {
+    union tree_node *chain;
+    union tree_node *type;
+    enum tree_code code : 8;
+    unsigned side_effects_flag : 1;
+  };
+  union tree_node
+  {
+    struct tree_common common;
+   };
+  enum c_tree_code {
+    C_DUMMY_TREE_CODE = LAST_AND_UNUSED_TREE_CODE,
+    STMT_EXPR,
+    LAST_C_TREE_CODE
+  };
+  enum cplus_tree_code {
+    CP_DUMMY_TREE_CODE = LAST_C_TREE_CODE,
+    AMBIG_CONV,
+    LAST_CPLUS_TREE_CODE
+  };
+  
+  extern int printf(const char *, ...);
+  int blah(){return 0;}
+  
+  int convert_like_real (tree convs)
+  {
+    switch (((enum tree_code) (convs)-&gt;common.code))
+      {
+      case AMBIG_CONV: /* This has bit 7 set, which must not be the sign
+  			bit in tree_common.code, i.e. the bitfield must
+  			be somehow marked unsigned.  */
+        return blah();
+      default:
+        break;
+      };
+     printf(&quot;unsigned enum bit-fields broken\n&quot;);
+  }
+  
+  int main()
+  {
+    union tree_node convs;
+  
+    convs.common.code = AMBIG_CONV;
+    convert_like_real (&amp;convs);
+    return 0;
+  }
+  +mkdir ./tests/single-exec/00218.c-c2go
+  +c2go transpile -o ./tests/single-exec/00218.c-c2go/main.go ./tests/single-exec/00218.c
+  runtime: goroutine stack exceeds 1000000000-byte limit
+  fatal error: stack overflow
+  
+  runtime stack:
+  runtime.throw(0x6b1b0b, 0xe)
+  	/nix/store/zmd03lv31gg4n92bwznkhsz9fy13xprs-go-1.12.1/share/go/src/runtime/panic.go:617 +0x72
+  runtime.newstack()
+  	/nix/store/zmd03lv31gg4n92bwznkhsz9fy13xprs-go-1.12.1/share/go/src/runtime/stack.go:1041 +0x6f0
+  runtime.morestack()
+  	/nix/store/zmd03lv31gg4n92bwznkhsz9fy13xprs-go-1.12.1/share/go/src/runtime/asm_amd64.s:429 +0x8f
+  
+  goroutine 1 [running]:
+  strings.Index(0xc000160704, 0x11, 0x6ab7d5, 0x3, 0x0)
+  	/nix/store/zmd03lv31gg4n92bwznkhsz9fy13xprs-go-1.12.1/share/go/src/strings/strings.go:947 +0x693 fp=0xc024000378 sp=0xc024000370 pc=0x4d57a3
+  strings.Count(0xc000160704, 0x11, 0x6ab7d5, 0x3, 0x33)
+  	/nix/store/zmd03lv31gg4n92bwznkhsz9fy13xprs-go-1.12.1/share/go/src/strings/strings.go:88 +0x9b fp=0xc0240003b8 sp=0xc024000378 pc=0x4d246b
+  strings.Replace(0xc000160704, 0x11, 0x6ab7d5, 0x3, 0x6ab666, 0x2, 0xffffffffffffffff, 0xc0141a40b0, 0xc0240004a0)
+  	/nix/store/zmd03lv31gg4n92bwznkhsz9fy13xprs-go-1.12.1/share/go/src/strings/strings.go:854 +0x9b fp=0xc024000428 sp=0xc0240003b8 pc=0x4d49fb
+  github.com/elliotchance/c2go/types.CleanCType(0xc000160704, 0x11, 0xc024000600, 0xc0240005e8)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/resolve.go:578 +0x6c fp=0xc024000490 sp=0xc024000428 pc=0x59a63c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160704, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:20 +0xa1 fp=0xc0240005e0 sp=0xc024000490 pc=0x59b761
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024000730 sp=0xc0240005e0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc0141a20e0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024000880 sp=0xc024000730 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc0240009d0 sp=0xc024000880 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc0141a2060, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024000b20 sp=0xc0240009d0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024000c70 sp=0xc024000b20 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419ffe0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024000dc0 sp=0xc024000c70 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024000f10 sp=0xc024000dc0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419ff60, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024001060 sp=0xc024000f10 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc0240011b0 sp=0xc024001060 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419fee0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024001300 sp=0xc0240011b0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024001450 sp=0xc024001300 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419fe60, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc0240015a0 sp=0xc024001450 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc0240016f0 sp=0xc0240015a0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419fde0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024001840 sp=0xc0240016f0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024001990 sp=0xc024001840 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419fd60, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024001ae0 sp=0xc024001990 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024001c30 sp=0xc024001ae0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419fce0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024001d80 sp=0xc024001c30 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024001ed0 sp=0xc024001d80 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419fc60, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024002020 sp=0xc024001ed0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024002170 sp=0xc024002020 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419fbe0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc0240022c0 sp=0xc024002170 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024002410 sp=0xc0240022c0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419fb60, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024002560 sp=0xc024002410 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc0240026b0 sp=0xc024002560 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419fae0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024002800 sp=0xc0240026b0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024002950 sp=0xc024002800 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419fa60, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024002aa0 sp=0xc024002950 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024002bf0 sp=0xc024002aa0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f9e0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024002d40 sp=0xc024002bf0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024002e90 sp=0xc024002d40 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f960, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024002fe0 sp=0xc024002e90 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024003130 sp=0xc024002fe0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f8e0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024003280 sp=0xc024003130 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc0240033d0 sp=0xc024003280 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f860, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024003520 sp=0xc0240033d0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024003670 sp=0xc024003520 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f7e0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc0240037c0 sp=0xc024003670 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024003910 sp=0xc0240037c0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f760, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024003a60 sp=0xc024003910 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024003bb0 sp=0xc024003a60 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f6e0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024003d00 sp=0xc024003bb0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024003e50 sp=0xc024003d00 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f660, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024003fa0 sp=0xc024003e50 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc0240040f0 sp=0xc024003fa0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f5e0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024004240 sp=0xc0240040f0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024004390 sp=0xc024004240 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f560, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc0240044e0 sp=0xc024004390 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024004630 sp=0xc0240044e0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f4e0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024004780 sp=0xc024004630 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc0240048d0 sp=0xc024004780 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f460, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024004a20 sp=0xc0240048d0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024004b70 sp=0xc024004a20 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f3e0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024004cc0 sp=0xc024004b70 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024004e10 sp=0xc024004cc0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f360, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024004f60 sp=0xc024004e10 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc0240050b0 sp=0xc024004f60 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f2e0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024005200 sp=0xc0240050b0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024005350 sp=0xc024005200 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f260, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc0240054a0 sp=0xc024005350 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc0240055f0 sp=0xc0240054a0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f1e0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024005740 sp=0xc0240055f0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024005890 sp=0xc024005740 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f160, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc0240059e0 sp=0xc024005890 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024005b30 sp=0xc0240059e0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f0e0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024005c80 sp=0xc024005b30 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024005dd0 sp=0xc024005c80 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419f060, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024005f20 sp=0xc024005dd0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024006070 sp=0xc024005f20 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419efe0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc0240061c0 sp=0xc024006070 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024006310 sp=0xc0240061c0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419ef60, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024006460 sp=0xc024006310 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc0240065b0 sp=0xc024006460 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419eee0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024006700 sp=0xc0240065b0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024006850 sp=0xc024006700 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419ee60, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc0240069a0 sp=0xc024006850 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024006af0 sp=0xc0240069a0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419ede0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024006c40 sp=0xc024006af0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024006d90 sp=0xc024006c40 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419ed60, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024006ee0 sp=0xc024006d90 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024007030 sp=0xc024006ee0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419ece0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024007180 sp=0xc024007030 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc0240072d0 sp=0xc024007180 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419ec60, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024007420 sp=0xc0240072d0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024007570 sp=0xc024007420 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419ebe0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc0240076c0 sp=0xc024007570 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024007810 sp=0xc0240076c0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419eb60, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024007960 sp=0xc024007810 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024007ab0 sp=0xc024007960 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419eae0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024007c00 sp=0xc024007ab0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024007d50 sp=0xc024007c00 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419ea60, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024007ea0 sp=0xc024007d50 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024007ff0 sp=0xc024007ea0 pc=0x59c574
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc01419e9e0, 0x11, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:97 +0x44c fp=0xc024008140 sp=0xc024007ff0 pc=0x59bb0c
+  github.com/elliotchance/c2go/types.SizeOf(0xc0000bc480, 0xc000160924, 0x12, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/types/sizeof.go:61 +0xeb4 fp=0xc024008290 sp=0xc024008140 pc=0x59c574
+  ...additional frames elided...
+  +exit 1
+not ok ./tests/single-exec/00219.c
+  #include &lt;stdio.h&gt;
+  
+  const int a = 0;
+  
+  struct a {
+  	int a;
+  };
+  
+  struct b {
+  	int a;
+  };
+  
+  int a_f()
+  {
+  	return 20;
+  }
+  
+  int b_f()
+  {
+  	return 10;
+  }
+  
+  typedef int (*fptr)(int);
+  int foo(int i)
+  {
+    return i;
+  }
+  
+  typedef int int_type1;
+  
+  #define gen_sw(a) _Generic(a, const char *: 1, default: 8, int: 123);
+  
+  int main()
+  {
+  	int i = 0;
+  	signed long int l = 2;
+  	struct b titi;
+  	const int * const ptr;
+  	const char *ti;
+  	int_type1 i2;
+  
+  	i = _Generic(a, int: a_f, const int: b_f)();
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(a, int: a_f() / 2, const int: b_f() / 2);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(ptr, int *:1, int * const:2, default:20);
+  	printf(&quot;%d\n&quot;, i);
+  	i = gen_sw(a);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(titi, struct a:1, struct b:2, default:20);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(i2, char: 1, int : 0);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(a, char:1, int[4]:2, default:5);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(17, int :1, int **:2);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(17L, int :1, long :2, long long : 3);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(&quot;17, io&quot;, char *: 3, const char *: 1);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(ti, const unsigned char *:1, const char *:4, char *:3,
+  		     const signed char *:2);
+  	printf(&quot;%d\n&quot;, i);
+  	printf(&quot;%s\n&quot;, _Generic(i + 2L, long: &quot;long&quot;, int: &quot;int&quot;,
+  				long long: &quot;long long&quot;));
+  	i = _Generic(l, long: 1, int: 2);
+  	printf(&quot;%d\n&quot;, i);
+  	i = _Generic(foo, fptr: 3, int: 4);
+  	printf(&quot;%d\n&quot;, i);
+  	return 0;
+  }
+  +mkdir ./tests/single-exec/00219.c-c2go
+  +c2go transpile -o ./tests/single-exec/00219.c-c2go/main.go ./tests/single-exec/00219.c
+  panic: unknown node type: &#x27;GenericSelectionExpr 0x5852bb0 &lt;col:6, col:42&gt; &#x27;int ()&#x27;&#x27;
+  
+  goroutine 14 [running]:
+  github.com/elliotchance/c2go/ast.Parse(0xc0002216f0, 0x37, 0x6acb24, 0x5)
+  	/home/travis/go/src/github.com/elliotchance/c2go/ast/ast.go:270 +0x4027
+  main.convertLinesToNodes(0xc0002282f0, 0x22f, 0x22f, 0xc00005eae0, 0xc0000407b0, 0x1)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:89 +0x1c8
+  main.convertLinesToNodesParallel.func1.2(0xc00001efc0, 0xc00000e448, 0xc0002282f0, 0x22f, 0x22f, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:121 +0x53
+  created by main.convertLinesToNodesParallel.func1
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:119 +0x1a6
+  +exit 1
+not ok ./tests/single-exec/00220.c
+  // this file contains BMP chars encoded in UTF-8
+  #include &lt;stdio.h&gt;
+  #include &lt;wchar.h&gt;
+  
+  int main()
+  {
+      wchar_t s[] = L&quot;hello$$你好¢¢世界€€world&quot;;
+      wchar_t *p;
+      for (p = s; *p; p++) printf(&quot;%04X &quot;, (unsigned) *p);
+      printf(&quot;\n&quot;);
+      return 0;
+  }
+  +mkdir ./tests/single-exec/00220.c-c2go
+  +c2go transpile -o ./tests/single-exec/00220.c-c2go/main.go ./tests/single-exec/00220.c
+  panic: could not match regexp with string
+  ^(?P&lt;address&gt;[0-9a-fx]+) &lt;(?P&lt;position&gt;.*)&gt; &#x27;(?P&lt;type&gt;.*)&#x27; lvalue (?P&lt;value&gt;&quot;.*&quot;)[\s]*$
+  0x61b80c8 &lt;col:19&gt; &#x27;wchar_t [21]&#x27; lvalue L&quot;hello$$\x4F60\x597D\242\242\x4E16\x754C\x20AC\x20ACworld&quot;
+  
+  
+  goroutine 22 [running]:
+  github.com/elliotchance/c2go/ast.groupsFromRegex(0xc00031e780, 0x57, 0xc00028a2bd, 0x64, 0xc0001be1d0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/ast/ast.go:286 +0x35d
+  github.com/elliotchance/c2go/ast.parseStringLiteral(0xc00028a2bd, 0x64, 0x6b1173)
+  	/home/travis/go/src/github.com/elliotchance/c2go/ast/string_literal.go:19 +0x62
+  github.com/elliotchance/c2go/ast.Parse(0xc00028a2af, 0x72, 0x6acb24, 0x5)
+  	/home/travis/go/src/github.com/elliotchance/c2go/ast/ast.go:228 +0x2212
+  main.convertLinesToNodes(0xc00028ea40, 0x2a5, 0x2a5, 0x0, 0x0, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:89 +0x1c8
+  main.convertLinesToNodesParallel.func1.2(0xc000154b40, 0xc000116448, 0xc00028ea40, 0x2a5, 0x2a5, 0x0)
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:121 +0x53
+  created by main.convertLinesToNodesParallel.func1
+  	/home/travis/go/src/github.com/elliotchance/c2go/main.go:119 +0x1a6
+  +exit 1
+</pre>
+<br>
+<a href="/c2go-single-exec_report.tap">raw TAP data</a> <a href="/c2go-single-exec_report.tap.txt">(.txt)</a>
+<br>
+    </body>
+    </html>
